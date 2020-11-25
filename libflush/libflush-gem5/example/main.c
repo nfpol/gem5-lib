@@ -148,7 +148,7 @@ main(int argc, char* argv[])
           fprintf(stderr, "Error: Could not open logfile '%s'\n", optarg);
           return -1;
         }
-        fprintf(logfile, "Time,Hit,Miss\n");
+        //fprintf(logfile, "Time,Hit,Miss\n");
         break;
       case 'f':
         {
@@ -276,13 +276,6 @@ main(int argc, char* argv[])
   int cache = hit_maximum_index * histogram_scale;
   int mem = miss_maximum_index * histogram_scale;
   int threshhold = mem - (mem - cache) / 2;
-
-  for (unsigned int i = 0; i < histogram_size; i++) {
-    fprintf(stdout, "%4zu: %10zu %10zu\n", i * histogram_scale, hit_histogram[i], miss_histogram[i]);
-    if (logfile != NULL) {
-      fprintf(logfile, "%zu,%zu,%zu\n", i * histogram_scale, hit_histogram[i], miss_histogram[i]);
-    }
-  }
 
   fprintf(stderr, "Cache access time: %d\n", cache);
   fprintf(stderr, "Memory access time: %d\n", mem);
