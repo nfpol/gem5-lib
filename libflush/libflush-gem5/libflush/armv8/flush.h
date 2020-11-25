@@ -6,7 +6,7 @@
 inline void arm_v8_flush(void* address)
 {
   asm volatile ("DC CIVAC, %0" :: "r"(address));
-  printf("flush address x\n");
+  //printf("flush address x\n");
   asm volatile ("DSB ISH");
   asm volatile ("ISB");
 }
