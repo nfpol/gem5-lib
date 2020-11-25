@@ -33,18 +33,17 @@ int compare(const void *elem1, const void *elem2)
 }
 
 
-int
-main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
   struct myStringStruct array[MAXARRAY];
   FILE *fp;
   int i,count=0;
 	
-	int diff2 = 0;
+  int diff2 = 0;
   int diff = 0;
-	init_pmu();
-	select_event();
-	reset_event_counters();
-	reset_cycle_counter();
+  init_pmu();
+  select_event();
+  reset_event_counters();
+  reset_cycle_counter();
   
   if (argc<2) {
     fprintf(stderr,"Usage: qsort_small <file>\n");
