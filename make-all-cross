@@ -1,0 +1,48 @@
+#cd basicmath
+#make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- clean
+#make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- all
+#cd ..
+cd crypto
+./build_armv8.sh
+cd ..
+cd crypto-gem5-counter
+./build_armv8.sh
+cd ..
+cd dijkstra-crypto
+#make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- clean
+#make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- all
+cd ..
+cd dijkstra-crypto-gem5-counter
+#make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- clean
+#make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- all
+cd ..
+cd dijkstra-m5
+#make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- clean
+#make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- all
+cd ..
+cd dijkstra-normal-m5
+#make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- clean
+#make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- all
+cd ..
+cd dijkstra-normal-reg
+#make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- clean
+#make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- all
+cd ..
+cd libflush
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- ARCH=armv8 clean
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- ARCH=armv8
+sudo make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- ARCH=armv8 install
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- ARCH=armv8 example
+cd ..
+cd libflush-gem5
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- ARCH=armv8 clean
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- ARCH=armv8
+sudo make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- ARCH=armv8 install
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- ARCH=armv8 example
+cd ..
+cd libflush-gem5-reg
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- ARCH=armv8 clean
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- ARCH=armv8
+sudo make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- ARCH=armv8 install
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- ARCH=armv8 example
+cd ..

@@ -1,0 +1,98 @@
+cd basicmath
+make clean
+git add -A
+git commit -m "clean"
+git push origin master
+make all
+cd basicmath-priv
+make clean
+git add -A
+git commit -m "clean"
+git push origin master
+make all
+cd ..
+cd crypto
+./build_armv8.sh
+cd ..
+cd crypto-gem5-counter
+./build_armv8.sh
+cd ..
+cd dijkstra-crypto
+make clean
+git add -A
+git commit -m "clean"
+git push origin master
+make all
+cd ..
+cd dijkstra-crypto-gem5-counter
+make clean
+git add -A
+git commit -m "clean"
+git push origin master
+make all
+cd ..
+cd dijkstra-m5
+make clean
+git add -A
+git commit -m "clean"
+git push origin master
+make all
+cd ..
+cd diff-dijkstra-normal-reg
+make clean
+git add -A
+git commit -m "clean"
+git push origin master
+make all
+cd ..
+cd dijkstra-m5-perf
+make clean
+git add -A
+git commit -m "clean"
+git push origin master
+make all
+cd ..
+cd dijkstra-normal-m5
+make clean
+git add -A
+git commit -m "clean"
+git push origin master
+make all
+cd ..
+cd dijkstra-normal-reg
+make clean
+git add -A
+git commit -m "clean"
+git push origin master
+make all
+cd ..
+cd libflush
+make ARCH=armv8 clean
+git add -A
+git commit -m "clean"
+git push origin master
+make ARCH=armv8
+sudo make ARCH=armv8 install
+make ARCH=armv8 example
+cd ..
+cd libflush-gem5
+make ARCH=armv8 clean
+git add -A
+git commit -m "clean"
+git push origin master
+make ARCH=armv8
+sudo make ARCH=armv8 install
+make ARCH=armv8 example
+cd ..
+cd libflush-gem5-reg
+make ARCH=armv8 clean
+git add -A
+git commit -m "clean"
+git push origin master
+make ARCH=armv8
+sudo make ARCH=armv8 install
+make ARCH=armv8 example
+cd ..
+git add -A
+git commit -m "clean"
+git push origin master

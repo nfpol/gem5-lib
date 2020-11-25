@@ -1,0 +1,36 @@
+m5 checkpoint
+cd /home/attacks/XKCP/support/Kernel-PMU
+./load-module
+cd /home/attacks/qemu-work/
+cd /home/attacks/qemu-work/qemu-gem5/dijkstra-normal-m5/
+m5 resetstats
+./dijkstra_small input.dat > output_small.dat
+m5 dumpstats
+m5 resetstats
+./dijkstra_large input.dat > output_large.dat
+m5 dumpstats
+cd /home/attacks/qemu-work/qemu-gem5/dijkstra-m5
+m5 resetstats
+./dijkstra_small input.dat > output_small.dat
+m5 dumpstats
+m5 resetstats
+./dijkstra_large input.dat > output_large.dat
+m5 dumpstats
+cd /home/attacks/qemu-work/qemu-gem5/dijkstra-normal-reg/
+./dijkstra_large input.dat > output_large.dat
+./dijkstra_small input.dat > output_small.dat
+cd /home/attacks/qemu-work/qemu-gem5/dijkstra-crypto/
+./dijkstra_large input.dat > output_large.dat
+./dijkstra_small input.dat > output_small.dat
+m5 checkpoint
+cd /home/attacks/qemu-work/qemu-gem5/dijkstra-m5
+m5 dumpresetstats 1 10000
+./dijkstra_small input.dat > output_small.dat
+m5 checkpoint
+./dijkstra_large input.dat > output_large.dat
+m5 checkpoint
+cd ..
+
+m5 exit
+
+
