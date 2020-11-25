@@ -1,3 +1,4 @@
+sudo apt install bf
 cd basicmath
 make clean
 git add -A
