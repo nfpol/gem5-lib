@@ -114,7 +114,7 @@ static int read_plains(struct one_round_attack_ctx *ctx)
 	if(plain_text_cnt > ctx->args.plain_text_cnt)
 		plain_text_cnt = ctx->args.plain_text_cnt;
 	
-	printf("plain_text_cnt : %d\n", plain_text_cnt);
+	//printf("plain_text_cnt : %d\n", plain_text_cnt);
 	
 	for(i=0; i<plain_text_cnt; i++) {
 		memset(tmp, 0, sizeof(tmp));
@@ -220,7 +220,7 @@ static void calc_subset(struct one_round_attack_ctx *ctx)
 	int threshold = ctx->args.cpu_cycle_threshold;
 	struct one_round_attack_cache_ctx *cache_ctx = &ctx->cache_ctx;
 	
-	printf("calculating all subsets...\n");
+	//printf("calculating all subsets...\n");
 	total = plain_text_cnt * AES128_KEY_LEN * KEYBYTES * repeat_cnt;
 	
 	for(p=0; p<plain_text_cnt; p++) {		
@@ -252,7 +252,7 @@ static void calc_subset(struct one_round_attack_ctx *ctx)
 		
 		curr = (p * AES128_KEY_LEN * KEYBYTES * repeat_cnt);
 		curr += (ki * KEYBYTES * repeat_cnt);
-		printf("progress : %d / %d\n", curr, total);
+		//printf("progress : %d / %d\n", curr, total);
 	}
 }
 

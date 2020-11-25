@@ -107,11 +107,11 @@ int main(int argc, char **argv)
 	client_msg = (struct shm_msg *)((char*)addr + SHM_CLIENT_BUF_IDX);
     server_msg = (struct shm_msg *)((char*)addr + SHM_SERVER_BUF_IDX);
 	
-	printf("security_daemon is running...\n");
-	printf("real key : ");
+	//printf("security_daemon is running...\n");
+	//printf("real key : ");
 	for(i=0; i<sizeof(real_key); i++)
-		printf("%02x", real_key[i]);
-	printf("\n");
+		//printf("%02x", real_key[i]);
+	//printf("\n");
 	
 	while(1) {
 		/* read msg */
@@ -125,7 +125,7 @@ int main(int argc, char **argv)
 		}
 		
 		if(client_msg->len == (sizeof(END_MSG) + sizeof(real_key))) {
-            printf("end msg!!\n");
+            //printf("end msg!!\n");
 			print_predict_result();
             break;
         }
@@ -142,7 +142,7 @@ int main(int argc, char **argv)
 		server_msg->status = 1;
 	}
 	
-	printf("security_daemon is closing...\n");
+	//printf("security_daemon is closing...\n");
 
 out:
 	/* destroy shm */

@@ -385,8 +385,8 @@ static void invert_round_key(struct last_round_attack_ctx *ctx)
 
 	//printf("first key : ");
 	for(i=0; i<AES128_KEY_LEN; i++)
-		printf("%02x", curr_round_key[i]);
-	printf("\n");
+		//printf("%02x", curr_round_key[i]);
+	//printf("\n");
 
 	memcpy(ctx->result.predict_key, curr_round_key, sizeof(curr_round_key));
 }

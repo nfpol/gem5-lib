@@ -198,7 +198,7 @@ int main(int argc, char **argv)
 		printf("security_daemon_connect error\n");
 		return 0;
 	}
-	printf("security_daemon_connect success\n");
+	//printf("security_daemon_connect success\n");
 	
 	/* 2. Set one_round_attack args */
 	set_one_round_attack_args(argv);
