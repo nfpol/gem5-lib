@@ -1,0 +1,691 @@
+#first way
+
+apt-get install qemu-system-arm
+apt-get install qemu-efi-aarch64
+apt-get install qemu-utils
+
+
+dd if=/dev/zero of=flash1.img bs=1M count=64
+dd if=/dev/zero of=flash0.img bs=1M count=64
+dd if=/usr/share/qemu-efi-aarch64/QEMU_EFI.fd of=flash0.img conv=notrunc
+
+wget http://ports.ubuntu.com/ubuntu-ports/dists/bionic-updates/main/installer-arm64/current/images/netboot/mini.iso
+
+qemu-img create ubuntu-image.img 20G
+
+qemu-system-aarch64 -nographic -machine virt,gic-version=max -m 1024M -cpu max -smp 4 -netdev user,id=vnet,hostfwd=:127.0.0.1:0-:22 -device virtio-net-pci,netdev=vnet -drive file=ubuntu-image.img,if=none,id=drive0,cache=writeback -device virtio-blk,drive=drive0,bootindex=0 -drive file=mini.iso,if=none,id=drive1,cache=writeback -device virtio-blk,drive=drive1,bootindex=1 -drive file=flash0.img,format=raw,if=pflash -drive file=flash1.img,format=raw,if=pflash 
+
+#Follow the instructions to install Ubuntu to the ubuntu-image.img file.
+
+#Once the install is finished you can exit QEMU with sudo poweroff.
+
+#Then restart QEMU without the installer image with the following command.
+
+qemu-system-aarch64 -nographic -machine virt,gic-version=max -m 1024M -cpu max -smp 4 -netdev user,id=vnet,hostfwd=:127.0.0.1:0-:22 -device virtio-net-pci,netdev=vnet -drive file=ubuntu-image.img,if=none,id=drive0,cache=writeback -device virtio-blk,drive=drive0,bootindex=0 -drive file=flash0.img,format=raw,if=pflash -drive file=flash1.img,format=raw,if=pflash 
+
+sudo apt-get update && sudo apt-get upgrade
+
+
+
+sudo git clone https://github.com/gem5/gem5.git
+cd gem5
+sudo git checkout tags/v19.0.0.0
+cd util/m5/
+sudo make -f Makefile.aarch64
+sudo cp m5 /sbin/gem5
+sudo ln -s /sbin/m5  /sbin/gem5
+#or
+#sudo ln -s /sbin/gem5 /sbin/m5
+sudo vim /lib/systemd/system/gem5.service
+
+#paste the following
+[Unit]
+Description=gem5 init script
+Documentation=http://gem5.org
+After=getty.target
+
+[Service]
+Type=idle
+ExecStart=/sbin/gem5init
+StandardOutput=tty
+StandardInput=tty-force
+StandardError=tty
+
+[Install]
+WantedBy=default.target
+
+
+
+
+sudo vim /sbin/initgem5
+
+#paste the following
+
+#!/bin/bash -
+
+CPU=`cat /proc/cpuinfo | grep vendor_id | head -n 1 | cut -d ' ' -f2-`
+echo "Got CPU type: $CPU"
+	
+if [ "$CPU" != "M5 Simulator" ];
+then
+    echo "Not in gem5. Not loading script"
+    exit 0
+fi
+
+# Try to read in the script from the host system
+/sbin/m5 readfile > /tmp/script
+chmod 755 /tmp/script
+if [ -s /tmp/script ]
+then
+    # If there is a script, execute the script and then exit the simulation
+    su root -c '/tmp/script' # gives script full privileges as root user in multi-user mode
+    sync
+    sleep 10
+    /sbin/m5 exit
+fi
+echo "No script found"
+
+sudo systemctl enable gem5.service
+
+
+sudo apt install build-essential
+sudo apt install vim
+sudo apt install git
+
+#openssl install
+
+sudo apt install build-essential checkinstall zlib1g-dev -y
+
+cd /usr/local/src/
+sudo wget https://www.openssl.org/source/openssl-1.1.1h.tar.gz
+sudo tar -xf openssl-1.1.1h.tar.gz   
+cd openssl-1.1.1h
+sudo 	./config --prefix=/usr/local/ssl --openssldir=/usr/local/ssl shared zlib
+sudo make -j 4
+sudo make test -j 4
+sudo make install -j 4
+
+cd /etc/ld.so.conf.d/
+sudo vim openssl-1.1.1c.conf
+
+#paste the following
+/usr/local/ssl/lib
+sudo ldconfig -v
+sudo mv /usr/bin/c_rehash /usr/bin/c_rehash.backup
+sudo mv /usr/bin/openssl /usr/bin/openssl.backup
+sudo vim /etc/environment
+
+#Insert the following:
+
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/ssl/bin"
+
+source /etc/environment
+echo $PATH
+
+which openssl
+openssl version -a
+
+sudo apt update
+sudo apt install software-properties-common
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install python3.8
+python --version
+
+sudo apt install python-minimal
+
+sudo apt-get update
+sudo apt-get install python3.6
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt-get update
+sudo apt-get install python3.8
+python3 --version
+
+sudo apt-get install python3-pip
+pip3 install  setuptools
+sudo apt-get install  gcc-arm-linux-gnueabihf gcc-aarch64-linux-gnu device-tree-compiler
+sudo apt-get install libc6-armel-cross libc6-dev-armel-cross binutils-arm-linux-gnueabi libncurses5-dev build-essential bison flex libssl-dev bc
+cd
+
+mkdir attacks
+cd attacks
+
+sudo apt-get install gcc-arm*
+
+sudo git clone https://github.com/IAIK/armageddon.git
+cd armageddon
+ 
+cd libflush
+sudo vim config-arm64.mk
+CC = aarch64-linux-gnu-gcc
+#CC = ${ANDROID_CC} ${ANDROID_CC_FLAGS}
+#CFLAGS += ${ANDROID_CFLAGS} -flto
+#LDFLAGS += -fPIE -flto
+
+
+sudo make ARCH=armv8
+sudo make install ARCH=armv8
+
+sudo make ARCH=armv8 example
+./example/build/armv8/release/bin/example -s 100 -n  10 -x 1 -z 10
+
+cd ..
+cd cache_template_attacks/
+sudo vim config-arm64.mk
+
+CC = aarch64-linux-gnu-gcc
+#CC = ${ANDROID_CC} ${ANDROID_CC_FLAGS}
+#CFLAGS += ${ANDROID_CFLAGS} -flto
+#LDFLAGS += -fPIE -flto
+
+sudo apt install pkg-config
+sudo make ARCH=armv8
+sudo make install ARCH=armv8
+
+cd ..
+
+cd eviction_strategy_evaluator/
+sudo apt-get install -y pkg-config
+sudo python setup.py install
+sudo vim device_alcatel.yml
+
+
+#paste the following
+
+device:
+        name: Alcatel POP2 Touch
+        codename: alto45
+        arch: armv7
+        executable-directory: /tmp/libflush/alcatel_pop2
+        log-directory: /tmp/libflush/alcatel_pop2
+        threshold: 95
+cache:
+        number-of-sets: 512
+        line-length: 64
+
+
+sudo vim config.yml
+
+#paste the following ###check properly the path
+
+libflush:
+        source-directory: /home/nikos/armageddon/libflush
+build:
+        directory: /home/nikos/armageddon/libflush/build
+logs:
+        directory: /tmp/libflush
+
+
+##run_strategies -e 25 -a 10 -d 10
+#or
+sudo eviction_strategy_evaluator -c config.yml -x cortex-a57.yml run_strategies -e 2 -a 1 -d 1
+
+
+cd ..
+cd input_simulator/
+vim config-arm64.mk
+
+CC = aarch64-linux-gnu-gcc
+#CC = ${ANDROID_CC} ${ANDROID_CC_FLAGS}
+#CFLAGS += ${ANDROID_CFLAGS} -flto
+#LDFLAGS += -fPIE -flto
+
+
+sudo make ARCH=armv8
+sudo make install ARCH=armv8
+
+cd
+cd attacks
+
+#in your host x86 computer
+git clone https://github.com/vusec/drammer.git
+cd drammer
+wget https://dl.google.com/android/repository/android-ndk-r11c-linux-x86_64.zip
+unzip android-ndk-r11c-linux-x86_64.zip
+cd android-ndk-r11c
+./build/tools/make-standalone-toolchain.sh --ndk-dir=`pwd` \
+  --arch=arm --platform=android-24 \
+  --install-dir=./sysroot-arm/ \
+  --verbose
+
+TANDALONE_TOOLCHAIN=path/to/android-ndk-r11c/sysroot-arm/bin make -j 4
+make install -j 4
+make test -j 4
+
+
+
+cd ..
+sudo git clone https://github.com/VandySec/rowhammer_armv8.git
+cd rowhammer_armv8
+cd 1_phy2dram_mapping 
+sudo make  
+sudo make test
+cd ..
+cd 2_find_aggressors  
+make  
+make install
+cd ..
+cd 3_rowhammer_test  
+add -std=gnu99 in Makefile gcc... if problem compiling
+make  
+make run 
+
+cd 
+cd attacks
+git clone https://github.com/lgeek/spec_poc_arm.git
+cd spec_poc_arm
+make
+./dump_sys_regs
+cd
+
+cd attacks
+
+
+git clone https://github.com/cryptax/spectre-armv7.git
+cd spectre-armv7
+sudo vim Makefile
+
+ANDROID_NDK=/opt/android-ndk-r17
+ANDROID_PLATFORM=android-22
+#TFLAGS = -DTIMING_POSIX
+#CFLAGS = $(TFLAGS) -O0  -I$(ANDROID_NDK)/sysroot/usr/include -I$(ANDROID_NDK)/sysroot/usr/include/arm-linux-androideabi -pie -Wall -Wextra -march=armv7-a -std=c99 --sysroot=$(ANDROID_NDK)/platforms/$(ANDROID_PLATFORM)/arch-arm
+LIBFLUSH_CFLAGS = -I. -L.
+#COMPILER_PATH=$(ANDROID_NDK)/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin
+#GCC = $(COMPILER_PATH)/arm-linux-androideabi-gcc
+GCC = aarch64-linux-gnu-gcc ##-std=gnu99 if proble compiling
+
+make -j 4
+
+cd
+cd attacks
+git clone https://github.com/V-E-O/PoC.git
+cd PoC/CVE-2017-5753/
+aarch64-linux-gnu-gcc source.c -pie -std=gnu99 -lpthread
+./a.out
+
+cd
+cd attacks
+git clone https://github.com/speed47/spectre-meltdown-checker.git
+cd spectre-meltdown-checker
+wget https://meltdown.ovh -O spectre-meltdown-checker.sh
+#inspect the script
+
+vim spectre-meltdown-checker.sh
+
+chmod +x spectre-meltdown-checker.sh
+sudo ./spectre-meltdown-checker.sh
+
+##another way to build
+
+wget https://cdimage.ubuntu.com/releases/18.04/release/ubuntu-18.04.5-server-arm64.iso
+or
+wget https://cdimage.ubuntu.com/releases/xenial/release/ubuntu-16.04.7-server-arm64.iso
+wget http://releases.linaro.org/components/kernel/uefi-linaro/16.02/release/qemu64/QEMU_EFI.fd
+
+qemu-img create ubuntu_arm.img 10G
+
+qemu-system-aarch64 -m 1024M -cpu cortex-a57 -smp 4 -M virt -bios QEMU_EFI.fd -nographic -drive if=none,file=ubuntu-18.04.5-server-arm64.iso,id=cdrom,media=cdrom -device virtio-scsi-device -device scsi-cd,drive=cdrom -drive if=none,file=ubuntu_arm.img,id=hd0 -device virtio-blk-device,drive=hd0
+
+qemu-system-aarch64 -m 1024M -cpu cortex-a57 -smp 4 -M virt -bios QEMU_EFI.fd -nographic -drive if=none,file=ubuntu_arm.img,id=hd0 -device virtio-blk-device,drive=hd0
+
+/usr/src/linux-headers-4.15.0-118-generic/include/generated
+sudo vim utsrelease.h
+
+//###perform crypto-side-channel
+cd
+cd attacks/crypto-side-channel-attack/
+cd build/aes-attack/one-round-attack/real-security-daemon
+Te0=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te0 )
+Te0=$(echo $Te0 | cut -c9-16)
+Te1=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te1 )
+Te1=$(echo $Te1 | cut -c9-16)
+Te2=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te2 )
+Te2=$(echo $Te2 | cut -c9-16)
+Te3=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te3 )
+Te3=$(echo $Te3 | cut -c9-16)
+LD_PRELOAD=../../../lib/libcrypto.so.1.0.0 ./security_daemon &
+./attacker 600 1 250  Te0 Te1 Te2 Te3 ../../../lib/libcrypto.so.1.0.0
+echo "USAGE : ./attacker <limit plain text count> <repeat count for a plaintext> <cpu cycle threshold> <offset te0> <offset te1> <offset te2> <offset te3> <crypto library path>\n"
+./attacker 600 1 250 0017ad10 0017a510 0017a510 0017a110 ../../../lib/libcrypto.so.1.0.0
+./attacker 600 1 250  Te0 Te1 Te2 Te3 ../../../lib/libcrypto.so.1.0.0
+./attacker 600 10 250 Te0 Te1 Te2 Te3 ../../../lib/libcrypto.so.1.0.0
+
+
+##// perf tools no restriction to access
+sudo sysctl -w kernel.perf_event_paranoid=-1
+
+##..or 
+
+sudo sh -c 'echo kernel.perf_event_paranoid=-1 > /etc/sysctl.d/local.conf'
+
+###//or
+sudo sh -c 'echo -1 >/proc/sys/kernel/perf_event_paranoid'
+
+##//without this access to perf needs sudo
+
+
+##in boot
+sudo vim /etc/sysctl.d/99-mysettings.conf 
+kernel.perf_event_paranoid=-1
+
+
+
+#enable PMU
+git clone  https://github.com/XKCP/XKCP.git
+cd XKCP/support/Kernel-PMU
+sudo make
+sudo ./load-module
+
+
+
+sudo visudo
+# User privilege specification
+root    ALL=(ALL:ALL) ALL
+
+# Members of the admin group may gain root privileges
+%admin ALL=(ALL) ALL
+nikos   ALL=(ALL:ALL) NOPASSWD: ALL
+
+# Allow members of group sudo to execute any command
+%sudo   ALL=(ALL:ALL) ALL
+nikos   ALL=(ALL:ALL) NOPASSWD: ALL
+
+
+
+# Members of the admin group may gain root privileges
+%admin ALL=(ALL) ALL
+%admin ALL=(ALL) NOPASSWD: ALL
+nikos   ALL=(ALL:ALL) NOPASSWD: ALL
+
+# Allow members of group sudo to execute any command
+%sudo   ALL=(ALL:ALL) ALL
+nikos   ALL=(ALL:ALL) NOPASSWD: ALL
+# See sudoers(5) for more information on "#include" directives:
+
+#includedir /etc/sudoers.d
+nikos ALL=(ALL) NOPASSWD: ALL
+
+
+
+###///change to kernel 4.14.0   https://seagullbird.xyz/posts/how-to-install-an-older-kernel/
+cd  /tmp
+wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14/linux-headers-4.14.0-041400_4.14.0-041400.201711122031_all.deb
+wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14/linux-headers-4.14.0-041400-generic_4.14.0-041400.201711122031_arm64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14/linux-image-4.14.0-041400-generic_4.14.0-041400.201711122031_arm64.deb
+sudo apt install -y module-init-tools
+sudo dpkg -i *.deb
+###//change default kernel
+
+grep submenu /boot/grub/grub.cfg
+grep gnulinux /boot/grub/grub.cfg
+
+
+
+sudo vim /etc/default/grub
+#GRUB_DEFAULT=0
+GRUB_DEFAULT="gnulinux-advanced-6df4b40d-554d-4d0f-a4b6-a7663b36b6a3>gnulinux-4.14.0-041400-generic-advanced-6df4b40d-554d-4d0f-a4b6-
+a7663b36b6a3"
+sudo update-grub
+sudo poweroff
+uname -a
+
+
+
+m5 resetstats
+.....
+....
+....
+dumpstats
+m5 exit ///problem with need to boot again
+
+
+
+
+wget http://releases.linaro.org/archive/15.06/openembedded/aarch64/Image
+##or Image when compile kernel from arch/arm64/boot/Image
+wget http://releases.linaro.org/archive/15.06/openembedded/aarch64/vexpress64-openembedded_lamp-armv8-gcc-4.9_20150620-722.img.gz
+gzip -dc vexpress64-openembedded_lamp-armv8-gcc-4.9_20150620-722.img.gz > linaro_arm64.img
+cp linaro_arm64.img linaro_arm64_exp.img
+
+
+
+
+./build/ARM/gem5.opt configs/example/arm/starter_fs.py --cpu atomic --disk-image /data/np261738/fs_images/arm64_disk_kernel/arm64_bionic_server_with_libs_pmu_module_enable_v3.img --kernel /d
+ata/np261738/fs_images/arm64_disk_kernel/vmlinux415 --dtb /nobackup/np261738/project/gem5/fs_images//binaries/armv8_gem5_v1_4cpu.dtb --num-cores 4 --restore m5out/cpt.2801948197732500
+
+
+--list-mem-types
+--mem-type=
+--mem-channels=
+--mem-ranks=
+ --mem-size=
+--l2cache
+
+--num-l2caches=
+--num-l3caches=
+--l1d_size=
+--l1i_size=
+--l2_size=
+ --l3_size=
+--l1d_assoc=
+--l1i_assoc=
+--l2_assoc=
+--l3_assoc=
+--cacheline_size=
+--list-cpu-types AtomicSimpleCPU O3_ARM_v7a_3  DerivO3CPU HPI 
+
+--cpu-type=
+--list-bp-types  List available branch predictor types
+--list-indirect-bp-types List available indirect branch predictor type
+ --bp-type=BP_TYPE 
+--indirect-bp-type=
+--list-hwp-types      List available hardware prefetcher types
+--l1i-hwp-type=
+--l1d-hwp-type=
+ --l2-hwp-type=
+--cpu-clock=
+--checkpoint-dir=
+
+--checkpoint-restore=CHECKPOINT_RESTORE
+
+--restore-with-cpu=
+--arm-iset=
+ --enable-security-extensions
+ --root-device=
+
+
+
+
+
+
+mkdir mnt
+dd if=/dev/zero bs=1G count=20 >> ./aarch64-ubuntu-trusty-headless.img # add 20G zeros
+mv aarch64-ubuntu-trusty-headless.img expanded-aarch64-ubuntu-trusty-headless.img
+sudo parted expanded-aarch64-ubuntu-trusty-headless.img resizepart 1 100%
+# Parse some info for 'losetup' and 'mount' later
+name=$(sudo fdisk -l expanded-aarch64-ubuntu-trusty-headless.img | tail -1 | awk -F: '{ print $1 }' | awk -F" " '{ print $1 }')
+start_sector=$(sudo fdisk -l expanded-aarch64-ubuntu-trusty-headless.img | grep $name | awk -F" " '{ print $2 }')
+units=$(sudo fdisk -l expanded-aarch64-ubuntu-trusty-headless.img | grep Units | awk -F" " '{ print $8 }')
+# Attach to device and record output, to me it was /dev/loop9                                                               
+sudo losetup -f --show expanded-aarch64-ubuntu-trusty-headless.img -o $(($start_sector*$units))                         
+              
+sudo e2fsck -f /dev/loop9  # Fix potential errors, press Y for all fixes
+sudo resize2fs /dev/loop9  # Actual resizing step
+sudo e2fsck -f /dev/loop9  # Double check there are no errors
+sudo losetup -d /dev/loop9 # Detach from the loop device
+sudo mount -o loop,offset=$(($start_sector*$units)) expanded-aarch64-ubuntu-trusty-headless.img mnt
+df -h # Should show the new expanded image size with the Used and Avail for disk_mnt
+sudo mount --bind /proc mnt/proc
+sudo mount --bind /dev mnt/dev
+sudo mount --bind /sys mnt/sys
+sudo cp -av /run/systemd/resolve/stub-resolv.conf mnt/etc/resolv.conf
+cd mnt
+sudo chroot .
+
+#qemu exit
+
+cd ..
+sudo umount mnt/proc
+sudo umount mnt/dev
+sudo umount mnt/sys
+sudo umount -l mnt
+
+
+###//https://www.eecg.utoronto.ca/~elsayed9/website/blog/gem5_fs_arm_flow.php
+
+qemu-system-aarch64 -m 1024 -cpu cortex-a57 -smp 2 -nographic -machine virt,gic-version=max -kernel Image_4.14 -append 'root=/dev/vda2 rw rootwait mem=1024M console=ttyAMA0,38400n8' -drive if=none,id=image,file=linaro_arm64_exp.img -netdev user,id=user0 -device virtio-net-device,netdev=user0 -device virtio-blk-device,drive=image
+
+
+
+####find sth
+sudo find . -name "*poster*"
+
+
+/* resetstats */
+__asm__ __volatile__ ("mov x0, #0; mov x1, #0; .inst 0XFF000110 | (0x40 << 16);" : : : "x0", "x1")
+/* dumpstats */
+__asm__ __volatile__ ("mov x0, #0; mov x1, #0; .inst 0xFF000110 | (0x41 << 16);" : : : "x0", "x1")
+
+
+
+cd linux/tools/perf
+make
+cp perf /usr/bin
+
+
+cd /home/nikos/qemu-work/qemu-gem5/crypto/
+cd build/aes-attack/one-round-attack/real-security-daemon
+Te0=$(nm /home/nikos/crypto-side-channel-attack/build/lib/libcrypto.so.1.0.0 | grep Te0 )
+Te0=$(echo $Te0 | cut -c9-16)
+Te1=$(nm /home/nikos/crypto-side-channel-attack/build/lib/libcrypto.so.1.0.0 | grep Te1 )
+Te1=$(echo $Te1 | cut -c9-16)
+Te2=$(nm /home/nikos/crypto-side-channel-attack/build/lib/libcrypto.so.1.0.0 | grep Te2 )
+Te2=$(echo $Te2 | cut -c9-16)
+Te3=$(nm /home/nikos/crypto-side-channel-attack/build/lib/libcrypto.so.1.0.0 | grep Te3 )
+Te3=$(echo $Te3 | cut -c9-16)
+LD_PRELOAD=/home/nikos/crypto-side-channel-attack/build/lib/libcrypto.so.1.0.0 ./security_daemon &
+./attacker 600 5 871  Te0 Te1 Te2 Te3 /home/nikos/crypto-side-channel-attack/build/lib/libcrypto.so.1.0.0
+./attacker 600 10 250 /home/nikos/crypto-side-channel-attack/build/lib/libcrypto.so.1.0.0
+
+
+#for the zybo board
+cd build/aes-attack/one-round-attack/real-security-daemon
+Te0=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te0 )
+Te0=$(echo $Te0 | cut -c1-8)
+Te1=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te1 )
+Te1=$(echo $Te1 | cut -c1-8)
+Te2=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te2 )
+Te2=$(echo $Te2 | cut -c1-8)
+Te3=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te3 )
+Te3=$(echo $Te3 | cut -c1-8)
+LD_PRELOAD=../../../lib/libcrypto.so.1.0.0 ./security_daemon &
+./attacker 600 1 111  $Te0 $Te1 $Te2 $Te3 ../../../lib/libcrypto.so.1.0.0
+
+cd build/aes-attack/last-round-attack/real-security-daemon
+Te0=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te0 )
+Te0=$(echo $Te0 | cut -c1-8)
+Te1=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te1 )
+Te1=$(echo $Te1 | cut -c1-8)
+Te2=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te2 )
+Te2=$(echo $Te2 | cut -c1-8)
+Te3=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te3 )
+Te3=$(echo $Te3 | cut -c1-8)
+rcon=$(nm ../../../lib/libcrypto.so.1.0.0 | grep rcon )
+rcon=$(echo $rcon | cut -c1-8)
+LD_PRELOAD=../../../lib/libcrypto.so.1.0.0 ./security_daemon &
+./attacker 1000 111 $Te0 $Te1 $Te2 $Te3 $rcon ../../../lib/libcrypto.so.1.0.0
+
+/home/nikos/crypto-side-channel-attack/build/lib
+
+
+taskset --cpu-list 1,2 my_command 
+taskset -c 0 mycommand --option  # start a command with the given affinity
+taskset -c -pa 0 1234            # set the affinity of a running process
+
+to run a bash script in the bacjgrounf o na specific cpu ie 0 or 0-1(run in cpu0 and cpu 1)
+taskset -c 0 ./myscript &
+
+
+cat /proc/sys/kernel/perf_event_paranoid
+
+
+
+perf stat -e branch-misses,cache-misses,cache-references,cycles,instructions,L1-dcache-load-misses,L1-dcache-load-misses,L1-dcache-loads,L1-dcache-store-misses,L1-dcache-stores,L1-icache-load-misses,branch-load-misses,branch-loads,dTLB-load-misses,iTLB-load-misses,armv8_pmuv3/br_immed_retired/,armv8_pmuv3/br_mis_pred/,armv8_pmuv3/br_pred/,armv8_pmuv3/br_retired/,armv8_pmuv3/br_return_retired/,armv8_pmuv3/cpu_cycles/,armv8_pmuv3/inst_retired/,armv8_pmuv3/inst_spec/,armv8_pmuv3/l1d_cache/,armv8_pmuv3/l1d_cache_refill/,armv8_pmuv3/l1d_tlb_refill/,armv8_pmuv3/l1i_cache_refill/,armv8_pmuv3/l1i_tlb_refill/,armv8_pmuv3/l2d_cache/,armv8_pmuv3/l2d_cache_refill/,armv8_pmuv3/l2d_cache_wb/,armv8_pmuv3/ld_retired/,armv8_pmuv3/mem_access/,armv8_pmuv3/st_retired/,armv8_pmuv3/sw_incr/ ./example/build/armv8/release/bin/example -s 200 -n  10 -x 1 -z 10
+
+
+
+search folder for text
+grep -rl "numCycles" /path
+
+
+
+build/ARM/gem5.opt --outdir ./outdir-zz --debug-flags=PMUVerbose configs/example/arm/starter_fs.py  --cpu hpi --disk-image /data/np261738/new_gem5/gem5/fs_images/expanded-aarch64-ubuntu-trusty-headless-zz.img  --kernel /data/np261738/new_gem5/gem5/fs_images/arm64_disk_kernel/vmlinux-4.14.0+pmu  --num-cores 1
+
+./build/ARM/gem5.opt configs/example/arm/starter_fs.py --cpu atomic --disk-image /data/np261738/fs_images/arm64_disk_kernel/arm64_bionic_server_with_libs_pmu_module_enable_v3.img --kernel /d
+ata/np261738/fs_images/arm64_disk_kernel/vmlinux415 --dtb /nobackup/np261738/project/gem5/fs_images//binaries/armv8_gem5_v1_4cpu.dtb --num-cores 4 --restore m5out/cpt.2801948197732500
+
+build/ARM/gem5.opt --debug-flags=PMUVerbose configs/example/arm/starter_fs.py --cpu hpi --disk-image /data/np261738/fs_images/arm64_disk_kernel/expanded-aarch64-ubuntu-trusty-headless-x.img  --kernel /data/np261738/fs_images/arm64_disk_kernel/vmlinux-4.14.0+pmu --dtb /nobackup/np261738/project/gem5/fs_images/binaries/armv8_gem5_v1_2cpu.dtb --num-cores 2 
+
+
+
+./build/ARM/gem5.opt configs/example/fs.py --disk-image=/data/np261738/fs_images/arm64_disk_kernel/expanded-aarch64-ubuntu-trusty-headless.img  --kernel=/data/np261738/fs_images/arm64_disk_kernel/vmlinux --dtb-file=$M5_PATH/binaries/armv8_gem5_v1_4cpu.dtb --machine-type=VExpress_GEM5_V1 --caches --l2cache --l1d_size=32kB --l1i_size=48kB --l2_size=2048kB --l1d_assoc=2 --l1i_assoc=3 --l2_assoc=16 --cacheline_size=64 --cpu-type=AtomicSimpleCPU  --num-cpus=4 --root-device=/dev/sda1 --checkpoint-dir=/nobackup/np261738/project/gem5/arm_cortex_a57 --arm-iset=aarch64
+
+./build/ARM/gem5.opt configs/example/fs.py --disk-image=/data/np261738/fs_images/arm64_disk_kernel/expanded-aarch64-ubuntu-trusty-headless.img  --kernel=/data/np261738/fs_images/arm64_disk_kernel/vmlinux --dtb-file=$M5_PATH/binaries/armv8_gem5_v1_4cpu.dtb --machine-type=VExpress_GEM5_V1 --caches --l2cache --l1d_size=32kB --l1i_size=48kB --l2_size=2048kB --l1d_assoc=2 --l1i_assoc
+=3 --l2_assoc=16 --cacheline_size=64 --cpu-type=HPI  --num-cpus=4 --root-device=/dev/sda1 --checkpoint-dir=/nobackup/np261738/project/gem5/arm_cortex_a57 --arm-iset=aarch64 -r 3  
+
+./build/ARM/gem5.opt configs/example/fs.py --disk-image=/data/np261738/fs_images/arm64_disk_kernel/expanded-aarch64-ubuntu-trusty-headless.img  --kernel=/data/np261738/fs_images
+/arm64_disk_kernel/vmlinux --dtb-file=$M5_PATH/binaries/armv8_gem5_v1_4cpu.dtb --machine-type=VExpress_GEM5_V1 --caches --l2cache --l1d_size=32kB --l1i_size=48kB --l2_size=2048kB --l1d_assoc=2 --l1i_assoc=3 --l2_assoc=16 --cacheline_size=64 --cpu-type=DerivO3CPU  --num-cpus=4 --root-device=/dev/sda1 --checkpoint-dir=/nobackup/np261738/project/gem5/arm_cortex_a57 --arm-iset=aarch64 -r 3
+
+
+build/ARM/gem5.opt --stats-root 'sim_insts' --stats-root 'sim_ticks' --stats-root 'system.cpu_cluster.cpus.branchPred' --stats-root 'system.cpu_cluster.cpus.dcache.overall'  --s
+tats-root 'system.cpu_cluster.cpus.icache.overall'    --outdir ./outdir-yy --debug-flags=PMUVerbose configs/example/arm/starter_fs.py --cpu hpi --disk-image /data/np261738/fs_images/arm64_disk_kernel/expa
+nded-aarch64-ubuntu-trusty-headless-yy.img  --kernel /data/np261738/fs_images/arm64_disk_kernel/vmlinux-4.14.0+pmu --dtb /nobackup/np261738/project/gem5/fs_images/binaries/armv8_gem5_v1_1cpu.dtb --num-cor
+es 1 --restore outdir-yy/cpt.178347631728500
+
+
+
+
+#crypto gem5
+cd build/aes-attack/last-round-attack/real-security-daemon
+Te0=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te0 )
+Te0=$(echo $Te0 | cut -c9-16)
+echo $Te0
+Te1=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te1 )
+Te1=$(echo $Te1 | cut -c9-16)
+echo $Te1
+Te2=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te2 )
+Te2=$(echo $Te2 | cut -c9-16)
+echo $Te2
+Te3=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te3 )
+Te3=$(echo $Te3 | cut -c9-16)
+echo $Te3
+rcon=$(nm ../../../lib/libcrypto.so.1.0.0 | grep rcon )
+rcon=$(echo $rcon | cut -c9-16)
+echo $rcon
+LD_PRELOAD=../../../lib/libcrypto.so.1.0.0 ./security_daemon &
+./attacker 1000 210 $Te0 $Te1 $Te2 $Te3 $rcon ../../../lib/libcrypto.so.1.0.0
+cd /home/attacks
+
+
+#or
+Te0 = 00163c60
+Te1 = 00164060
+Te2 = 00164460
+Te3 = 00164860
+rcon = 00163c30
+cd /home/attacks/crypto-side-channel-attack/build/aes-attack/one-round-attack/real-security-daemon
+LD_PRELOAD=../../../lib/libcrypto.so.1.0.0 ./security_daemon &
+./attacker 600 1 210 00163c60 00164060  00164460  00164860 ../../../lib/libcrypto.so.1.0.0
+
+
+cd /home/attacks/crypto-side-channel-attack/build/aes-attack/last-round-attack/real-security-daemon
+LD_PRELOAD=../../../lib/libcrypto.so.1.0.0 ./security_daemon &
+./attacker 1000 210 00163c60 00164060  00164460  00164860 00163c30 ../../../lib/libcrypto.so.1.0.0
+
+
+
+(--redirect-stdout ou -r )--stdout-file=sim.out    ##redirects stdout to a file
+--stats-file=FILE       Sets the output file for statistics
+
+

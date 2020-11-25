@@ -1,0 +1,3 @@
+/home/attacks/qemu-work/qemu-gem5/armv8_pmu_enable/pmu_el0_cycle_counter.ko
+/home/attacks/qemu-work/qemu-gem5/armv8_pmu_enable/pmu_el0_cycle_counter.o
+
