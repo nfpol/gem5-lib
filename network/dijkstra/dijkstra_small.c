@@ -39,7 +39,7 @@ void print_path (NODE *rgnNodes, int chNode)
     {
       print_path(rgnNodes, rgnNodes[chNode].iPrev);
     }
-  printf (" %d", chNode);
+  ////fprintf (" %d", chNode);
   fflush(stdout);
 }
 
@@ -51,7 +51,7 @@ void enqueue (int iNode, int iDist, int iPrev)
   
   if (!qNew) 
     {
-      fprintf(stderr, "Out of memory.\n");
+      //fprintf(stderr, "Out of memory.\n");
       exit(1);
     }
   qNew->iNode = iNode;
@@ -108,7 +108,7 @@ int dijkstra(int chStart, int chEnd)
 
   if (chStart == chEnd) 
     {
-      printf("Shortest path is 0 in cost. Just stay where you are.\n");
+      //fprintf("Shortest path is 0 in cost. Just stay where you are.\n");
     }
   else
     {
@@ -135,10 +135,10 @@ int dijkstra(int chStart, int chEnd)
 	    }
 	}
       
-      printf("Shortest path is %d in cost. ", rgnNodes[chEnd].iDist);
-      printf("Path is: ");
-      print_path(rgnNodes, chEnd);
-      printf("\n");
+      //fprintf("Shortest path is %d in cost. ", rgnNodes[chEnd].iDist);
+      //fprintf("Path is: ");
+      fprint_path(rgnNodes, chEnd);
+      //fprintf("\n");
     }
 }
 
@@ -148,7 +148,7 @@ int main(int argc, char *argv[]) {
   
   if (argc<2) {
     fprintf(stderr, "Usage: dijkstra <filename>\n");
-    fprintf(stderr, "Only supports matrix size is #define'd.\n");
+    //fprintf(stderr, "Only supports matrix size is #define'd.\n");
   }
 
   /* open the adjacency matrix file */

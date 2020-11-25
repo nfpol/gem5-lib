@@ -86,7 +86,7 @@ main(int argc, char **argv)
 	reset_cycle_counter();
 
 	if (argc<2) {
-		printf("Usage: %s <TCP stream>\n", argv[0]);
+		//printf("Usage: %s <TCP stream>\n", argv[0]);
 		exit(-1);
 	}
 	/*
@@ -95,7 +95,7 @@ main(int argc, char **argv)
 	 *    10.0.3.4 0xffff0000
 	 */
 	if ((fp = fopen(argv[1], "r")) == NULL) {
-		printf("File %s doesn't seem to exist\n",argv[1]);
+		//fprintf("File %s doesn't seem to exist\n",argv[1]);
 		exit(0);
 	}
 
@@ -216,8 +216,8 @@ main(int argc, char **argv)
 		//if(pfind->p_key==(addr.s_addr&pfind->p_m->pm_mask))
 		if(pfind->p_key==addr.s_addr)
 		{
-			printf("%f %08x: ", time, addr.s_addr);
-			printf("Found.\n");
+			//fprintf("%f %08x: ", time, addr.s_addr);
+			//fprintf("Found.\n");
 		}
 		else
 		{
@@ -230,7 +230,7 @@ main(int argc, char **argv)
 			p = pat_insert(p, phead);
 		}
 		if (!p) {
-			fprintf(stderr, "Failed on pat_insert\n");
+			//fprintf(stderr, "Failed on pat_insert\n");
 			exit(0);
 		}
 	}

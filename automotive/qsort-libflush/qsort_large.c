@@ -56,7 +56,7 @@ main(int argc, char *argv[]) {
 	reset_cycle_counter();
   
   if (argc<2) {
-    fprintf(stderr,"Usage: qsort_large <file>\n");
+    //fprintf(stderr,"Usage: qsort_large <file>\n");
     exit(-1);
   }
   else {

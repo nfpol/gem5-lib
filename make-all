@@ -1,10 +1,98 @@
 sudo apt install bf
+cd automotive
 cd basicmath
 make clean
 git add -A
 git commit -m "clean"
 git push origin master
 make all
+cd ..
+cd basicmath-libflush
+make clean
+git add -A
+git commit -m "clean"
+git push origin master
+make all
+cd ..
+cd bitcount-libflush
+make clean
+git add -A
+git commit -m "clean"
+git push origin master
+make
+cd ..
+cd bitcount
+make clean
+git add -A
+git commit -m "clean"
+git push origin master
+make
+cd ..
+cd qsort
+make clean
+git add -A
+git commit -m "clean"
+git push origin master
+make all
+cd ..
+cd qsort-liflush
+make clean
+git add -A
+git commit -m "clean"
+git push origin master
+make all
+cd ..
+cd susan
+make clean
+git add -A
+git commit -m "clean"
+git push origin master
+make 
+cd ..
+cd susan-liblush
+make clean
+git add -A
+git commit -m "clean"
+git push origin master
+make 
+cd ..
+cd..
+cd consumer/jpeg/jpeg-6a
+make all
+cd ../../../
+cd network
+cd dijkstra
+make clean
+git add -A
+git commit -m "clean"
+git push origin master
+make all
+cd ..
+cd dijkstra-liblush
+make clean
+git add -A
+git commit -m "clean"
+git push origin master
+make all
+cd ..
+cd patricia-liblush
+make clean
+git add -A
+git commit -m "clean"
+git push origin master
+make 
+cd ..
+cd patricia
+make clean
+git add -A
+git commit -m "clean"
+git push origin master
+make 
+cd ..
+cd ..
+cd security/blowfish
+make all
+cd ..
 cd ..
 cd crypto-side-channel-attack
 cd crypto-gem5-counter

@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
     "Shift and count bits"
   };
   if (argc<2) {
-    fprintf(stderr,"Usage: bitcnts <iterations>\n");
+    //fprintf(stderr,"Usage: bitcnts <iterations>\n");
     exit(-1);
 	}
   iterations=atoi(argv[1]);
@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
 	 cmaxix = i;
     }
     
-    printf("%-38s> Time: %7.3f sec.; Bits: %ld\n", text[i], ct, n);
+    //printf("%-38s> Time: %7.3f sec.; Bits: %ld\n", text[i], ct, n);
   }
 	
 	diff2 = get_timing();   //time before the attack
@@ -116,8 +116,8 @@ int main(int argc, char *argv[])
 
   diff2 = get_timing() - diff2;
 	
-  printf("\nBest  > %s\n", text[cminix]);
-  printf("Worst > %s\n", text[cmaxix]);
+  //printf("\nBest  > %s\n", text[cminix]);
+  //printf("Worst > %s\n", text[cmaxix]);
 	
 	cycle_counter_disable();
   event_counters_disable();
