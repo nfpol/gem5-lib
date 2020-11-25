@@ -28,20 +28,6 @@ git commit -m "clean"
 git push origin master
 make
 cd ..
-cd qsort
-make clean
-git add -A
-git commit -m "clean"
-git push origin master
-make all
-cd ..
-cd qsort-liflush
-make clean
-git add -A
-git commit -m "clean"
-git push origin master
-make all
-cd ..
 cd susan
 make clean
 git add -A
