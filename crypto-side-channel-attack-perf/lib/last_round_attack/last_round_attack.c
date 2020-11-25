@@ -116,7 +116,7 @@ static int read_plains(struct last_round_attack_ctx *ctx)
 	if(plain_text_cnt > ctx->args.plain_text_cnt)
 		plain_text_cnt = ctx->args.plain_text_cnt;
 	
-	printf("plain_text_cnt : %d\n", plain_text_cnt);
+	//printf("plain_text_cnt : %d\n", plain_text_cnt);
 	
 	for(i=0; i<plain_text_cnt; i++) {
 		memset(tmp, 0, sizeof(tmp));
@@ -296,7 +296,7 @@ static void calc_score(struct last_round_attack_ctx *ctx)
 
 		/* 5. Print progress */
 		if(p % 20 == 0)
-			printf("progress : %d / %d\n", p, plain_text_cnt);
+			//printf("progress : %d / %d\n", p, plain_text_cnt);
 	}
 }
 
@@ -341,7 +341,7 @@ static void invert_round_key(struct last_round_attack_ctx *ctx)
 	struct last_round_attack_cache_ctx *cache_ctx = &ctx->cache_ctx;
 
 	memcpy(curr_round_key, ctx->result.predict_key, sizeof(curr_round_key));	/* start - last round key */
-	printf("invert round key!!\n");
+	//printf("invert round key!!\n");
 
 	while(r >= 0) {
 		/* invert K(r)[4] ~ K(r)[15] first, by using K(r+1) */
@@ -383,7 +383,7 @@ static void invert_round_key(struct last_round_attack_ctx *ctx)
 		memcpy(curr_round_key, prev_round_key, sizeof(prev_round_key));
 	}
 
-	printf("first key : ");
+	//printf("first key : ");
 	for(i=0; i<AES128_KEY_LEN; i++)
 		printf("%02x", curr_round_key[i]);
 	printf("\n");
