@@ -295,7 +295,7 @@ static void calc_score(struct last_round_attack_ctx *ctx)
 		}
 
 		/* 5. //print progress */
-		if(p % 20 == 0)
+		//if(p % 20 == 0)
 			//printf("progress : %d / %d\n", p, plain_text_cnt);
 	}
 }
@@ -324,7 +324,7 @@ static void predict_last_round_key(struct last_round_attack_ctx *ctx)
 	}
 
 	//printf("predict last round key : ");
-	for(ki=0; ki<AES128_KEY_LEN; ki++)
+	//for(ki=0; ki<AES128_KEY_LEN; ki++)
 		//printf("%02x", out_key[ki]);
 	//printf("\n");
 }
