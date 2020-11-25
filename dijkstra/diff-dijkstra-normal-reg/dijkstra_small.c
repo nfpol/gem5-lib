@@ -160,21 +160,20 @@ int dijkstra(int chStart, int chEnd)
 
 int main(int argc, char *argv[]) {
   int diff = 0;
-  //system("./load-module");
   int i,j,k;
   FILE *fp;
   
   if (argc<2) {
-    fprintf(stderr, "Usage: dijkstra <filename>\n");
-    fprintf(stderr, "Only supports matrix size is #define'd.\n");
+    //fprintf(stderr, "Usage: dijkstra <filename>\n");
+    //fprintf(stderr, "Only supports matrix size is #define'd.\n");
   }
 
   /* open the adjacency matrix file */
   fp = fopen (argv[1],"r");
-
+	
+	/* initialize the pmu registers */
   init_pmu();
   select_event();
-  //SelectL2DCacheRefill();
   reset_event_counters();
   reset_cycle_counter();
 
@@ -197,15 +196,13 @@ int main(int argc, char *argv[]) {
   event_counters_disable();
 
   printf("\nPerformance monitor results\n\n");
-  printf("i cache refills= %u\n", get_event_counter(6)); /*get_event_counter(0)*/
+  printf("i cache refills= %u\n", get_event_counter(0)); /*get_event_counter(0)*/
   printf("retired branches= %u\n", get_event_counter(1) );
   printf("d cache refills= %u\n", get_event_counter(2) );
   printf("retired instructions = %u\n", get_event_counter(3) );
   printf("branch predictor misses = %u\n", get_event_counter(4) );
   printf("Predictable branch speculatively executed = %u\n", get_event_counter(5) );
   printf("CPU cycles = %u\n", get_timing());
-  //diff = get_timing() ;
-  //printf("CPU cycles difference attack - nomimal = %u\n", diff);
  
   exit(0);
   

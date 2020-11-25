@@ -1,1 +1,1 @@
-sudo insmod ./enable_arm_pmu.ko
+sudo insmod ./pmu_el0.ko

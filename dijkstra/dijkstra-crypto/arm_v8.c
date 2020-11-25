@@ -19,7 +19,7 @@ void init_pmu(void)
 void select_event(void)
 {
 	/*  GEM5 events are different than arm documented   ------->    look in gem5/arch/arm/ArmPMU*/
-	pmu_event_config(6, 0x02);  // i cache refills
+	pmu_event_config(0, 0x02);  // i cache refills
 	asm volatile("ISB"); 
 	printf("config event 6 refills in the instruction cache\n");
 	pmu_event_config(1, 0x21);  // retired branches
@@ -38,7 +38,7 @@ void select_event(void)
 	asm volatile("ISB"); 
 	printf("config event 5 branches\n");
 	//sleep( seconds );
-	pmu_enable_config_counter(6);
+	pmu_enable_config_counter(0);
 	asm volatile("ISB"); 
 	pmu_enable_config_counter(1);
 	asm volatile("ISB"); 
@@ -58,7 +58,7 @@ void cycle_counter_disable(void){
 }
 
 void event_counters_disable(void){
-	pmu_event_counters_disable(6);   // Stop event counter 0
+	pmu_event_counters_disable(0);   // Stop event counter 0
 	pmu_event_counters_disable(1);   // Stop event counter 1
 	pmu_event_counters_disable(2);   // Stop event counter 2
 	pmu_event_counters_disable(3);   // Stop event counter 3

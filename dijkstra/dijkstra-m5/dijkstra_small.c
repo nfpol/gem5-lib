@@ -173,24 +173,29 @@ int main(int argc, char *argv[]) {
 			AdjMatrix[i][j]= k;
     }
   }
+
+
+
+
 	/*Run libflush example */
-	chdir("/home/attacks/armageddon/libflush/"); 
-	system("pwd");
-	system("./example/build/armv8/release/bin/example -s 100 -n  10 -x 1 -z 10");
-	chdir("/home/attacks/qemu-work/qemu-gem5/dijkstra-crypto/");	
+	chdir("/home/attacks/gem5-lib/libflush/libflush-gem5-reg/"); 
+	system("./example/build/armv8/release/bin/example -s 600 -n  1000 -x 1 -z 10");
+	chdir("/home/attacks/gem5-lib/dijkstra/dijkstra-m5/");		
 	
 	/* Run attack crypto_side_channel_attacl */
 	/*
   chdir("/home/attacks/crypto-side-channel-attack/build/aes-attack/one-round-attack/real-security-daemon/"); 
-  system("pwd");
   system("Te0=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te0 ) && Te0=$(echo $Te0 | cut -c9-16)");
   system("Te1=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te1 ) && Te1=$(echo $Te1 | cut -c9-16)");
   system("Te2=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te2 ) && Te2=$(echo $Te2 | cut -c9-16)");
   system("Te3=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te2 ) && Te3=$(echo $Te3 | cut -c9-16)");
   system("LD_PRELOAD=../../../lib/libcrypto.so.1.0.0 ./security_daemon &");
-  system("./attacker 600 1 420  Te0 Te1 Te2 Te3 ../../../lib/libcrypto.so.1.0.0");
-  chdir("/home/attacks/qemu-work/qemu-gem5/dijkstra/");
+  system("./attacker 1 1 210  $Te0 $Te1 $Te2  $Te3 ../../../lib/libcrypto.so.1.0.0");
+  chdir("/home/attacks/gem5-lib/dijkstra/dijkstra-m5/");	
   */
+	
+	
+	
   /* finds 10 shortest paths between nodes */
   for (i=0,j=NUM_NODES/2;i<20;i++,j++) {
 			j=j%NUM_NODES;

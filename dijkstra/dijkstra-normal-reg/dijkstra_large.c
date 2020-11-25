@@ -176,7 +176,6 @@ int main(int argc, char *argv[]) {
 	
   init_pmu();
   select_event();
-  //SelectL2DCacheRefill();
   reset_event_counters();
   reset_cycle_counter();
 
@@ -200,15 +199,13 @@ int main(int argc, char *argv[]) {
   event_counters_disable();
 
   printf("\nPerformance monitor results\n\n");
-  printf("Level 2 data cache refill = %u\n", get_event_counter(6)); /*get_event_counter(0)*/
-  printf("Mispredicted or not predicted branch speculatively executed = %u\n", get_event_counter(1) );
-  printf("Instruction architecturally executed = %u\n", get_event_counter(2) );
-  printf("Bus access = %u\n", get_event_counter(3) );
-  printf("Operation speculatively executed = %u\n", get_event_counter(4) );
+  printf("i cache refills= %u\n", get_event_counter(0)); /*get_event_counter(0)*/
+  printf("retired branches= %u\n", get_event_counter(1) );
+  printf("d cache refills= %u\n", get_event_counter(2) );
+  printf("retired instructions = %u\n", get_event_counter(3) );
+  printf("branch predictor misses = %u\n", get_event_counter(4) );
   printf("Predictable branch speculatively executed = %u\n", get_event_counter(5) );
   printf("CPU cycles = %u\n", get_timing());
-  diff = get_timing() ;
-  printf("CPU cycles difference attack - nomimal = %u\n", diff);
 	
 	
 	
