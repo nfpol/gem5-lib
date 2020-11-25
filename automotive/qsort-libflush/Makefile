@@ -1,5 +1,5 @@
-FILE1 = qsort_small.c arm_v8.c arm_v8.c
-FILE2 = qsort_large.c arm_v8.c arm_v8.c
+FILE1 = qsort_small.c arm_v8.c 
+FILE2 = qsort_large.c arm_v8.c 
 
 all: qsort_small qsort_large
 
