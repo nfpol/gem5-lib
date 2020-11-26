@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <stdlib.h>
 
 #include <stdint.h>
 #include <string.h>
@@ -20,6 +20,13 @@ extern void reset_cycle_counter(void);
              
 int main(void) {
   int i,j,k = 0;
+  FILE * fPtr;
+  fPtr = fopen("output.dat", "w");
+  if(fPtr == NULL){
+        /* File not created hence exit */
+        printf("Unable to create file.\n");
+        exit(EXIT_FAILURE);
+  }
 		
 	init_pmu();
 	select_event();
@@ -33,16 +40,19 @@ int main(void) {
 		//sleep(1);
 		event_counters_disable();
 		cycle_counter_disable();
-		printf("%u   ", get_event_counter(0)); /*get_event_counter(0)*/
-		printf("%u   ", get_event_counter(1) );
-		printf("%u   ", get_event_counter(2) );
-		printf("%u   ", get_event_counter(3) );
-		printf("%u   ", get_event_counter(4) );
-		printf("%u   ", get_event_counter(5) );
-		printf("%u   ", get_event_counter(6) );
-		printf("%u\n", get_timing());
+		printf("%u                            ", get_event_counter(0)); /*get_event_counter(0)*/
+		fputs(get_event_counter(0), fPtr);
+		printf("%u                            ", get_event_counter(1) );
+		printf("%u                            ", get_event_counter(2) );
+		printf("%u                            ", get_event_counter(3) );
+		printf("%u                            ", get_event_counter(4) );
+		printf("%u                            ", get_event_counter(5) );
+		printf("%u                            ", get_event_counter(6) );
+		printf("%u                            \n", get_timing());
 		i++;
 	}
+	
+	fclose(fPtr);
 	
 		
   exit(0);
