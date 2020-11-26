@@ -20,17 +20,16 @@ extern void reset_cycle_counter(void);
              
 int main(void) {
   int i,j,k = 0;
-	bool execute_loop = true;
-	
-	
+		
 	init_pmu();
 	select_event();
 	reset_event_counters();
 	reset_cycle_counter();
 
-	while(execute_loop == true){
+	while(i < 10000){
 		reset_event_counters(); //reset event counters
-		sleep(0.01);  //sleep 10ms
+		//sleep(0.01);  //sleep 10ms
+		sleep(1);
 		event_counters_disable();
 		cycle_counter_disable();
 		printf("\nPerformance monitor results\n\n");
@@ -42,6 +41,7 @@ int main(void) {
 		printf("Predictable branch speculatively executed = %u\n", get_event_counter(5) );
 		printf("CPU cycles event counter = %u\n", get_event_counter(6) );
 		printf("CPU cycles = %u\n", get_timing());
+		i++;
 	}	
   exit(0);
   
