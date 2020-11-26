@@ -42,8 +42,9 @@ git commit -m "clean"
 git push origin master
 make 
 cd ..
-cd..
+cd ..
 cd consumer/jpeg/jpeg-6a
+make clean
 make all
 cd ../../../
 cd network
@@ -54,14 +55,14 @@ git commit -m "clean"
 git push origin master
 make all
 cd ..
-cd dijkstra-liblush
+cd dijkstra-libflush
 make clean
 git add -A
 git commit -m "clean"
 git push origin master
 make all
 cd ..
-cd patricia-liblush
+cd patricia-libflush
 make clean
 git add -A
 git commit -m "clean"
@@ -77,18 +78,22 @@ make
 cd ..
 cd ..
 cd security/blowfish
+make clean
 make all
 cd ..
 cd ..
 cd crypto-side-channel-attack
 cd crypto-gem5-counter
 ./build_armv8.sh
+cp /home/nikos/crypto-side-channel-attack/build/lib/libcrypto.so.1.0.0 build/lib/
 cd ..
 cd crypto-side-channel-attack-perf
 ./build_armv8.sh
+cp /home/nikos/crypto-side-channel-attack/build/lib/libcrypto.so.1.0.0 build/lib/
 cd ..
 cd crypto-side-channel-attack-reg
 ./build_armv8.sh
+cp /home/nikos/crypto-side-channel-attack/build/lib/libcrypto.so.1.0.0 build/lib/
 cd ..
 cd ..
 cd dijkstra
@@ -101,51 +106,30 @@ make all
 cd ..
 cd diff-dijkstra-normal-reg
 make clean
-git add -A
-git commit -m "clean"
-git push origin master
 make all
 cd ..
 cd dijkstra-normal-reg
 make clean
-git add -A
-git commit -m "clean"
-git push origin master
 make all
 cd ..
 cd dijkstra-crypto
 make clean
-git add -A
-git commit -m "clean"
-git push origin master
 make all
 cd ..
 cd dijkstra-m5-perf
 make clean
-git add -A
-git commit -m "clean"
-git push origin master
 make all
 cd ..
 cd dijkstra-perf
 make clean
-git add -A
-git commit -m "clean"
-git push origin master
 make all
 cd ..
 cd dijkstra-crypto-gem5-counter
 make clean
-git add -A
-git commit -m "clean"
-git push origin master
 make all
 cd ..
 cd dijkstra-normal-m5
 make clean
-git add -A
-git commit -m "clean"
-git push origin master
 make all
 cd ..
 cd ..
@@ -160,21 +144,38 @@ make ARCH=armv8 example
 cd ..
 cd libflush-gem5
 make ARCH=armv8 clean
-git add -A
-git commit -m "clean"
-git push origin master
 make ARCH=armv8
 sudo make ARCH=armv8 install
 make ARCH=armv8 example
 cd ..
 cd libflush-gem5-reg
 make ARCH=armv8 clean
-git add -A
-git commit -m "clean"
-git push origin master
 make ARCH=armv8
 sudo make ARCH=armv8 install
 make ARCH=armv8 example
+cd ..
+cd ..
+cd security/blowfish/
+make clean
+make all
+cd ..
+cd sha
+make clean
+make
+cd ..
+cd ..
+cd telecomm/FFT
+make clean
+make
+cd ..
+cd CRC32
+make clean
+make 
+cd ..
+cd adpcm/src
+make clean
+make all
+cd ..
 cd ..
 cd ..
 git add -A
