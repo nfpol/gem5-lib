@@ -33,25 +33,26 @@ int main(void) {
 	reset_event_counters();
 	reset_cycle_counter();
 	printf("Performance monitor results\n");
-	printf("i cache refills---|---retired branches---|---d cahce refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt");
+	printf("i cache refills---|---retired branches---|---d cahce refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n");
 	while(i < 1000){
 		reset_event_counters(); //reset event counters
 		sleep(0.01);  //sleep 10ms
 		//sleep(1);
 		event_counters_disable();
 		cycle_counter_disable();
-		printf("%u                            ", get_event_counter(0)); /*get_event_counter(0)*/
-		fputs(get_event_counter(0), fPtr);
-		printf("%u                            ", get_event_counter(1) );
-		printf("%u                            ", get_event_counter(2) );
-		printf("%u                            ", get_event_counter(3) );
-		printf("%u                            ", get_event_counter(4) );
-		printf("%u                            ", get_event_counter(5) );
-		printf("%u                            ", get_event_counter(6) );
-		printf("%u                            \n", get_timing());
+		fprintf(fPtr, "%u                            ", get_event_counter(0));
+		fprintf(fPtr, "%u                            ", get_event_counter(1) );
+		printf(fPtr, "%u                            ", get_event_counter(2) );
+		printf(fPtr, "%u                            ", get_event_counter(3) );
+		printf(fPtr, "%u                            ", get_event_counter(4) );
+		printf(fPtr, "%u                            ", get_event_counter(5) );
+		printf(fPtr, "%u                            ", get_event_counter(6) );
+		printf(fPtr, "%u                            \n", get_timing());
 		i++;
 	}
 	
+
+	printf("PMU monitor is closing ....\n");
 	fclose(fPtr);
 	
 		
