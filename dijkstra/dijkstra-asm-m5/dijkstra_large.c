@@ -158,7 +158,7 @@ int main(int argc, char *argv[]) {
   int i,j,k;
   FILE *fp;
   /* resetstats */
-	__asm__ __volatile__ ("mov x0, #0; mov x1, #0; .inst 0XFF000110 | (0x40 << 16);" : : : "x0", "x1");
+	__asm__ __volatile__ ("mov x0, #0; mov x1, #0; .inst 0XFF000110 | (0x40 << 16);");
   if (argc<2) {
     //fprintf(stderr, "Usage: dijkstra <filename>\n");
     //fprintf(stderr, "Only supports matrix size is #define'd.\n");
@@ -205,7 +205,7 @@ int main(int argc, char *argv[]) {
 	
 	
 	/* dumpstats */
-	__asm__ __volatile__ ("mov x0, #0; mov x1, #0; .inst 0xFF000110 | (0x41 << 16);" : : : "x0", "x1");
+	__asm__ __volatile__ ("mov x0, #0; mov x1, #0; .inst 0xFF000110 | (0x41 << 16);");
   exit(0);
   
 
