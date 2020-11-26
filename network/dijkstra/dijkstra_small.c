@@ -137,7 +137,7 @@ int dijkstra(int chStart, int chEnd)
       
       //fprintf("Shortest path is %d in cost. ", rgnNodes[chEnd].iDist);
       //fprintf("Path is: ");
-      fprint_path(rgnNodes, chEnd);
+      print_path(rgnNodes, chEnd);
       //fprintf("\n");
     }
 }
