@@ -21,26 +21,18 @@ void select_event(void)
 	/*  GEM5 events are different than arm documented   ------->    look in gem5/arch/arm/ArmPMU*/
 	pmu_event_config(0, 0x02);  // i cache refills
 	asm volatile("ISB"); 
-	printf("config event 6 refills in the instruction cache\n");
 	pmu_event_config(1, 0x21);  // retired branches
 	asm volatile("ISB"); 
-	printf("config event 1 retired branches\n");
 	pmu_event_config(2, 0x05);  // d cache refills
 	asm volatile("ISB"); 
-	printf("config event 2 refills in the data cache\n");
  	pmu_event_config(3, 0x08);  // retired instructions
  	asm volatile("ISB"); 
-	printf("config event 3  retired instructions\n");
 	pmu_event_config(4, 0x10);  // branch predictor misses
 	asm volatile("ISB"); 
-	printf("config event 4 branch predictor misses\n");
 	pmu_event_config(5, 0x12);  // Predictable branch speculatively executed
 	asm volatile("ISB"); 
-	printf("config event 5 branches\n");
 	pmu_event_config(6, 0x11);  // CPU cycles
 	asm volatile("ISB"); 
-	printf("config event 6 CPU cycles\n");
-	//sleep( seconds );
 	pmu_enable_config_counter(0);
 	asm volatile("ISB"); 
 	pmu_enable_config_counter(1);

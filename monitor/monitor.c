@@ -28,18 +28,17 @@ int main(void) {
 
 	while(i < 10000){
 		reset_event_counters(); //reset event counters
-		//sleep(0.01);  //sleep 10ms
-		sleep(1);
+		sleep(0.01);  //sleep 10ms
+		//sleep(1);
 		event_counters_disable();
 		cycle_counter_disable();
-		printf("\nPerformance monitor results\n\n");
-		printf("i cache refills= %u\n", get_event_counter(0)); /*get_event_counter(0)*/
-		printf("retired branches= %u\n", get_event_counter(1) );
-		printf("d cache refills= %u\n", get_event_counter(2) );
-		printf("retired instructions = %u\n", get_event_counter(3) );
-		printf("branch predictor misses = %u\n", get_event_counter(4) );
-		printf("Predictable branch speculatively executed = %u\n", get_event_counter(5) );
-		printf("CPU cycles event counter = %u\n", get_event_counter(6) );
+		printf("i cache refills= %u   ", get_event_counter(0)); /*get_event_counter(0)*/
+		printf("retired branches= %u   ", get_event_counter(1) );
+		printf("d cache refills= %u   ", get_event_counter(2) );
+		printf("retired instructions = %u   ", get_event_counter(3) );
+		printf("branch predictor misses = %u   ", get_event_counter(4) );
+		printf("Predictable branch speculatively executed = %u   ", get_event_counter(5) );
+		printf("CPU cycles event counter = %u   ", get_event_counter(6) );
 		printf("CPU cycles = %u\n", get_timing());
 		i++;
 	}	
