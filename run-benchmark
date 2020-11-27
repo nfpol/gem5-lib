@@ -1,3 +1,0 @@
-./run-calibration
-threshold=$?
-echo $threshold
