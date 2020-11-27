@@ -1,24 +1,4 @@
 cd /home/attacks/armageddon/libflush
-./example/build/armv8/release/bin/example -s 500 -n  1000 -x 1 -z 10
-tr1=$(echo $?)
-./example/build/armv8/release/bin/example -s 500 -n  1000 -x 1 -z 10
-tr2=$(echo $?)
-./example/build/armv8/release/bin/example -s 500 -n  1000 -x 1 -z 10
-tr3=$(echo $?)
-./example/build/armv8/release/bin/example -s 500 -n  1000 -x 1 -z 10
-tr4=$(echo $?)
-./example/build/armv8/release/bin/example -s 500 -n  1000 -x 1 -z 10
-tr5=$(echo $?)
-./example/build/armv8/release/bin/example -s 500 -n  1000 -x 1 -z 10
-tr6=$(echo $?)
-./example/build/armv8/release/bin/example -s 500 -n  1000 -x 1 -z 10
-tr7=$(echo $?)
-./example/build/armv8/release/bin/example -s 500 -n  1000 -x 1 -z 10
-tr8=$(echo $?)
-./example/build/armv8/release/bin/example -s 500 -n  1000 -x 1 -z 10
-tr9=$(echo $?)
-./example/build/armv8/release/bin/example -s 500 -n  1000 -x 1 -z 10
-tr10=$(echo $?)
-#threshold=$((tr1+tr2+$tr3+$tr4+$tr5+$tr6+$tr7+$tr8+$tr9+$tr10)
-threshold=$(((tr1+tr2+tr3+tr4+tr5+tr6+tr7+tr8+tr9+tr10)/10))
+./example-avg/build/armv8/release/bin/example -s 500 -n  1000 -x 1 -z 10
+threshold=$(echo $?)
 exit $threshold

@@ -292,7 +292,7 @@ main(int argc, char* argv[])
   	toto += threshhold; 
   }
   toto = toto/10;
-  fprintf(stderr, "Threshhold: %d\n", toto);
+  fprintf(stderr, "Threshhold averaged: %d\n", toto);
   
   /* Clean-up */
   free(hit_histogram);
@@ -312,7 +312,7 @@ main(int argc, char* argv[])
     return -1;
   }
 
-  return threshhold;
+  return toto;
 }
 
 static void
