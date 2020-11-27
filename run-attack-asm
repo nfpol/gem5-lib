@@ -1,0 +1,10 @@
+m5 checkpoint
+cd /home/attacks/armageddon/libflush
+./example-asm/build/armv8/release/bin/example -s 500 -n  1000 -x 1 -z 10
+cd /home/nikos/gem5-lib/dijkstra/dijkstra-crypto-asm
+./dijkstra_large input.dat
+cd /home/nikos/gem5-lib/dijkstra/dijkstra-asm-m5
+./dijkstra_large input.dat
+cd /home/nikos/gem5-lib/automotive/basicmath-libflush-asm
+basicmath_small > output_large.txt
+m5 exit

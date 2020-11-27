@@ -1,7 +1,0 @@
-./run-calibration
-cd /home/attacks/gem5-lib/
-threshold=$?
-echo $threshold
-cd /home/attacks/armageddon/libflush
-./example/build/armv8/release/bin/example -s 500 -n  1000 -x 1 -z 10
-cd /home/attacks/
