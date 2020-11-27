@@ -1,4 +1,5 @@
 cd /home/attacks/armageddon/libflush
 ./example-avg/build/armv8/release/bin/example -s 500 -n  1000 -x 1 -z 10
 threshold=$(echo $?)
+echo $threshold
 exit $threshold

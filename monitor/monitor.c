@@ -33,8 +33,8 @@ int main(void) {
 	reset_event_counters();
 	reset_cycle_counter();
 	printf("Performance monitor results\n");
-	fprintf(fPtr, "i cache refills---|---retired branches---|---d cahce refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n");
-	while(i < 60000){
+	fprintf(fPtr, "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n");
+	while(i < 1000){
 		reset_event_counters(); //reset event counters
 		sleep(0.01);  //sleep 10ms
 		//sleep(1);
