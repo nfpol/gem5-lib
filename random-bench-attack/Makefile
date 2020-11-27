@@ -6,4 +6,4 @@ random: ${FILE1} Makefile
 	gcc -static -O3 ${FILE1} -o random -lm
 
 clean:
-rm -rf random
+	rm -rf random
