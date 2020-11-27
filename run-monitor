@@ -1,3 +1,5 @@
+# run monitor
+
 cd /home/nikos/XKCP/support/Kernel-PMU/
 ./load-module
 cd /home/nikos/gem5-lib
@@ -17,4 +19,5 @@ Te3=$(echo $Te3 | cut -c9-16)
 LD_PRELOAD=/home/nikos/crypto-side-channel-attack/build/lib/libcrypto.so.1.0.0 ./security_daemon &
 ./attacker 1 1 800  $Te0 $Te1 $Te2 $Te3 ../../../lib/libcrypto.so.1.0.0
 
-
+# get monitor stats
+# stop monitor
