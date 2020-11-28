@@ -6,10 +6,10 @@ touch output.dat
 
 cd /home/attacks/armageddon/libflush
 ./example/build/armv8/release/bin/example -s 500 -n  1000 -x 1 -z 10
-cd /home/nikos/gem5-lib/dijkstra/dijkstra-crypto
+cd /home/attacks/gem5-lib/dijkstra/dijkstra-crypto
 ./dijkstra_large input.dat
-/home/nikos/gem5-lib/network/patricia-libflush
+cd /home/attacks/gem5-lib/network/patricia-libflush
 patricia small.udp > output_small.txt
-cd /home/nikos/gem5-lib/automotive/basicmath-libflush
+cd /home/attacks/gem5-lib/automotive/basicmath-libflush
 basicmath_small > output_large.txt
 cd /home/attacks/gem5-lib/

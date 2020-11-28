@@ -20,7 +20,7 @@ int main()
 			}
 			else if (randomnumber==2){
 				printf("basicmath\n");
-				chdir("/home/nikos/gem5-lib/automotive/basicmath"); 
+				chdir("/home/attacks/gem5-lib/automotive/basicmath"); 
 				system("m5 resetstats");
 				system("basicmath_small > output_small.txt");
 				system("m5 dumpstats");
@@ -28,7 +28,7 @@ int main()
 			}	
 			else if (randomnumber==3){
 				printf("bitcount\n");
-				chdir("/home/nikos/gem5-lib/automotive/bitcount"); 
+				chdir("/home/attacks/gem5-lib/automotive/bitcount"); 
 				system("m5 resetstats");
 				system("bitcnts 75000 > output_small.txt");
 				system("m5 dumpstats");
@@ -36,7 +36,7 @@ int main()
 			}
 			else if (randomnumber==4){
 				printf("sha\n");
-				chdir("/home/nikos/gem5-lib/security/sha"); 
+				chdir("/home/attacks/gem5-lib/security/sha"); 
 				system("m5 resetstats");
 				system("./sha input_small.asc > output_small.txt");
 				system("m5 dumpstats");

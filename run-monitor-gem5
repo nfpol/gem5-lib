@@ -15,6 +15,6 @@ Te2=$(echo $Te2 | cut -c9-16)
 Te3=$(nm /home/attacks/crypto-side-channel-attack/build/lib/libcrypto.so.1.0.0 | grep Te3 )
 Te3=$(echo $Te3 | cut -c9-16)
 LD_PRELOAD=/home/attacks/crypto-side-channel-attack/build/lib/libcrypto.so.1.0.0 ./security_daemon &
-./attacker 1 1 800  $Te0 $Te1 $Te2 $Te3 ../../../lib/libcrypto.so.1.0.0
+./attacker 1 1 199  $Te0 $Te1 $Te2 $Te3 ../../../lib/libcrypto.so.1.0.0
 
 
