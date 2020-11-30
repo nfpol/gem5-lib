@@ -693,4 +693,25 @@ LD_PRELOAD=../../../lib/libcrypto.so.1.0.0 ./security_daemon &
 (--redirect-stdout ou -r )--stdout-file=sim.out    ##redirects stdout to a file
 --stats-file=FILE       Sets the output file for statistics
 
+Using the M5 Binary
+The M5 binary has to be compiled for the guest machine (the one being simulated) and copied to the disk image. Usually it is found in /sbin/m5.
 
+After booting the guest system, in a terminal:
+
+#/sbin/m5 -h
+usage: /sbin/m5 exit [delay]
+       /sbin/m5 fail <code> [delay]
+       /sbin/m5 resetstats [delay [period]]
+       /sbin/m5 dumpstats [delay [period]]
+       /sbin/m5 dumpresetstats [delay [period]]
+       /sbin/m5 readfile 
+       /sbin/m5 writefile <filename> [host filename]
+       /sbin/m5 execfile 
+       /sbin/m5 checkpoint [delay [period]]
+       /sbin/m5 addsymbol <address> <symbol>
+       /sbin/m5 loadsymbol 
+       /sbin/m5 initparam [key] // key must be shorter than 16 chars
+       /sbin/m5 sw99param 
+       /sbin/m5 pin <cpu> <program> [args ...]
+
+All times in nanoseconds!
