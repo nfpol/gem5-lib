@@ -646,6 +646,11 @@ es 1 --restore outdir-yy/cpt.178347631728500
 
 
 
+build/ARM/gem5.opt --outdir ./outdir-nnn-o3/ --debug-flags=PMUVerbose configs/example/fs.py --disk-image=/home/nikos/new_gem5/fs_images/expanded-aarch64-ubuntu-trusty-headless-nnn.img --kernel=/home/nikos/new_gem5/fs_images/vmlinux-4.14.0+pmu --machine-type=VExpress_GEM5_V1 --caches --l2cache --l1d_size=32kB --l1i_size=48kB --l2_size=2048kB --l1d_assoc=2 --l1i_assoc=3 --l2_assoc=16 --cacheline_size=64 --cpu-type=O3_ARM_v7a_3 --num-cpus=1 --root-device=/dev/sda1 --checkpoint-dir ./outdir-nnn/  --arm-iset=aarch64 --mem-type=DDR4_2400_4x16 --mem-channels=1 --mem-ranks=1  --mem-size=4GB  --bp-type=BiModeBP --indirect-bp-type=SimpleIndirectPredictor --cpu-clock=4GHz  --enable-security-extensions
+
+
+
+
 #crypto gem5
 cd build/aes-attack/last-round-attack/real-security-daemon
 Te0=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te0 )
