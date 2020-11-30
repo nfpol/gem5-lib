@@ -19,5 +19,12 @@ Te3=$(echo $Te3 | cut -c9-16)
 LD_PRELOAD=/home/nikos/crypto-side-channel-attack/build/lib/libcrypto.so.1.0.0 ./security_daemon &
 ./attacker 1 1 800  $Te0 $Te1 $Te2 $Te3 ../../../lib/libcrypto.so.1.0.0
 
+
+
+
+#(LD_PRELOAD=/home/nikos/crypto-side-channel-attack/build/lib/libcrypto.so.1.0.0 ./security_daemon || tail -l 50 /var/log/syslog > /tmp/log ) &
+
+
+
 # get monitor stats
 # stop monitor
