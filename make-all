@@ -104,6 +104,13 @@ cp /home/nikos/crypto-side-channel-attack/build/lib/libcrypto.so.1.0.0 build/lib
 cd ..
 cd ..
 cd dijkstra
+cd dijkstra-asm-m5
+make clean
+git add -A
+git commit -m "clean"
+git push origin master
+make all
+cd ..
 cd dijkstra-m5
 make clean
 git add -A

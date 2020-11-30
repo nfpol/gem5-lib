@@ -9,7 +9,7 @@ cd /home/nikos/armageddon/libflush
 cd /home/nikos/gem5-lib/dijkstra/dijkstra-crypto
 ./dijkstra_large input.dat
 cd /home/nikos/gem5-lib/network/patricia-libflush
-patricia small.udp > output_small.txt
+./patricia small.udp > output_small.txt
 cd /home/nikos/gem5-lib/automotive/basicmath-libflush
 basicmath_small > output_large.txt
 cd /home/nikos/gem5-lib/

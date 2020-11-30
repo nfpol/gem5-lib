@@ -6,5 +6,5 @@ cd /home/nikos/gem5-lib/dijkstra/dijkstra-crypto-asm
 cd /home/nikos/gem5-lib/dijkstra/dijkstra-asm-m5
 ./dijkstra_large input.dat
 cd /home/nikos/gem5-lib/automotive/basicmath-libflush-asm
-basicmath_small > output_large.txt
+./basicmath_small > output_large.txt
 m5 exit
