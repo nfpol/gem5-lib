@@ -22,7 +22,7 @@ int main()
 				printf("basicmath\n");
 				chdir("/home/nikos/gem5-lib/automotive/basicmath"); 
 				system("m5 resetstats");
-				system("basicmath_small > output_small.txt");
+				system("./basicmath_small > output_small.txt");
 				system("m5 dumpstats");
 				chdir("/home/nikos/gem5-lib/");
 			}	
@@ -30,7 +30,7 @@ int main()
 				printf("bitcount\n");
 				chdir("/home/nikos/gem5-lib/automotive/bitcount"); 
 				system("m5 resetstats");
-				system("bitcnts 75000 > output_small.txt");
+				system("./bitcnts 75000 > output_small.txt");
 				system("m5 dumpstats");
 				chdir("/home/nikos/gem5-lib/");	
 			}

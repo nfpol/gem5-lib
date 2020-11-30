@@ -23,6 +23,6 @@ cd /home/nikos/gem5-lib/automotive/basicmath-libflush
 echo "---------------------------------------------------------\n" > /home/nikos/gem5-lib/monitor-one\output.dat
 echo "-----------------basicmath-libflush----------------------\n" > /home/nikos/gem5-lib/monitor-one\output.dat
 echo "---------------------------------------------------------\n" > /home/nikos/gem5-lib/monitor-one\output.dat
-basicmath_small > output_small.txt
+./basicmath_small > output_small.txt
 cd /home/nikos/gem5-lib/
 m5 checkpoint

@@ -4,16 +4,6 @@ threshold=$?
 echo $threshold
 m5 checkpoint
 cd /home/nikos/crypto-side-channel-attack/build/aes-attack/one-round-attack/real-security-daemon
-Te0=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te0 )
-Te0=$(echo $Te0 | cut -c9-16)
-Te1=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te1 )
-Te1=$(echo $Te1 | cut -c9-16)
-Te2=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te2 )
-Te2=$(echo $Te2 | cut -c9-16)
-Te3=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te3 )
-Te3=$(echo $Te3 | cut -c9-16)
-rcon=$(nm ../../../lib/libcrypto.so.1.0.0 | grep rcon )
-rcon=$(echo $rcon | cut -c9-16)
 LD_PRELOAD=../../../lib/libcrypto.so.1.0.0 ./security_daemon &
 ./attacker 1 1 $threshold 00163c60 00164060  00164460  00164860 ../../../lib/libcrypto.so.1.0.0
 cd /home/nikos/gem5-lib/
