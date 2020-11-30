@@ -1,5 +1,4 @@
 # run monitor
-
 cd /home/nikos/XKCP/support/Kernel-PMU/
 ./load-module
 cd /home/nikos/gem5-lib

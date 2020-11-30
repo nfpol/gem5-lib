@@ -5,11 +5,24 @@ touch output.dat
 ./monitor &
 
 cd /home/nikos/armageddon/libflush
+echo "---------------------------------------------------------\n" > /home/nikos/gem5-lib/monitor-one\output.dat
+echo "----------Executing Libflush-----------------------------\n" > /home/nikos/gem5-lib/monitor-one\output.dat
+echo "---------------------------------------------------------\n" > /home/nikos/gem5-lib/monitor-one\output.dat
 ./example/build/armv8/release/bin/example -s 500 -n  1000 -x 1 -z 10
 cd /home/nikos/gem5-lib/dijkstra/dijkstra-crypto
+echo "---------------------------------------------------------\n" > /home/nikos/gem5-lib/monitor-one\output.dat
+echo "-----------------dijkstra-crypto-------------------------\n" > /home/nikos/gem5-lib/monitor-one\output.dat
+echo "---------------------------------------------------------\n" > /home/nikos/gem5-lib/monitor-one\output.dat
 ./dijkstra_large input.dat
 cd /home/nikos/gem5-lib/network/patricia-libflush
+echo "---------------------------------------------------------\n" > /home/nikos/gem5-lib/monitor-one\output.dat
+echo "-----------------patricia-libflush-----------------------\n" > /home/nikos/gem5-lib/monitor-one\output.dat
+echo "---------------------------------------------------------\n" > /home/nikos/gem5-lib/monitor-one\output.dat
 ./patricia small.udp > output_small.txt
 cd /home/nikos/gem5-lib/automotive/basicmath-libflush
-basicmath_small > output_large.txt
+echo "---------------------------------------------------------\n" > /home/nikos/gem5-lib/monitor-one\output.dat
+echo "-----------------basicmath-libflush----------------------\n" > /home/nikos/gem5-lib/monitor-one\output.dat
+echo "---------------------------------------------------------\n" > /home/nikos/gem5-lib/monitor-one\output.dat
+basicmath_small > output_small.txt
 cd /home/nikos/gem5-lib/
+m5 checkpoint
