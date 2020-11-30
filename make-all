@@ -42,7 +42,7 @@ git commit -m "clean"
 git push origin master
 make 
 cd ..
-cd susan-liblush
+cd susan-libflush
 make clean
 git add -A
 git commit -m "clean"
