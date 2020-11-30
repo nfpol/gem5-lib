@@ -1,0 +1,8 @@
+cd /home/nikos/gem5-lib/random-bench-attack-monitor/monitor-asm
+rm -rf out*
+touch output-asm.dat
+./random &
+cd ..
+./random
+m5 checkpoint
+

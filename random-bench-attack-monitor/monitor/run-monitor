@@ -1,3 +1,0 @@
-rm -rf output.dat
-touch output.dat
-./monitor

@@ -17,7 +17,7 @@ int main()
     		int randomnumber;
 		srand(time(NULL));
 		FILE * fPtr;
-  		fPtr = fopen("monitor-asm/output-asm.dat", "w");
+  		fPtr = fopen("./monitor-asm/output-asm.dat", "w");
   		if(fPtr == NULL){
        		/* File not created hence exit */
         		printf("Unable to create file.\n");

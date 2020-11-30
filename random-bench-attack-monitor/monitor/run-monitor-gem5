@@ -1,3 +1,0 @@
-rm -rf output-gem5.dat
-touch output-gem5.dat
-./monitor

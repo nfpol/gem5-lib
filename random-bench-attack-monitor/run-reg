@@ -1,0 +1,10 @@
+cd /home/nikos/gem5-lib/random-bench-attack-monitor/reg/monitor
+rm -rf out*
+touch output-reg.dat
+./random &
+cd ..
+./random
+cd ..
+m5 checkpoint
+
+
