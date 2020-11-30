@@ -14,6 +14,13 @@ git commit -m "clean"
 git push origin master
 make all
 cd ..
+cd basicmath-libflush-asm
+make clean
+git add -A
+git commit -m "clean"
+git push origin master
+make all
+cd ..
 cd bitcount-libflush
 make clean
 git add -A
@@ -116,6 +123,10 @@ cd dijkstra-crypto
 make clean
 make all
 cd ..
+cd dijkstra-crypto-asm
+make clean
+make all
+cd ..
 cd dijkstra-m5-perf
 make clean
 make all
@@ -178,6 +189,23 @@ make all
 cd ..
 cd ..
 cd ..
+cd monitor
+make clean
+make all
+cd ..
+cd monitor-asm
+make clean
+make all
+cd ..
+cd monitor-one
+make clean
+make all
+cd ..
+cd random-bench-attack
+make clean
+make all
+cd ..
+
 git add -A
 git commit -m "clean"
 git push origin master
