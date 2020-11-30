@@ -64,7 +64,7 @@ int main()
 			}
 			
 		}
-	fprintf(fPtr, "closing random execution");
+	fprintf(fPtr, "closing random execution\n");
 	fclose(fPtr);
 	return 0;
 }
