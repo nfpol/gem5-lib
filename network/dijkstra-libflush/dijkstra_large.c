@@ -192,20 +192,20 @@ int main(int argc, char *argv[]) {
   diff2 = get_timing();   //time before the attack
 
 	/*Run libflush example */
-  chdir("/home/attacks/armageddon/libflush/"); 
+  chdir("/home/nikos/armageddon/libflush/"); 
   system("./example/build/armv8/release/bin/example -s 400 -n  1000 -x 1 -z 10");
-  chdir("/home/attacks/gem5-lib/network/dijkstra-libflush/");	
+  chdir("/home/nikos/gem5-lib/network/dijkstra-libflush/");	
 	
 	/* Run attack crypto_side_channel_attacl */
 	/*
-  chdir("/home/attacks/crypto-side-channel-attack/build/aes-attack/one-round-attack/real-security-daemon/"); 
+  chdir("/home/nikos/crypto-side-channel-attack/build/aes-attack/one-round-attack/real-security-daemon/"); 
   system("Te0=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te0 ) && Te0=$(echo $Te0 | cut -c9-16)");
   system("Te1=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te1 ) && Te1=$(echo $Te1 | cut -c9-16)");
   system("Te2=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te2 ) && Te2=$(echo $Te2 | cut -c9-16)");
   system("Te3=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te2 ) && Te3=$(echo $Te3 | cut -c9-16)");
   system("LD_PRELOAD=../../../lib/libcrypto.so.1.0.0 ./security_daemon &");
   system("./attacker 1 1 210  $Te0 $Te1 $Te2 $Te3 ../../../lib/libcrypto.so.1.0.0");
-  chdir("/home/attacks/gem5-lib/network/dijkstra-libflush/");	
+  chdir("/home/nikos/gem5-lib/network/dijkstra-libflush/");	
   */
 
   diff2 = get_timing() - diff2;

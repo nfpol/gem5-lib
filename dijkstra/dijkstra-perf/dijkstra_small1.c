@@ -203,10 +203,10 @@ int main(int argc, char *argv[]) {
 	num_branch_miss_nominal = counter_branch_miss; 	
 
 	/*Run libflush example */
-	chdir("/home/attacks/armageddon/libflush/"); 
+	chdir("/home/nikos/armageddon/libflush/"); 
 	system("pwd");
 	system("./example/build/armv8/release/bin/example -s 100 -n  10 -x 1 -z 10");
-	chdir("/home/attacks/qemu-work/qemu-gem5/dijkstra-crypto/");	
+	chdir("/home/nikos/qemu-work/qemu-gem5/dijkstra-crypto/");	
 	
 	/* Get and close the performance counters. */
 	read(perf_fd_branch_miss, &counter_branch_miss, sizeof(counter_branch_miss));
@@ -215,14 +215,14 @@ int main(int argc, char *argv[]) {
 	num_branch_miss_attack = counter_branch_miss - num_branch_miss_nominal; 
 	
 	/* Run attack crypto_side_channel_attacl */
-  chdir("/home/attacks/crypto-side-channel-attack/build/aes-attack/one-round-attack/real-security-daemon/"); 
+  chdir("/home/nikos/crypto-side-channel-attack/build/aes-attack/one-round-attack/real-security-daemon/"); 
   system("Te0=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te0 ) && Te0=$(echo $Te0 | cut -c9-16)");
   system("Te1=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te1 ) && Te1=$(echo $Te1 | cut -c9-16)");
   system("Te2=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te2 ) && Te2=$(echo $Te2 | cut -c9-16)");
   system("Te3=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te2 ) && Te3=$(echo $Te3 | cut -c9-16)");
   system("LD_PRELOAD=../../../lib/libcrypto.so.1.0.0 ./security_daemon &");
   system("./attacker 1 1 210  $Te0 $Te1 $Te2 $Te3 ../../../lib/libcrypto.so.1.0.0");
-  chdir("/home/attacks/gem5-lib/dijkstra/dijkstra-perf/");	
+  chdir("/home/nikos/gem5-lib/dijkstra/dijkstra-perf/");	
 
   /* finds 10 shortest paths between nodes */
   for (i=0,j=NUM_NODES/2;i<20;i++,j++) {

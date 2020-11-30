@@ -5,7 +5,7 @@
 
 int main()
 {		
-		for(int i =0; i<15; i++) {
+		for(int i =0; i<150; i++) {
 			
 			/* resetstats */
   			__asm__ __volatile__ ("mov x0, #0; mov x1, #0; .inst 0XFF000110 | (0x40 << 16);");

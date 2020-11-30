@@ -22,9 +22,9 @@ int main(void)
 {
 	int cycles_normal = 0;
 	int diff = 0;
-	chdir("cd /home/attacks/XKCP/support/Kernel-PMU/");
+	chdir("/home/nikos/XKCP/support/Kernel-PMU/");
   system("./load-module");
-	chdir("cd /home/attacks/lib-gem5/automotive/basicmath-libflush/");
+	chdir("/home/nikos/lib-gem5/automotive/basicmath-libflush/");
   double  a1 = 1.0, b1 = -10.5, c1 = 32.0, d1 = -30.0;
   double  a2 = 1.0, b2 = -4.5, c2 = 17.0, d2 = -30.0;
   double  a3 = 1.0, b3 = -3.5, c3 = 22.0, d3 = -31.0;
@@ -86,20 +86,20 @@ int main(void)
 	printf("Cycles CPU before exec  of attack = %u\n", cycles_normal);
 	
 	/*Run libflush example */
-  chdir("/home/attacks/armageddon/libflush/"); 
+  chdir("/home/nikos/armageddon/libflush/"); 
   system("./example/build/armv8/release/bin/example -s 400 -n  1000 -x 1 -z 10");
-  chdir("/home/attacks/gem5-lib/automotive/basicmath-libflush/");	
+  chdir("/home/nikos/gem5-lib/automotive/basicmath-libflush/");	
 	
 	/* Run attack crypto_side_channel_attacl */
 	/*
-  chdir("/home/attacks/crypto-side-channel-attack/build/aes-attack/one-round-attack/real-security-daemon/"); 
+  chdir("/home/nikos/crypto-side-channel-attack/build/aes-attack/one-round-attack/real-security-daemon/"); 
   system("Te0=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te0 ) && Te0=$(echo $Te0 | cut -c9-16)");
   system("Te1=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te1 ) && Te1=$(echo $Te1 | cut -c9-16)");
   system("Te2=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te2 ) && Te2=$(echo $Te2 | cut -c9-16)");
   system("Te3=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te2 ) && Te3=$(echo $Te3 | cut -c9-16)");
   system("LD_PRELOAD=../../../lib/libcrypto.so.1.0.0 ./security_daemon &");
   system("./attacker 1 1 210  $Te0 $Te1 $Te2 $Te3 ../../../lib/libcrypto.so.1.0.0");
-  chdir("/home/attacks/gem5-lib/automotive/basicmath-libflush/");
+  chdir("/home/nikos/gem5-lib/automotive/basicmath-libflush/");
   */
   	
   	
