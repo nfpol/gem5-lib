@@ -49,6 +49,13 @@ int main(void) {
 		fprintf(fPtr, "%u                            ", get_event_counter(6) );
 		fprintf(fPtr, "%u                            \n", get_timing());
 		i++;
+		pmu_enable_config_counter(0);
+		pmu_enable_config_counter(1);
+		pmu_enable_config_counter(2);
+		pmu_enable_config_counter(3);
+		pmu_enable_config_counter(4);
+		pmu_enable_config_counter(5);
+		pmu_enable_all_counters();
 	}
 	
 
