@@ -33,6 +33,17 @@ inline void pmu_el0_access(void)  /* Enabling PMU user access */
 
 }
 
+inline void pmu_enable_all_counters(void)  /* Enabling the counters */
+{
+	uint32_t value = 0;
+	asm volatile("MRS %0, PMCR_EL0" : "=r" (value));  /* read previous value and add the new config after */
+	//printf("Current value of PMCR_EL0 is %zu\n", value);
+	value |= ARMV8_PMCR_E; 
+	asm volatile ("ISB");
+	asm volatile("MSR PMCR_EL0, %0" : : "r" (value)); 
+	//printf("Configure PMCR_EL0 with %zu\n", value);
+}
+
 inline void pmu_enable_el0(void)  /* Enabling the PMU */
 {
 	uint32_t value = 0;

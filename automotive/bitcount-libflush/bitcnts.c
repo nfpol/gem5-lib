@@ -29,6 +29,8 @@ extern void init_pmu(void);
 extern void select_event(void);
 extern void reset_event_counters(void);
 extern void reset_cycle_counter(void);
+extern void event_counters_disable(void);
+extern void cycle_counter_disable(void);
 
 static int CDECL bit_shifter(long int x);
 
@@ -41,12 +43,12 @@ int main(int argc, char *argv[])
   int i, cminix, cmaxix;
   long j, n, seed;
   int iterations;
-	
+	/*
 	init_pmu();
 	select_event();
 	reset_event_counters();
 	reset_cycle_counter();
-	
+	*/
   static int (* CDECL pBitCntFunc[FUNCS])(long) = {
     bit_count,
     bitcount,
@@ -95,7 +97,7 @@ int main(int argc, char *argv[])
     //printf("%-38s> Time: %7.3f sec.; Bits: %ld\n", text[i], ct, n);
   }
 	
-	diff2 = get_timing();   //time before the attack
+	//diff2 = get_timing();   //time before the attack
 	
 	/*Run libflush example */
   chdir("/home/nikos/armageddon/libflush/"); 
@@ -114,24 +116,24 @@ int main(int argc, char *argv[])
   chdir("/home/nikos/gem5-lib/automotive/bitcount-libflush/");
   */
 
-  diff2 = get_timing() - diff2;
+  //diff2 = get_timing() - diff2;
 	
   //printf("\nBest  > %s\n", text[cminix]);
   //printf("Worst > %s\n", text[cmaxix]);
-	
+	/*
 	cycle_counter_disable();
-  event_counters_disable();
+  	event_counters_disable();
 	
 	printf("\nPerformance monitor results\n\n");
-  printf("i cache refills= %u\n", get_event_counter(0)); /*get_event_counter(0)*/
-  printf("retired branches= %u\n", get_event_counter(1) );
-  printf("d cache refills= %u\n", get_event_counter(2) );
-  printf("retired instructions = %u\n", get_event_counter(3) );
-  printf("branch predictor misses = %u\n", get_event_counter(4) );
-  printf("Predictable branch speculatively executed = %u\n", get_event_counter(5) );
-  printf("CPU cycles = %u\n", get_timing());
-  diff = get_timing() - diff2;
-  printf("CPU cycles  attack = %u\n", diff2);
+	printf("i cache refills= %u\n", get_event_counter(0)); 
+	printf("retired branches= %u\n", get_event_counter(1) );
+	printf("d cache refills= %u\n", get_event_counter(2) );
+	printf("retired instructions = %u\n", get_event_counter(3) );
+	printf("branch predictor misses = %u\n", get_event_counter(4) );
+	printf("Predictable branch speculatively executed = %u\n", get_event_counter(5) );
+	printf("CPU cycles = %lu\n", get_timing());
+	diff = get_timing() - diff2;
+	printf("CPU cycles  attack = %lu\n", diff2); */
 	
 	
   return 0;

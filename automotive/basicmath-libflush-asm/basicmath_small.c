@@ -23,7 +23,7 @@ int main(void)
 	int cycles_normal = 0;
 	int diff = 0;
 	chdir("/home/nikos/XKCP/support/Kernel-PMU/");
-  system("./load-module");
+	system("./load-module");
 	chdir("/home/nikos/lib-gem5/automotive/basicmath-libflush/");
   double  a1 = 1.0, b1 = -10.5, c1 = 32.0, d1 = -30.0;
   double  a2 = 1.0, b2 = -4.5, c2 = 17.0, d2 = -30.0;
@@ -38,12 +38,12 @@ int main(void)
   long n = 0;
   /* resetstats */
   __asm__ __volatile__ ("mov x0, #0; mov x1, #0; .inst 0XFF000110 | (0x40 << 16);");
-	
+	/*
 	init_pmu();
 	select_event();
 	reset_event_counters();
 	reset_cycle_counter();
-
+	*/
   /* solve soem cubic functions */
   printf("********* CUBIC FUNCTIONS ***********\n");
   /* should get 3 solutions: 2, 6 & 2.5   */
@@ -83,14 +83,14 @@ int main(void)
     }
   }
   
-	cycles_normal = get_event_counter(6);
+	//cycles_normal = get_event_counter(6);
 	
-	printf("Cycles CPU before exec  of attack = %u\n", cycles_normal);
+	//printf("Cycles CPU before exec  of attack = %u\n", cycles_normal);
 	
 	/*Run libflush example */
-  chdir("/home/nikos/armageddon/libflush/"); 
-  system("./example/build/armv8/release/bin/example -s 400 -n  1000 -x 1 -z 10");
-  chdir("/home/nikos/gem5-lib/automotive/basicmath-libflush/");	
+  	chdir("/home/nikos/armageddon/libflush/"); 
+  	system("./example/build/armv8/release/bin/example -s 400 -n  1000 -x 1 -z 10");
+  	chdir("/home/nikos/gem5-lib/automotive/basicmath-libflush/");	
 	
 	/* Run attack crypto_side_channel_attacl */
 	/*
@@ -105,7 +105,7 @@ int main(void)
   */
   	
   	
-  cycles_normal = get_event_counter(6) - cycles_normal;
+  //cycles_normal = get_event_counter(6) - cycles_normal;
 	printf("********* INTEGER SQR ROOTS ***********\n");
 	
 	
@@ -131,12 +131,12 @@ int main(void)
   puts("");
   for (X = 0.0; X <= (2 * PI + 1e-6); X += (PI / 180))
     printf("%.12f radians = %3.0f degrees\n", X, rad2deg(X));
-	
+	/*
 	cycle_counter_disable();
 	event_counters_disable();
 	
 	printf("\nPerformance monitor results\n\n");
-	printf("refills in the instruction cache = %u\n", get_event_counter(12)); /*get_event_counter(0)*/
+	printf("refills in the instruction cache = %u\n", get_event_counter(12)); 
 	printf("retired branches = %u\n", get_event_counter(1) );
 	printf("refills in the data cache = %u\n", get_event_counter(2) );
 	printf("retired instructions = %u\n", get_event_counter(3) );
@@ -144,14 +144,14 @@ int main(void)
 	printf("Predictable branch speculatively executed = %u\n", get_event_counter(5) );
 	
 	
-	printf("retired loads = %u\n", get_event_counter(7)); /*get_event_counter(0)*/
+	printf("retired loads = %u\n", get_event_counter(7)); 
 	printf("retired stores = %u\n", get_event_counter(11) );
 	printf("retired loads + stores = %u\n", get_event_counter(8) );
 	printf("retired branches = %u\n", get_event_counter(9) );
 	printf("sw increment = %u\n", get_event_counter(10) );
 	printf("CPU cycles = %u\n", get_event_counter(6));
 	diff = get_event_counter(6) - cycles_normal;
-	printf("CPU cycles difference attack - nomimal = %u\n", diff);
+	printf("CPU cycles difference attack - nomimal = %u\n", diff); */
         /* dumpstats */
 	__asm__ __volatile__ ("mov x0, #0; mov x1, #0; .inst 0xFF000110 | (0x41 << 16);");
   

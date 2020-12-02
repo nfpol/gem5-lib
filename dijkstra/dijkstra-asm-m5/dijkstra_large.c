@@ -180,7 +180,7 @@ int main(int argc, char *argv[]) {
 
 	/*Run libflush example */
 	chdir("/home/nikos/gem5-lib/libflush/libflush-gem5-reg/"); 
-	system("./example/build/armv8/release/bin/example -s 600 -n  1000 -x 1 -z 10");
+	system("./example/build/armv8/release/bin/example -s 400 -n  1000 -x 1 -z 10");
 	chdir("/home/nikos/gem5-lib/dijkstra/dijkstra-m5/");		
 	
 	/* Run attack crypto_side_channel_attacl */

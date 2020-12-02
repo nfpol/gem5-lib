@@ -59,6 +59,8 @@ extern void init_pmu(void);
 extern void select_event(void);
 extern void reset_event_counters(void);
 extern void reset_cycle_counter(void);
+extern void event_counters_disable(void);
+extern void cycle_counter_disable(void);
 
 struct MyNode {
 	int foo;
@@ -80,10 +82,6 @@ main(int argc, char **argv)
 	unsigned long mask=0xffffffff;
 	float time;
 	
-	init_pmu();
-	select_event();
-	reset_event_counters();
-	reset_cycle_counter();
 
 	if (argc<2) {
 		//printf("Usage: %s <TCP stream>\n", argv[0]);
@@ -115,7 +113,6 @@ main(int argc, char **argv)
 		exit(0);
 	}
 	
-	diff2 = get_timing();   //time before the attack
 	
 	/*Run libflush example */
   chdir("/home/nikos/armageddon/libflush/"); 
@@ -134,7 +131,6 @@ main(int argc, char **argv)
   chdir("/home/nikos/gem5-lib/automotive/bitcount-libflush/");
   */
 
-  diff2 = get_timing() - diff2;
 	
 	bzero(phead, sizeof(*phead));
 	phead->p_m = (struct ptree_mask *)malloc(
@@ -235,19 +231,5 @@ main(int argc, char **argv)
 		}
 	}
 
-
-	cycle_counter_disable();
-  event_counters_disable();
-	
-	printf("\nPerformance monitor results\n\n");
-  printf("i cache refills= %u\n", get_event_counter(0)); /*get_event_counter(0)*/
-  printf("retired branches= %u\n", get_event_counter(1) );
-  printf("d cache refills= %u\n", get_event_counter(2) );
-  printf("retired instructions = %u\n", get_event_counter(3) );
-  printf("branch predictor misses = %u\n", get_event_counter(4) );
-  printf("Predictable branch speculatively executed = %u\n", get_event_counter(5) );
-  printf("CPU cycles = %u\n", get_timing());
-  diff = get_timing() - diff2;
-  printf("CPU cycles  attack = %u\n", diff2);
 	exit(1);
 }

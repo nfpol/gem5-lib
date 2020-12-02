@@ -18,6 +18,8 @@ extern void init_pmu(void);
 extern void select_event(void);
 extern void reset_event_counters(void);
 extern void reset_cycle_counter(void);
+extern void event_counters_disable(void);
+extern void cycle_counter_disable(void);
 
 
 struct _NODE
@@ -176,10 +178,10 @@ int main(int argc, char *argv[]) {
   /* open the adjacency matrix file */
   fp = fopen (argv[1],"r");
 
-	init_pmu();
+/* 	init_pmu();
 	select_event();
 	reset_event_counters();
-	reset_cycle_counter();
+	reset_cycle_counter(); */
 
   /* make a fully connected matrix */
   for (i=0;i<NUM_NODES;i++) {
@@ -191,7 +193,7 @@ int main(int argc, char *argv[]) {
   }
 	
 	
-	diff = get_timing();   //time before the attack
+	//diff = get_timing();   //time before the attack
 	
 	/*Run libflush example */
 	chdir("/home/nikos/armageddon/libflush/"); 
@@ -212,25 +214,25 @@ int main(int argc, char *argv[]) {
   /* finds 10 shortest paths between nodes */
 	
 	
-	diff = get_timing();   //time after the attack
+	//diff = get_timing();   //time after the attack
   for (i=0,j=NUM_NODES/2;i<20;i++,j++) {
 			j=j%NUM_NODES;
       dijkstra(i,j);
   }
   
-  cycle_counter_disable();
+/*   cycle_counter_disable();
   event_counters_disable();
 
   printf("\nPerformance monitor results\n\n");
-  printf("i cache refills= %u\n", get_event_counter(0)); /*get_event_counter(0)*/
+  printf("i cache refills= %u\n", get_event_counter(0)); 
   printf("retired branches= %u\n", get_event_counter(1) );
   printf("d cache refills= %u\n", get_event_counter(2) );
   printf("retired instructions = %u\n", get_event_counter(3) );
   printf("branch predictor misses = %u\n", get_event_counter(4) );
   printf("Predictable branch speculatively executed = %u\n", get_event_counter(5) );
-  printf("CPU cycles = %u\n", get_timing());
+  printf("CPU cycles = %lu\n", get_timing());
   diff = get_timing() ;
-  printf("CPU cycles attack = %u\n", diff);
+  printf("CPU cycles attack = %lu\n", diff); */
   
   /* dumpstats */
   __asm__ __volatile__ ("mov x0, #0; mov x1, #0; .inst 0xFF000110 | (0x41 << 16);");

@@ -57,6 +57,7 @@ int main(void) {
 		pmu_enable_config_counter(3);
 		pmu_enable_config_counter(4);
 		pmu_enable_config_counter(5);
+		pmu_enable_config_counter(6);
 		pmu_enable_all_counters();
 	}
 	

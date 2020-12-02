@@ -16,6 +16,8 @@ extern void init_pmu(void);
 extern void select_event(void);
 extern void reset_event_counters(void);
 extern void reset_cycle_counter(void);
+extern void event_counters_disable(void);
+extern void cycle_counter_disable(void);
 
              
 int main(void) {
@@ -48,7 +50,7 @@ int main(void) {
 		fprintf(fPtr, "%u                            ", get_event_counter(4) );
 		fprintf(fPtr, "%u                            ", get_event_counter(5) );
 		fprintf(fPtr, "%u                            ", get_event_counter(6) );
-		fprintf(fPtr, "%u                            \n", get_timing());
+		fprintf(fPtr, "%lu                            \n", get_timing());
 		i++;
 		pmu_enable_config_counter(0);
 		pmu_enable_config_counter(1);
@@ -56,6 +58,7 @@ int main(void) {
 		pmu_enable_config_counter(3);
 		pmu_enable_config_counter(4);
 		pmu_enable_config_counter(5);
+		pmu_enable_config_counter(6);
 		pmu_enable_all_counters();
 	}
 	

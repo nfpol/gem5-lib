@@ -16,6 +16,8 @@ extern void init_pmu(void);
 extern void select_event(void);
 extern void reset_event_counters(void);
 extern void reset_cycle_counter(void);
+extern void event_counters_disable(void);
+extern void cycle_counter_disable(void);
 /* The printf's may be removed to isolate just the math calculations */
 
 int main(void)
@@ -23,7 +25,7 @@ int main(void)
 	int cycles_normal = 0;
 	int diff = 0;
 	chdir("/home/nikos/XKCP/support/Kernel-PMU/");
-  system("./load-module");
+  	system("./load-module");
 	chdir("/home/nikos/lib-gem5/automotive/basicmath-libflush/");
 	char user_input[5];
 	double  a1 = 1.0, b1 = -10.5, c1 = 32.0, d1 = -30.0;
@@ -37,12 +39,12 @@ int main(void)
 	
 	/* resetstats */
 	__asm__ __volatile__ ("mov x0, #0; mov x1, #0; .inst 0XFF000110 | (0x40 << 16);");
-	
+	/*
 	init_pmu();
 	select_event();
 	reset_event_counters();
 	reset_cycle_counter();
-
+	*/
 	//printf("Enter five letters:\n ");
 	//fgets(user_input, 5, stdin);
 	//printf("You entered %s! \n", user_input);
@@ -122,29 +124,29 @@ int main(void)
 	}
 	
 
-	cycles_normal = get_event_counter(6);
+	//cycles_normal = get_event_counter(6);
 	
-	printf("Cycles CPU before exec  of attack = %u\n", cycles_normal);
+	//printf("Cycles CPU before exec  of attack = %u\n", cycles_normal);
 	
 	/*Run libflush example */
-  chdir("/home/nikos/armageddon/libflush/"); 
-  system("./example/build/armv8/release/bin/example -s 400 -n  1000 -x 1 -z 10");
-  chdir("/home/nikos/gem5-lib/automotive/basicmath-libflush/");	
+  	chdir("/home/nikos/armageddon/libflush/"); 
+  	system("./example/build/armv8/release/bin/example -s 400 -n  1000 -x 1 -z 10");
+  	chdir("/home/nikos/gem5-lib/automotive/basicmath-libflush/");	
 	
 	/* Run attack crypto_side_channel_attacl */
 	/*
-  chdir("/home/nikos/crypto-side-channel-attack/build/aes-attack/one-round-attack/real-security-daemon/"); 
-  system("Te0=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te0 ) && Te0=$(echo $Te0 | cut -c9-16)");
-  system("Te1=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te1 ) && Te1=$(echo $Te1 | cut -c9-16)");
-  system("Te2=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te2 ) && Te2=$(echo $Te2 | cut -c9-16)");
-  system("Te3=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te2 ) && Te3=$(echo $Te3 | cut -c9-16)");
-  system("LD_PRELOAD=../../../lib/libcrypto.so.1.0.0 ./security_daemon &");
-  system("./attacker 1 1 210  $Te0 $Te1 $Te2 $Te3 ../../../lib/libcrypto.so.1.0.0");
-  chdir("/home/nikos/gem5-lib/automotive/basicmath-libflush/");
-  */
+	chdir("/home/nikos/crypto-side-channel-attack/build/aes-attack/one-round-attack/real-security-daemon/"); 
+	system("Te0=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te0 ) && Te0=$(echo $Te0 | cut -c9-16)");
+	system("Te1=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te1 ) && Te1=$(echo $Te1 | cut -c9-16)");
+	system("Te2=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te2 ) && Te2=$(echo $Te2 | cut -c9-16)");
+	system("Te3=$(nm ../../../lib/libcrypto.so.1.0.0 | grep Te2 ) && Te3=$(echo $Te3 | cut -c9-16)");
+	system("LD_PRELOAD=../../../lib/libcrypto.so.1.0.0 ./security_daemon &");
+	system("./attacker 1 1 210  $Te0 $Te1 $Te2 $Te3 ../../../lib/libcrypto.so.1.0.0");
+	chdir("/home/nikos/gem5-lib/automotive/basicmath-libflush/");
+ 	 */
   	
   	
-  cycles_normal = get_event_counter(6) - cycles_normal;
+  	//cycles_normal = get_event_counter(6) - cycles_normal;
 	printf("********* INTEGER SQR ROOTS ***********\n");
 
 
@@ -176,12 +178,12 @@ int main(void)
 	for (X = 0.0; X <= (2 * PI + 1e-6); X += (PI / 5760))
 		printf("%.12f radians = %3.0f degrees\n", X, rad2deg(X));
 	
-	
+	/*
 	cycle_counter_disable();
 	event_counters_disable();
 	
 	printf("\nPerformance monitor results\n\n");
-	printf("refills in the instruction cache = %u\n", get_event_counter(12)); /*get_event_counter(0)*/
+	printf("refills in the instruction cache = %u\n", get_event_counter(12)); 
 	printf("retired branches = %u\n", get_event_counter(1) );
 	printf("refills in the data cache = %u\n", get_event_counter(2) );
 	printf("retired instructions = %u\n", get_event_counter(3) );
@@ -189,14 +191,14 @@ int main(void)
 	printf("Predictable branch speculatively executed = %u\n", get_event_counter(5) );
 	
 	
-	printf("retired loads = %u\n", get_event_counter(7)); /*get_event_counter(0)*/
+	printf("retired loads = %u\n", get_event_counter(7)); 
 	printf("retired stores = %u\n", get_event_counter(11) );
 	printf("retired loads + stores = %u\n", get_event_counter(8) );
 	printf("retired branches = %u\n", get_event_counter(9) );
 	printf("sw increment = %u\n", get_event_counter(10) );
 	printf("CPU cycles = %u\n", get_event_counter(6));
 	diff = get_event_counter(6) - cycles_normal;
-	printf("CPU cycles difference attack - nomimal = %u\n", diff);
+	printf("CPU cycles difference attack - nomimal = %u\n", diff); */
 	
 	/* dumpstats */
 	__asm__ __volatile__ ("mov x0, #0; mov x1, #0; .inst 0xFF000110 | (0x41 << 16);");

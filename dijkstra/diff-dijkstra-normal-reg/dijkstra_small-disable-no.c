@@ -17,7 +17,8 @@
 extern void select_event(void);
 extern void reset_event_counters(void);
 extern void reset_cycle_counter(void);
-
+extern void event_counters_disable(void);
+extern void cycle_counter_disable(void);
 
 struct _NODE
 {
@@ -173,10 +174,11 @@ int main(int argc, char *argv[]) {
   fp = fopen (argv[1],"r");
 	
 	/* initialize the pmu registers */
+	/*
   init_pmu();
   select_event();
   reset_event_counters();
-  reset_cycle_counter();
+  reset_cycle_counter(); */
 
   /* make a fully connected matrix */
   for (i=0;i<NUM_NODES;i++) {
@@ -195,15 +197,15 @@ int main(int argc, char *argv[]) {
   
   //cycle_counter_disable();
   //event_counters_disable();
-
+	/*
   printf("\nPerformance monitor results\n\n");
-  printf("i cache refills= %u\n", get_event_counter(0)); /*get_event_counter(0)*/
+  printf("i cache refills= %u\n", get_event_counter(0)); 
   printf("retired branches= %u\n", get_event_counter(1) );
   printf("d cache refills= %u\n", get_event_counter(2) );
   printf("retired instructions = %u\n", get_event_counter(3) );
   printf("branch predictor misses = %u\n", get_event_counter(4) );
   printf("Predictable branch speculatively executed = %u\n", get_event_counter(5) );
-  printf("CPU cycles = %u\n", get_timing());
+  printf("CPU cycles = %lu\n", get_timing()); */
  
  
   exit(0);
