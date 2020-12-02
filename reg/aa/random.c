@@ -16,6 +16,7 @@
 
 int main(int argc, char* argv[])
 {
+		char command[100];
 		double timing_frame = 0;
 		int loop_monitor = 0;
 		int loop_rand = 0;
@@ -74,7 +75,8 @@ int main(int argc, char* argv[])
 					return -1; */
 			}
 		}
-		system("./monitor/monitor -lm loop_monitor -t timing_frame &");
+		sprintf(command, "./monitor/monitor -lm %u -t %f &", loop_monitor, timing_frame);
+		system(command);
 		for(int i =0; i<loop_rand; i++) {
 			printf("nikos");
 			randomnumber = rand() % 4+ 1;

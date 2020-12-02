@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
   static const char* short_options = "t:lm";
 	
 	int c;
-  while ((c = getopt_long(argc, argv, short_options, long_options, NULL)) != -1) {
+  while ((c = getopt_long(argc, argv, short_options, NULL)) != -1) {
 		switch (c) {
       case 't':
         timing_frame = atof(optarg);
