@@ -11,7 +11,7 @@
 
 
 #include <unistd.h>   //for sleep()
-extern void monitor(int, float);
+extern void monitor(int, double);
 
 
 int main(int argc, char* argv[])
@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
     int randomnumber;
 		srand(time(NULL));
 		FILE * fPtr;
-  		fPtr = fopen("./monitor/output-reg.dat", "w");
+  		fPtr = fopen("output-reg.dat", "a");
   		if(fPtr == NULL){
        		/* File not created hence exit */
         		printf("Unable to create file.\n");
@@ -76,6 +76,7 @@ int main(int argc, char* argv[])
 		}
 		void monitor(loop_monitor, timing_frame);
 		for(int i =0; i<loop_rand; i++) {
+			printf("nikos");
 			randomnumber = rand() % 4+ 1;
 			if (randomnumber==1){
 					/*Run libflush example */
