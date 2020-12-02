@@ -186,6 +186,10 @@ cd telecomm/FFT
 make clean
 make
 cd ..
+cd gsm
+make clean
+make all
+cd ..
 cd CRC32
 make clean
 make 
@@ -194,6 +198,12 @@ cd adpcm/src
 make clean
 make all
 cd ..
+cd ..
+cd ..
+cd office
+cd stringsearch
+make clean
+make all
 cd ..
 cd ..
 cd monitor
@@ -212,7 +222,21 @@ cd random-bench-attack
 make clean
 make all
 cd ..
+cd random-bench-attack-monitor
+make clean && make all
+cd monitor-asm
+make clean && make all
+cd ..
+cd reg
+make clean 
+make all
+cd monitor
+make clean && make all
+cd ..
 
+cd ..
+
+cd ..
 git add -A
 git commit -m "clean"
 git push origin master
