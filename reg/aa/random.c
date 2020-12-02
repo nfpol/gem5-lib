@@ -84,6 +84,7 @@ int main(int argc, char* argv[])
 		}
 		//sprintf(command, "./monitor/monitor -lm %u -t %u -d %u &", loop_monitor, timef, div);
 		//system(command);
+		printf("%u", loop_rand);
 		for(int i =0; i<loop_rand; i++) {
 			printf("nikos");
 			randomnumber = rand() % 4+ 1;
