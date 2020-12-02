@@ -32,14 +32,14 @@ int main(int argc, char* argv[])
         		exit(EXIT_FAILURE);
 		}	
 			/* Parse arguments */
-		static const char* short_options = "t:lm:lr:d";
-		/*static struct option long_options[] = {
+		static const char* short_options = "t:m:r:d:";
+		static struct option long_options[] = {
 			{"timing",           required_argument, NULL, 't'},
-			{"loop_monitor",     required_argument, NULL, 'lm'},
-			{"loop_rand",        required_argument, NULL, 'lr'},
+			{"loop_monitor",     required_argument, NULL, 'm'},
+			{"loop_rand",        required_argument, NULL, 'r'},
 			{"divider",          required_argument, NULL, 'd'},
-			{ NULL,             0, NULL, 0}
-		};*/
+			{ NULL,              0, NULL, 0}
+		}; 
 	
 		int c;
 		while ((c = getopt_long(argc, argv, short_options, NULL)) != -1) {
@@ -51,14 +51,14 @@ int main(int argc, char* argv[])
 						return -1;
 					}
 					break;
-				case 'lm':
+				case 'm':
 					loop_monitor = atoi(optarg);
 					if (loop_monitor <= 0) {
 						fprintf(stderr, "Error: loop_monitor is negative\n");
 						return -1;
 					}
 					break;
-				case 'lr':
+				case 'r':
 					loop_rand = atoi(optarg);
 					if (loop_rand <= 0) {
 						fprintf(stderr, "Error: loop_rand is negative\n");
@@ -76,15 +76,15 @@ int main(int argc, char* argv[])
 				case 'h':
 					print_help(argv);
 					return 0;
-				case '?':
+				case '?':*/
 				default:
 					fprintf(stderr, "Error: Invalid option '-%c'\n", optopt);
-					return -1; */
+					return -1; 
 			}
 		}
 		//sprintf(command, "./monitor/monitor -lm %u -t %u -d %u &", loop_monitor, timef, div);
 		//system(command);
-		printf("%u", loop_rand);
+		printf("%u:\n", loop_rand);
 		for(int i =0; i<loop_rand; i++) {
 			printf("nikos");
 			randomnumber = rand() % 4+ 1;
