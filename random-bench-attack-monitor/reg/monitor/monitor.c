@@ -16,7 +16,8 @@ extern void init_pmu(void);
 extern void select_event(void);
 extern void reset_event_counters(void);
 extern void reset_cycle_counter(void);
-
+extern void event_counters_disable(void);
+extern void cycle_counter_disable(void);
              
 int main(void) {
   int i,j,k = 0;
