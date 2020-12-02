@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
 		char command[100];
 		double timing_frame = 0;
 		int div = 0 ;
-		int time = 0;
+		int time_f = 0;
 		int loop_monitor = 0;
 		int loop_rand = 0;
 		FILE* logfile = NULL;
@@ -47,8 +47,8 @@ int main(int argc, char* argv[])
 		while ((c = getopt_long(argc, argv, short_options, NULL)) != -1) {
 			switch (c) {
 				case 't':
-					time = atof(optarg);
-					if (time <= 0) {
+					time_f = atof(optarg);
+					if (time_f <= 0) {
 						fprintf(stderr, "Error: timing frame is negative.\n");
 						return -1;
 					}
@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
 					return -1; */
 			}
 		}
-		sprintf(command, "./monitor/monitor -lm %u -t %u -d %u &", loop_monitor, timing_frame);
+		sprintf(command, "./monitor/monitor -lm %u -t %u -d %u &", loop_monitor, time_f, div);
 		system(command);
 		for(int i =0; i<loop_rand; i++) {
 			printf("nikos");
