@@ -36,6 +36,7 @@ int main(void) {
 	fprintf(fPtr, "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n");
 	while(i < 60000){
 		reset_event_counters(); //reset event counters
+		pmu_reset_cycle_counter();
 		sleep(0.01);  //sleep 10ms
 		//sleep(1);
 		event_counters_disable();
