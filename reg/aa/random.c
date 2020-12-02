@@ -21,20 +21,16 @@ int main(int argc, char* argv[])
 		int timef = 0;
 		int loop_monitor = 0;
 		int loop_rand = 0;
-		printf("a");
 		FILE* logfile = NULL;
     int randomnumber;
 		srand(time(NULL));
 		FILE * fPtr;
-		printf("here");
   		fPtr = fopen("./monitor/output-reg.dat", "a");
   		if(fPtr == NULL){
        		/* File not created hence exit */
         		printf("Unable to create file.\n");
         		exit(EXIT_FAILURE);
-		}
-		
-	printf("here");	
+		}	
 			/* Parse arguments */
 		static const char* short_options = "t:lm:lr:d";
 		/*static struct option long_options[] = {
@@ -86,9 +82,8 @@ int main(int argc, char* argv[])
 					return -1; */
 			}
 		}
-		printf("here");
-		sprintf(command, "./monitor/monitor -lm %u -t %u -d %u &", loop_monitor, timef, div);
-		system(command);
+		//sprintf(command, "./monitor/monitor -lm %u -t %u -d %u &", loop_monitor, timef, div);
+		//system(command);
 		for(int i =0; i<loop_rand; i++) {
 			printf("nikos");
 			randomnumber = rand() % 4+ 1;
