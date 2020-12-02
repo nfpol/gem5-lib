@@ -20,7 +20,7 @@ extern void event_counters_disable(void);
 extern void cycle_counter_disable(void);
 
              
-void monitor(int loop, float timing_frame) {
+void monitor(int loop, double timing_frame) {
 
   int i,j,k = 0;
   FILE * fPtr;

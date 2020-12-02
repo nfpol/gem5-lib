@@ -16,7 +16,7 @@ extern void monitor(int, float);
 
 int main(int argc, char* argv[])
 {
-		float timing_frame = 0;
+		double timing_frame = 0;
 		int loop_monitor = 0;
 		int loop_rand = 0;
 		FILE* logfile = NULL;
@@ -32,19 +32,19 @@ int main(int argc, char* argv[])
 		
 		
 			/* Parse arguments */
-		static const char* short_options = "t:l";
-		static struct option long_options[] = {
+		static const char* short_options = "t:lm:lr";
+		/*static struct option long_options[] = {
 			{"timing",           required_argument, NULL, 't'},
 			{"loop_monitor",     required_argument, NULL, 'lm'},
 			{"loop_rand",        required_argument, NULL, 'lr'},
 			{ NULL,             0, NULL, 0}
-		};
+		};*/
 	
 		int c;
-		while ((c = getopt_long(argc, argv, short_options, long_options, NULL)) != -1) {
+		while ((c = getopt_long(argc, argv, short_options, NULL)) != -1) {
 			switch (c) {
 				case 't':
-					timing_frame = atoi(optarg);
+					timing_frame = atof(optarg);
 					if (timing_frame <= 0) {
 						fprintf(stderr, "Error: timing frame is negative.\n");
 						return -1;
@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
 						fprintf(stderr, "Error: loop_rand is negative\n");
 						return -1;
 					}
-					break
+					break;
 					/*
 				case 'h':
 					print_help(argv);
@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
 					return -1; */
 			}
 		}
-		void monitor(timing_frame, loop_monitor);
+		void monitor(loop_monitor, timing_frame);
 		for(int i =0; i<loop_rand; i++) {
 			randomnumber = rand() % 4+ 1;
 			if (randomnumber==1){
