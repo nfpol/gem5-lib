@@ -18,6 +18,8 @@ int main(int argc, char* argv[])
 {
 		char command[100];
 		double timing_frame = 0;
+		int div = 0 ;
+		int time = 0;
 		int loop_monitor = 0;
 		int loop_rand = 0;
 		FILE* logfile = NULL;
@@ -33,7 +35,7 @@ int main(int argc, char* argv[])
 		
 		
 			/* Parse arguments */
-		static const char* short_options = "t:lm:lr";
+		static const char* short_options = "t:lm:lr:d";
 		/*static struct option long_options[] = {
 			{"timing",           required_argument, NULL, 't'},
 			{"loop_monitor",     required_argument, NULL, 'lm'},
@@ -45,8 +47,8 @@ int main(int argc, char* argv[])
 		while ((c = getopt_long(argc, argv, short_options, NULL)) != -1) {
 			switch (c) {
 				case 't':
-					timing_frame = atof(optarg);
-					if (timing_frame <= 0) {
+					time = atof(optarg);
+					if (time <= 0) {
 						fprintf(stderr, "Error: timing frame is negative.\n");
 						return -1;
 					}
@@ -65,6 +67,13 @@ int main(int argc, char* argv[])
 						return -1;
 					}
 					break;
+				case 'd':
+					div = atoi(optarg);
+					if (div <= 0) {
+						fprintf(stderr, "Error: loop_rand is negative\n");
+						return -1;
+					}
+					break;
 					/*
 				case 'h':
 					print_help(argv);
@@ -75,7 +84,7 @@ int main(int argc, char* argv[])
 					return -1; */
 			}
 		}
-		sprintf(command, "./monitor/monitor -lm %u -t %f &", loop_monitor, timing_frame);
+		sprintf(command, "./monitor/monitor -lm %u -t %u -d %u &", loop_monitor, timing_frame);
 		system(command);
 		for(int i =0; i<loop_rand; i++) {
 			printf("nikos");
