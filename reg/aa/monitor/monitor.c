@@ -22,7 +22,7 @@ extern void cycle_counter_disable(void);
              
 int main(int argc, char* argv[]) {
  /* Define parameters */
-	double timing_frame = 0;
+	float timing_frame = 0;
 	int time = 0;
 	int div = 0;
 	int loop = 0;
@@ -78,7 +78,7 @@ int main(int argc, char* argv[]) {
 	select_event();
 	reset_event_counters();
 	reset_cycle_counter();
-	timing_frame = (time/div);
+	timing_frame = (time/(float)div);
 	printf("%f", timing_frame);
 	printf("Performance monitor results\n");
 	fprintf(fPtr, "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n");

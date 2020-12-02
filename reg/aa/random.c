@@ -17,15 +17,16 @@
 int main(int argc, char* argv[])
 {
 		char command[100];
-		double timing_frame = 0;
 		int div = 0 ;
-		int time_f = 0;
+		int timef = 0;
 		int loop_monitor = 0;
 		int loop_rand = 0;
+		printf("a");
 		FILE* logfile = NULL;
     int randomnumber;
 		srand(time(NULL));
 		FILE * fPtr;
+		printf("here");
   		fPtr = fopen("./monitor/output-reg.dat", "a");
   		if(fPtr == NULL){
        		/* File not created hence exit */
@@ -33,13 +34,14 @@ int main(int argc, char* argv[])
         		exit(EXIT_FAILURE);
 		}
 		
-		
+	printf("here");	
 			/* Parse arguments */
 		static const char* short_options = "t:lm:lr:d";
 		/*static struct option long_options[] = {
 			{"timing",           required_argument, NULL, 't'},
 			{"loop_monitor",     required_argument, NULL, 'lm'},
 			{"loop_rand",        required_argument, NULL, 'lr'},
+			{"divider",          required_argument, NULL, 'd'},
 			{ NULL,             0, NULL, 0}
 		};*/
 	
@@ -47,8 +49,8 @@ int main(int argc, char* argv[])
 		while ((c = getopt_long(argc, argv, short_options, NULL)) != -1) {
 			switch (c) {
 				case 't':
-					time_f = atof(optarg);
-					if (time_f <= 0) {
+					timef = atoi(optarg);
+					if (timef <= 0) {
 						fprintf(stderr, "Error: timing frame is negative.\n");
 						return -1;
 					}
@@ -84,7 +86,8 @@ int main(int argc, char* argv[])
 					return -1; */
 			}
 		}
-		sprintf(command, "./monitor/monitor -lm %u -t %u -d %u &", loop_monitor, time_f, div);
+		printf("here");
+		sprintf(command, "./monitor/monitor -lm %u -t %u -d %u &", loop_monitor, timef, div);
 		system(command);
 		for(int i =0; i<loop_rand; i++) {
 			printf("nikos");
