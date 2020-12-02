@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 #include <string.h>
-
+#include <stdlib.h>
 
 #define NUM_NODES                          100
 #define NONE                               9999
