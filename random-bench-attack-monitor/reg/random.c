@@ -46,7 +46,7 @@ int main()
 				chdir("/home/nikos/gem5-lib/");
 			}	
 			else if (randomnumber==3){
-				printf(""bitcount\n");
+				printf("bitcount\n");
 				//fprintf(fPtr, "bitcount\n");
 				chdir("/home/nikos/gem5-lib/automotive/bitcount"); 
 				//system("m5 resetstats");
