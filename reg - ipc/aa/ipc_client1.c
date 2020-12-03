@@ -110,10 +110,10 @@ int main()
 	
 	/* Send some shit */
 	char* data = calloc(16, sizeof(data));
-	for (int i = 0; i < 10; i++){
+	for (int i = 0; i < 200; i++){
 		data = "monitoring P2";
 		ipc_send(data, 16);	
-		sleep(0);
+		sleep(0.1);
 	}
 		
 	return 0;

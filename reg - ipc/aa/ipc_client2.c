@@ -101,6 +101,7 @@ ipc_send(char* data, size_t size)
 
 int main()
 {
+	srand(time(NULL));
 	/* 1. Initialize */
 	if(ipc_connect()) {
 		printf("ipc connect error\n");
@@ -112,8 +113,8 @@ int main()
 	char* data = calloc(16, sizeof(data));
 	for (int i = 0; i < 10; i++){
 		data = "libflush P1";
-		ipc_send(data, 16);	
-		sleep(0);
+		ipc_send(data, 16);
+		sleep(rand()%3);
 	}
 	
 	ipc_disconnect();
