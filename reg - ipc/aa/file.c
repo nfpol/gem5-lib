@@ -42,16 +42,19 @@ int main(int argc, char **argv)
 	
 		client_msg = (struct shm_msg *)((char*)addr + SHM_CLIENT_BUF_IDX_RAND);
     server_msg = (struct shm_msg *)((char*)addr + SHM_SERVER_BUF_IDX);
-	
+		server_msg->status = 1;
+		
 	printf("file is running...\n");
 	
 	while(1) {
 		/* read msg */
 		while(1) {
 			if(client_msg->status == 1) {
+				server_msg->status = 0;
 				memcpy(msg, client_msg->msg, client_msg->len);
 				printf("receive msg : %s", msg)
 				client_msg->status = 0;
+				server_msg->status = 1;
 				break;
 			}
 			sleep(0);
