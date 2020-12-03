@@ -13,7 +13,7 @@
 int server_fd;
 void *addr;
 struct shm_msg *client_msg;
-struct shm_msg *client_monitor
+struct shm_msg *client_monitor;
 struct shm_msg *server_msg;
 char msg[MSG_SIZE_MAX] = {0,};
 
