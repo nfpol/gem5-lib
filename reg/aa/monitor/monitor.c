@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
 	FILE* logfile = NULL;
   int i,j,k = 0;
   FILE * fPtr;
-  fPtr = fopen("output.dat", "w");
+  fPtr = fopen("output-reg.dat", "w");
   if(fPtr == NULL){
         /* File not created hence exit */
         printf("Unable to create file.\n");
@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) {
   }
 	
 	/* Parse arguments */
-  static const char* short_options = "t:lm:d";
+  static const char* short_options = "t:m:d:";
 	
 	int c;
   while ((c = getopt_long(argc, argv, short_options, NULL)) != -1) {
@@ -49,7 +49,7 @@ int main(int argc, char* argv[]) {
           return -1;
         }
         break;
-      case 'lm':
+      case 'm':
         loop = atoi(optarg);
         if (loop <= 0) {
           fprintf(stderr, "Error: loop is negative\n");
@@ -66,11 +66,11 @@ int main(int argc, char* argv[]) {
 				/*
       case 'h':
         print_help(argv);
-        return 0;
+        return 0; */
       case '?':
       default:
         fprintf(stderr, "Error: Invalid option '-%c'\n", optopt);
-        return -1; */
+        return -1; 
     }
   }
 		
@@ -78,8 +78,9 @@ int main(int argc, char* argv[]) {
 	select_event();
 	reset_event_counters();
 	reset_cycle_counter();
-	timing_frame = (time/(float)div);
-	printf("%f", timing_frame);
+	timing_frame = (time/(double)div);
+	printf("timiing %f\n", timing_frame);
+	printf("loop %u\n", loop);
 	printf("Performance monitor results\n");
 	fprintf(fPtr, "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n");
 	while(i < loop){
@@ -106,6 +107,7 @@ int main(int argc, char* argv[]) {
 		pmu_enable_config_counter(5);
 		pmu_enable_config_counter(6);
 		pmu_enable_all_counters();
+		printf("%u\n", i);
 	}
 	
 

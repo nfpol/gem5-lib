@@ -33,13 +33,13 @@ int main(int argc, char* argv[])
 		}	
 			/* Parse arguments */
 		static const char* short_options = "t:m:r:d:";
-		static struct option long_options[] = {
+		/*static struct option long_options[] = {
 			{"timing",           required_argument, NULL, 't'},
 			{"loop_monitor",     required_argument, NULL, 'm'},
 			{"loop_rand",        required_argument, NULL, 'r'},
 			{"divider",          required_argument, NULL, 'd'},
 			{ NULL,              0, NULL, 0}
-		}; 
+		};*/ 
 	
 		int c;
 		while ((c = getopt_long(argc, argv, short_options, NULL)) != -1) {
@@ -82,8 +82,8 @@ int main(int argc, char* argv[])
 					return -1; 
 			}
 		}
-		//sprintf(command, "./monitor/monitor -lm %u -t %u -d %u &", loop_monitor, timef, div);
-		//system(command);
+		sprintf(command, "./monitor/monitor -lm %u -t %u -d %u &", loop_monitor, timef, div);
+		system(command);
 		printf("%u:\n", loop_rand);
 		for(int i =0; i<loop_rand; i++) {
 			printf("nikos");
