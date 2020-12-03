@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
 	FILE* logfile = NULL;
   int i,j,k = 0;
   FILE * fPtr;
-  fPtr = fopen("output-reg.dat", "w");
+  fPtr = fopen("output-reg.dat", "a");
   if(fPtr == NULL){
         /* File not created hence exit */
         printf("Unable to create file.\n");
@@ -88,6 +88,7 @@ int main(int argc, char* argv[]) {
 	reset_cycle_counter();
 	timing_frame = (time/(double)div);
 	printf("Performance monitor results\n");
+	fprintf(fPtr, "PMU monitor is starting monitoring counters\n\n");
 	fprintf(fPtr, "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n");
 	while(i < loop){
 		reset_event_counters(); //reset event counters
@@ -117,6 +118,7 @@ int main(int argc, char* argv[]) {
 	
 
 	printf("PMU monitor is closing ....\n");
+	fprintf(fPtr, "PMU monitor is closing\n");
 	fclose(fPtr);
 	
 		
