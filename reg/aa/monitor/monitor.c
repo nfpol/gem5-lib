@@ -19,13 +19,22 @@ extern void reset_cycle_counter(void);
 extern void event_counters_disable(void);
 extern void cycle_counter_disable(void);
 
-             
+ 
+static void print_help(char* argv[]) {
+  fprintf(stdout, "Usage: %s [OPTIONS]\n", argv[0]);
+  fprintf(stdout, "\t-t, -time <value>\t TIME (default: t 1  --> 1/10 --> 0.1sec )\n");
+  fprintf(stdout, "\t-m, -loop_monitor <value>\t  Loop for the moniotr (default:  m 1000)\n");
+  fprintf(stdout, "\t-d, -div <value>\t time divider (default:  div 10)\n");
+  fprintf(stdout, "\t-h, -help\t\t Help page\n");
+}
+
+            
 int main(int argc, char* argv[]) {
  /* Define parameters */
 	float timing_frame = 0;
-	int time = 0;
-	int div = 0;
-	int loop = 0;
+	int time = 1;
+	int div = 10;
+	int loop = 1000;
 	FILE* logfile = NULL;
   int i,j,k = 0;
   FILE * fPtr;
@@ -37,7 +46,7 @@ int main(int argc, char* argv[]) {
   }
 	
 	/* Parse arguments */
-  static const char* short_options = "t:m:d:";
+  static const char* short_options = "t:m:d:h:";
 	
 	int c;
   while ((c = getopt_long(argc, argv, short_options, NULL)) != -1) {
@@ -63,10 +72,9 @@ int main(int argc, char* argv[]) {
           return -1;
         }
         break;
-				/*
       case 'h':
         print_help(argv);
-        return 0; */
+        return 0;
       case '?':
       default:
         fprintf(stderr, "Error: Invalid option '-%c'\n", optopt);
@@ -79,8 +87,6 @@ int main(int argc, char* argv[]) {
 	reset_event_counters();
 	reset_cycle_counter();
 	timing_frame = (time/(double)div);
-	printf("timiing %f\n", timing_frame);
-	printf("loop %u\n", loop);
 	printf("Performance monitor results\n");
 	fprintf(fPtr, "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n");
 	while(i < loop){

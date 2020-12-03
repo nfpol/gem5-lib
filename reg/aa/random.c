@@ -13,26 +13,35 @@
 #include <unistd.h>   //for sleep()
 
 
+static void print_help(char* argv[]) {
+  fprintf(stdout, "Usage: %s [OPTIONS]\n", argv[0]);
+  fprintf(stdout, "\t-t, -timing_frame <value>\t TIMING FRAME (default: t 1  --> 1/10 --> 0.1sec )\n");
+  fprintf(stdout, "\t-m, -loop_monitor <value>\t  Loop for the moniotr (default:  m 1000)\n");
+  fprintf(stdout, "\t-r, -loop_rand <value>\t How many random choices of benchmark attack to execute  (default: -r 20)\n");
+  fprintf(stdout, "\t-d, -div <value>\t time divider (default:  div 10)\n");
+  fprintf(stdout, "\t-h, -help\t\t Help page\n");
+}
+
 
 int main(int argc, char* argv[])
 {
 		char command[100];
-		int div = 0 ;
-		int timef = 0;
-		int loop_monitor = 0;
-		int loop_rand = 0;
+		int div = 10;
+		int timing_frame = 1;
+		int loop_monitor = 1000;
+		int loop_rand = 20;
 		FILE* logfile = NULL;
     int randomnumber;
 		srand(time(NULL));
 		FILE * fPtr;
-  		fPtr = fopen("./monitor/output-reg.dat", "a");
-  		if(fPtr == NULL){
-       		/* File not created hence exit */
-        		printf("Unable to create file.\n");
-        		exit(EXIT_FAILURE);
+		fPtr = fopen("./monitor/output-reg.dat", "a");
+		if(fPtr == NULL){
+				/* File not created hence exit */
+					printf("Unable to create file.\n");
+					exit(EXIT_FAILURE);
 		}	
 			/* Parse arguments */
-		static const char* short_options = "t:m:r:d:";
+		static const char* short_options = "t:m:r:d:h:";
 		/*static struct option long_options[] = {
 			{"timing",           required_argument, NULL, 't'},
 			{"loop_monitor",     required_argument, NULL, 'm'},
@@ -45,8 +54,8 @@ int main(int argc, char* argv[])
 		while ((c = getopt_long(argc, argv, short_options, NULL)) != -1) {
 			switch (c) {
 				case 't':
-					timef = atoi(optarg);
-					if (timef <= 0) {
+					timing_frame = atoi(optarg);
+					if (timing_frame <= 0) {
 						fprintf(stderr, "Error: timing frame is negative.\n");
 						return -1;
 					}
@@ -72,21 +81,18 @@ int main(int argc, char* argv[])
 						return -1;
 					}
 					break;
-					/*
 				case 'h':
 					print_help(argv);
 					return 0;
-				case '?':*/
+				case '?':
 				default:
 					fprintf(stderr, "Error: Invalid option '-%c'\n", optopt);
 					return -1; 
 			}
 		}
-		sprintf(command, "./monitor/monitor -lm %u -t %u -d %u &", loop_monitor, timef, div);
+		sprintf(command, "./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
 		system(command);
-		printf("%u:\n", loop_rand);
 		for(int i =0; i<loop_rand; i++) {
-			printf("nikos");
 			randomnumber = rand() % 4+ 1;
 			if (randomnumber==1){
 					/*Run libflush example */
