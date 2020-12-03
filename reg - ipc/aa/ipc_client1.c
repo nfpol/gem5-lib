@@ -39,7 +39,7 @@ ipc_connect(void)
 			goto out;
 	}
 
-	client_msg = (struct shm_msg *)((char*)addr + SHM_CLIENT_BUF_IDX_RAND);
+	client_msg = (struct shm_msg *)((char*)addr + SHM_CLIENT_BUF_IDX_MONITOR);
 	server_msg = (struct shm_msg *)((char*)addr + SHM_SERVER_BUF_IDX);
 	
 	return 0;
@@ -107,11 +107,13 @@ int main()
 		return 0;
 	}
 	printf("ipc connect successfull\n");
+	
 	/* Send some shit */
 	char* data = calloc(16, sizeof(data));
 	for (int i = 0; i < 10; i++){
-		data = "libflush ";
+		data = "monitoring P2";
 		ipc_send(data, 16);	
+		sleep(0);
 	}
 	
 	ipc_disconnect();

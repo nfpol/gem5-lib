@@ -41,6 +41,7 @@ int main(int argc, char **argv)
     memset(addr, 0, MSG_SIZE_MAX);
 	
 		client_msg = (struct shm_msg *)((char*)addr + SHM_CLIENT_BUF_IDX_RAND);
+		client_monitor = (struct shm_msg *)((char*)addr + SHM_CLIENT_BUF_IDX_MONITOR);
     server_msg = (struct shm_msg *)((char*)addr + SHM_SERVER_BUF_IDX);
 		server_msg->status = 1;
 		
@@ -54,6 +55,14 @@ int main(int argc, char **argv)
 				memcpy(msg, client_msg->msg, client_msg->len);
 				printf("receive msg : %s\n", msg);
 				client_msg->status = 0;
+				server_msg->status = 1;
+				break;
+			}
+			if(client_monitor->status == 1) {
+				client_monitor->status = 0;
+				memcpy(msg, client_monitor->msg, client_monitor->len);
+				printf("receive msg : %s\n", msg);
+				client_monitor->status = 0;
 				server_msg->status = 1;
 				break;
 			}
