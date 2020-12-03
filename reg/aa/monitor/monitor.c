@@ -113,7 +113,6 @@ int main(int argc, char* argv[]) {
 		pmu_enable_config_counter(5);
 		pmu_enable_config_counter(6);
 		pmu_enable_all_counters();
-		printf("%u\n", i);
 	}
 	
 
