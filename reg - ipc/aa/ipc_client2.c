@@ -113,7 +113,7 @@ int main()
 	for (int i = 0; i < 10; i++){
 		data = "libflush ";
 		ipc_send(data, 16);	
-		sleep(1);
+		sleep(0);
 	}
 	
 	ipc_disconnect();

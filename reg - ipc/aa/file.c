@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 			if(client_msg->status == 1) {
 				server_msg->status = 0;
 				memcpy(msg, client_msg->msg, client_msg->len);
-				printf("receive msg : %s", msg);
+				printf("receive msg : %s\n", msg);
 				client_msg->status = 0;
 				server_msg->status = 1;
 				break;
