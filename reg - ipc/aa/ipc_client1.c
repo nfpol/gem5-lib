@@ -115,9 +115,6 @@ int main()
 		ipc_send(data, 16);	
 		sleep(0);
 	}
-	
-	ipc_disconnect();
-	printf("ipc disconnect successfull\n");
-	
+		
 	return 0;
 }
