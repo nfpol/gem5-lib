@@ -139,7 +139,7 @@ int main(int argc, char* argv[])
 		}
 	fprintf(fPtr, "closing random execution\n");
 	//printf("closing random execution\n");
-	system("pkill -f monitor");
+	//system("pkill -f monitor");
 	fclose(fPtr);
 	return 0;
 }
