@@ -20,13 +20,7 @@ char msg[MSG_SIZE_MAX] = {0,};
 int main(int argc, char **argv)
 {
 	int i;
-	FILE * fPtr;
-	fPtr = fopen("./monitor/output-reg.dat", "a");
-	if(fPtr == NULL){
-			/* File not created hence exit */
-			printf("Unable to create file.\n");
-			exit(EXIT_FAILURE);
-	}	
+	
 	/* create shm */
     if((server_fd = shm_open(SHM_NAME, O_CREAT | O_RDWR, PERM_FILE)) == -1) {
         printf("shm_open error : %s\n", strerror(errno));
@@ -60,7 +54,6 @@ int main(int argc, char **argv)
 			if(client_msg->status == 1) {
 				server_msg->status = 0;
 				memcpy(msg, client_msg->msg, client_msg->len);
-				fprintf(fPtr, "%s", msg);
 				printf("receive msg : %s\n", msg);
 				client_msg->status = 0;
 				server_msg->status = 1;
@@ -69,7 +62,6 @@ int main(int argc, char **argv)
 			if(client_monitor->status == 1) {
 				client_monitor->status = 0;
 				memcpy(msg, client_monitor->msg, client_monitor->len);
-				fprintf(fPtr, "%s", msg);
 				printf("receive msg : %s\n", msg);
 				client_monitor->status = 0;
 				server_msg->status = 1;

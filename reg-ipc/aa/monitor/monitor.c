@@ -17,6 +17,12 @@
 #include <fcntl.h>
 #include "../ipc.h"
 
+/* IPC */
+static int ipc_fd;
+static void *addr;
+static struct shm_msg *client_msg;
+static struct shm_msg *server_msg;
+
 extern void init_pmu(void);
 extern void select_event(void);
 extern void reset_event_counters(void);
@@ -32,12 +38,6 @@ static void print_help(char* argv[]) {
   fprintf(stdout, "\t-d, -div <value>\t time divider (default:  div 10)\n");
   fprintf(stdout, "\t-h, -help\t\t Help page\n");
 }
-
-/* IPC */
-static int ipc_fd;
-static void *addr;
-static struct shm_msg *client_msg;
-static struct shm_msg *server_msg;
 
 static int 
 ipc_connect(void)
@@ -72,14 +72,16 @@ out:
 	return -1;
 }
 
+
 static void
 ipc_disconnect(void)
 {
+	char *data = calloc(16, sizeof(data));
 	/* send end msg */
 	client_msg->status = 0;
-	client_msg->len = sizeof(END_MSG) + AES128_KEY_LEN; // be careful to choose the right size
+	client_msg->len = sizeof(END_MSG) + 16; // be careful to choose the right size
 	strncpy(client_msg->msg, END_MSG, client_msg->len);
-	memcpy(client_msg->msg + sizeof(END_MSG), attack_ctx.result.predict_key, AES128_KEY_LEN); // todo
+	memcpy(client_msg->msg + sizeof(END_MSG), data, 16); // todo
 	client_msg->status = 1;
 	
 	/* close shm */
@@ -111,6 +113,7 @@ ipc_send(char* data, size_t size)
 	
 	return 0;
 }
+
             
 int main(int argc, char* argv[]) {
  /* Define parameters */
@@ -120,13 +123,22 @@ int main(int argc, char* argv[]) {
 	int loop = 1000;
 	FILE* logfile = NULL;
   int i,j,k = 0;
-  FILE * fPtr;
-  fPtr = fopen("output-reg.dat", "a");
-  if(fPtr == NULL){
-        /* File not created hence exit */
-        printf("Unable to create file.\n");
-        exit(EXIT_FAILURE);
-  }
+  //FILE * fPtr;
+  //fPtr = fopen("output-reg.dat", "a");
+  //if(fPtr == NULL){
+  //      /* File not created hence exit */
+  //      printf("Unable to create file.\n");
+  //      exit(EXIT_FAILURE);
+  //}
+	
+		/* 1. Initialize */
+	if(ipc_connect()) {
+		printf("ipc connect error\n");
+		return 0;
+	}
+	printf("ipc connect successfull\n");
+	
+	char* data = calloc(16, sizeof(data));
 	
 	/* Parse arguments */
   static const char* short_options = "t:m:d:h:";
@@ -171,8 +183,12 @@ int main(int argc, char* argv[]) {
 	reset_cycle_counter();
 	timing_frame = (time/(double)div);
 	printf("Performance monitor results\n");
-	fprintf(fPtr, "PMU monitor is starting monitoring counters\n\n");
-	fprintf(fPtr, "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n");
+	data = "PMU monitor is starting monitoring counters\n\n";
+	ipc_send(data, 16);
+	data = "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n";
+	ipc_send(data, 16);
+	//fprintf(fPtr, "PMU monitor is starting monitoring counters\n\n");
+	//fprintf(fPtr, "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n");
 	while(i < loop){
 		reset_event_counters(); //reset event counters
 		pmu_reset_cycle_counter();
@@ -180,14 +196,31 @@ int main(int argc, char* argv[]) {
 		//sleep(1);
 		event_counters_disable();
 		cycle_counter_disable();
-		fprintf(fPtr, "%u                            ", get_event_counter(0));
-		fprintf(fPtr, "%u                            ", get_event_counter(1) );
-		fprintf(fPtr, "%u                            ", get_event_counter(2) );
-		fprintf(fPtr, "%u                            ", get_event_counter(3) );
-		fprintf(fPtr, "%u                            ", get_event_counter(4) );
-		fprintf(fPtr, "%u                            ", get_event_counter(5) );
-		fprintf(fPtr, "%u                            ", get_event_counter(6) );
-		fprintf(fPtr, "%lu                            \n", get_timing());
+		
+		data = get_event_counter(0)) & "                            ";
+		ipc_send(data, 16);
+		data = get_event_counter(1)) & "                            ";
+		ipc_send(data, 16);
+		data = get_event_counter(2)) & "                            ";
+		ipc_send(data, 16);
+		data = get_event_counter(3)) & "                            ";
+		ipc_send(data, 16);
+		data = get_event_counter(4)) & "                            ";
+		ipc_send(data, 16);
+		data = get_event_counter(5)) & "                            ";
+		ipc_send(data, 16);
+		data = get_event_counter(6)) & "                            ";
+		ipc_send(data, 16);
+		data = get_timing()) & "                            \n";
+		ipc_send(data, 16);
+		//f(fPtr, "%u                            ", get_event_counter(0));
+		//f(fPtr, "%u                            ", get_event_counter(1) );
+		//f(fPtr, "%u                            ", get_event_counter(2) );
+		//f(fPtr, "%u                            ", get_event_counter(3) );
+		//f(fPtr, "%u                            ", get_event_counter(4) );
+		//f(fPtr, "%u                            ", get_event_counter(5) );
+		//f(fPtr, "%u                            ", get_event_counter(6) );
+		//f(fPtr, "%lu                            \n", get_timing());
 		i++;
 		pmu_enable_config_counter(0);
 		pmu_enable_config_counter(1);
@@ -199,10 +232,11 @@ int main(int argc, char* argv[]) {
 		pmu_enable_all_counters();
 	}
 	
-
+	data = "PMU monitor is closing ....\n";
+	ipc_send(data, 16);
 	printf("PMU monitor is closing ....\n");
-	fprintf(fPtr, "PMU monitor is closing\n");
-	fclose(fPtr);
+	//fprintf(fPtr, "PMU monitor is closing\n");
+	//fclose(fPtr);
 	
 		
   exit(0);

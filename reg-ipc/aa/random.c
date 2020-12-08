@@ -12,9 +12,16 @@
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+
 #include "ipc.h"
 
 #include <unistd.h>   //for sleep()
+
+/* IPC */
+static int ipc_fd;
+static void *addr;
+static struct shm_msg *client_msg;
+static struct shm_msg *server_msg;
 
 static void print_help(char* argv[]) {
   fprintf(stdout, "Usage: %s [OPTIONS]\n", argv[0]);
@@ -24,6 +31,82 @@ static void print_help(char* argv[]) {
   fprintf(stdout, "\t-d, -div <value>\t time divider (default:  div 10)\n");
   fprintf(stdout, "\t-h, -help\t\t Help page\n");
 }
+
+static int 
+ipc_connect(void)
+{
+	/* get shm */
+	if((ipc_fd = shm_open(SHM_NAME, O_RDWR, PERM_FILE)) == -1) {
+			printf("shm_open error : %s\n", strerror(errno));
+			return -1;
+	}
+
+	/* mmap */
+	addr = mmap(NULL, MSG_SIZE_MAX, PROT_READ | PROT_WRITE, MAP_SHARED, ipc_fd, 0);
+	if(addr == MAP_FAILED) {
+			printf("mmap error : %s\n", strerror(errno));
+			goto out;
+	}
+
+	client_msg = (struct shm_msg *)((char*)addr + SHM_CLIENT_BUF_IDX_RAND);
+	server_msg = (struct shm_msg *)((char*)addr + SHM_SERVER_BUF_IDX);
+	
+	return 0;
+
+out:
+	/* close shm */
+    if(munmap(addr, MSG_SIZE_MAX) == -1) {
+        printf("munmap error : %s\n", strerror(errno));
+	}
+    if(close(ipc_fd) == -1) {
+        printf("close error : %s\n", strerror(errno));
+    }
+	
+	return -1;
+}
+
+
+static void
+ipc_disconnect(void)
+{
+	char *data = calloc(16, sizeof(data));
+	/* send end msg */
+	client_msg->status = 0;
+	client_msg->len = sizeof(END_MSG) + 16; // be careful to choose the right size
+	strncpy(client_msg->msg, END_MSG, client_msg->len);
+	memcpy(client_msg->msg + sizeof(END_MSG), data, 16); // todo
+	client_msg->status = 1;
+	
+	/* close shm */
+	if(munmap(addr, MSG_SIZE_MAX) == -1) {
+		printf("munmap error : %s\n", strerror(errno));
+	}
+
+	if(close(ipc_fd) == -1) {
+		printf("close error : %s\n", strerror(errno));
+	}
+}
+
+static int
+ipc_send(char* data, size_t size)
+{
+	/* prepare msg */
+	client_msg->status = 0;
+	client_msg->len = size;
+	
+	/* send msg */
+	while(1) {
+		if(server_msg->status == 1) {	
+			memcpy(client_msg->msg, data, client_msg->len);
+			client_msg->status = 1;
+			break;
+		}
+		sleep(0);
+	}
+	
+	return 0;
+}
+
 
 int main(int argc, char* argv[])
 {
@@ -35,13 +118,21 @@ int main(int argc, char* argv[])
 		FILE* logfile = NULL;
     int randomnumber;
 		srand(time(NULL));
-		FILE * fPtr;
-		fPtr = fopen("./monitor/output-reg.dat", "a");
-		if(fPtr == NULL){
-				/* File not created hence exit */
-					printf("Unable to create file.\n");
-					exit(EXIT_FAILURE);
-		}	
+		//FILE * fPtr;
+		//fPtr = fopen("./monitor/output-reg.dat", "a");
+		//if(fPtr == NULL){
+		//		/* File not created hence exit */
+		//			printf("Unable to create file.\n");
+		//			exit(EXIT_FAILURE);
+		//}	
+			/* 1. Initialize */
+		if(ipc_connect()) {
+			printf("ipc connect error\n");
+			return 0;
+		}
+		
+		char* data = calloc(16, sizeof(data));
+	  printf("ipc connect successfull\n");
 			/* Parse arguments */
 		static const char* short_options = "t:m:r:d:h:";
 		/*static struct option long_options[] = {
@@ -51,7 +142,9 @@ int main(int argc, char* argv[])
 			{"divider",          required_argument, NULL, 'd'},
 			{ NULL,              0, NULL, 0}
 		};*/ 
-	
+		/*call the server file */
+		system("./home/nikos/gem5-lib/reg-ipc/aa/server");
+		
 		int c;
 		while ((c = getopt_long(argc, argv, short_options, NULL)) != -1) {
 			switch (c) {
@@ -94,11 +187,15 @@ int main(int argc, char* argv[])
 		}
 		sprintf(command, "./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
 		system(command);
+		data = "starting random execution\n";
+		ipc_send(data, 16);
 		for(int i =0; i<loop_rand; i++) {
 			randomnumber = rand() % 4+ 1;
 			if (randomnumber==1){
 					/*Run libflush example */
-				fprintf(fPtr, "libflush\n");
+				data = "libflush\n";
+				ipc_send(data, 16);
+				//fprintf(fPtr, "libflush\n");
 				//printf("libflush\n");
 				chdir("/home/nikos/armageddon/libflush/"); 
 				//system("m5 resetstats");
@@ -107,7 +204,9 @@ int main(int argc, char* argv[])
 				chdir("/home/nikos/gem5-lib/");	
 			}
 			else if (randomnumber==2){
-				fprintf(fPtr, "basicmath\n");
+				data = "basicmath_small\n";
+				ipc_send(data, 16);
+				//fprintf(fPtr, "basicmath\n");
 				//printf("basicmath\n");
 				chdir("/home/nikos/gem5-lib/automotive/basicmath"); 
 				//system("m5 resetstats");
@@ -116,8 +215,10 @@ int main(int argc, char* argv[])
 				chdir("/home/nikos/gem5-lib/");
 			}	
 			else if (randomnumber==3){
+				data = "bitcount small\n";
+				ipc_send(data, 16);
 				//printf(""bitcount\n");
-				fprintf(fPtr, "bitcount\n");
+				//fprintf(fPtr, "bitcount\n");
 				chdir("/home/nikos/gem5-lib/automotive/bitcount"); 
 				//system("m5 resetstats");
 				system("./bitcnts 75000 > output_small.txt");
@@ -125,8 +226,10 @@ int main(int argc, char* argv[])
 				chdir("/home/nikos/gem5-lib/");	
 			}
 			else if (randomnumber==4){
+				data = "sha small\n";
+				ipc_send(data, 16);
 				//printf("sha\n");
-				fprintf(fPtr, "sha\n");
+				//fprintf(fPtr, "sha\n");
 				chdir("/home/nikos/gem5-lib/security/sha"); 
 				//system("m5 resetstats");
 				system("./sha input_small.asc > output_small.txt");
@@ -134,14 +237,21 @@ int main(int argc, char* argv[])
 				chdir("/home/nikos/gem5-lib/");	
 			}
 			else {
-				fprintf(fPtr, "nothing");
+				data = "wrong rand\n";
+				ipc_send(data, 16);
+				//fprintf(fPtr, "nothing");
 				//printf("nothing");
 			}
 			
 		}
-	fprintf(fPtr, "closing random execution\n");
+	
+	data = "closing random execution";
+	ipc_send(data, 16);
+	//fprintf(fPtr, "closing random execution\n");
 	//printf("closing random execution\n");
 	//system("pkill -f monitor");
-	fclose(fPtr);
+	ipc_disconnect();
+	printf("ipc disconnect successfull\n");
+	//fclose(fPtr);
 	return 0;
 }
