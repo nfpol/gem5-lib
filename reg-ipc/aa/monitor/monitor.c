@@ -122,7 +122,7 @@ int main(int argc, char* argv[]) {
 	int div = 10;
 	int loop = 1000;
 	FILE* logfile = NULL;
-  int i,j,k = 0;
+  	int i,j,k = 0;
   //FILE * fPtr;
   //fPtr = fopen("output-reg.dat", "a");
   //if(fPtr == NULL){
@@ -141,10 +141,10 @@ int main(int argc, char* argv[]) {
 	char* data = calloc(16, sizeof(data));
 	
 	/* Parse arguments */
-  static const char* short_options = "t:m:d:h:";
+  	static const char* short_options = "t:m:d:h:";
 	
 	int c;
-  while ((c = getopt_long(argc, argv, short_options, NULL)) != -1) {
+  	while ((c = getopt_long(argc, argv, short_options, NULL)) != -1) {
 		switch (c) {
       case 't':
         time = atoi(optarg);
@@ -174,8 +174,8 @@ int main(int argc, char* argv[]) {
       default:
         fprintf(stderr, "Error: Invalid option '-%c'\n", optopt);
         return -1; 
-    }
-  }
+    	}
+ 	}
 		
 	init_pmu();
 	select_event();

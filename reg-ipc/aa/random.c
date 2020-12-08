@@ -37,15 +37,15 @@ ipc_connect(void)
 {
 	/* get shm */
 	if((ipc_fd = shm_open(SHM_NAME, O_RDWR, PERM_FILE)) == -1) {
-			printf("shm_open error : %s\n", strerror(errno));
-			return -1;
+		printf("shm_open error : %s\n", strerror(errno));
+		return -1;
 	}
 
 	/* mmap */
 	addr = mmap(NULL, MSG_SIZE_MAX, PROT_READ | PROT_WRITE, MAP_SHARED, ipc_fd, 0);
 	if(addr == MAP_FAILED) {
-			printf("mmap error : %s\n", strerror(errno));
-			goto out;
+		printf("mmap error : %s\n", strerror(errno));
+		goto out;
 	}
 
 	client_msg = (struct shm_msg *)((char*)addr + SHM_CLIENT_BUF_IDX_RAND);
@@ -116,7 +116,7 @@ int main(int argc, char* argv[])
 		int loop_monitor = 1000;
 		int loop_rand = 20;
 		FILE* logfile = NULL;
-    int randomnumber;
+    	int randomnumber;
 		srand(time(NULL));
 		//FILE * fPtr;
 		//fPtr = fopen("./monitor/output-reg.dat", "a");
@@ -132,7 +132,7 @@ int main(int argc, char* argv[])
 		}
 		
 		char* data = calloc(16, sizeof(data));
-	  printf("ipc connect successfull\n");
+	  	printf("ipc connect successfull\n");
 			/* Parse arguments */
 		static const char* short_options = "t:m:r:d:h:";
 		/*static struct option long_options[] = {
@@ -143,7 +143,6 @@ int main(int argc, char* argv[])
 			{ NULL,              0, NULL, 0}
 		};*/ 
 		/*call the server file */
-		system("./home/nikos/gem5-lib/reg-ipc/aa/server");
 		
 		int c;
 		while ((c = getopt_long(argc, argv, short_options, NULL)) != -1) {
@@ -185,6 +184,9 @@ int main(int argc, char* argv[])
 					return -1; 
 			}
 		}
+		
+		system("./home/nikos/gem5-lib/reg-ipc/aa/server &");
+
 		sprintf(command, "./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
 		system(command);
 		data = "starting random execution\n";

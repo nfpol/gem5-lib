@@ -6,6 +6,10 @@
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <stdint.h>
+#include <sys/syscall.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
 
 #include "ipc.h"
 
@@ -23,9 +27,9 @@ int main(int argc, char **argv)
 	FILE * fPtr;
 	fPtr = fopen("./monitor/output-reg.dat", "a");
 	if(fPtr == NULL){
-			/* File not created hence exit */
-			printf("Unable to create file.\n");
-			exit(EXIT_FAILURE);
+		/* File not created hence exit */
+		printf("Unable to create file.\n");
+		exit(EXIT_FAILURE);
 	}	
 	/* create shm */
     if((server_fd = shm_open(SHM_NAME, O_CREAT | O_RDWR, PERM_FILE)) == -1) {
@@ -47,10 +51,10 @@ int main(int argc, char **argv)
     }
     memset(addr, 0, MSG_SIZE_MAX);
 	
-		client_msg = (struct shm_msg *)((char*)addr + SHM_CLIENT_BUF_IDX_RAND);
-		client_monitor = (struct shm_msg *)((char*)addr + SHM_CLIENT_BUF_IDX_MONITOR);
-    server_msg = (struct shm_msg *)((char*)addr + SHM_SERVER_BUF_IDX);
-		server_msg->status = 1;
+	client_msg = (struct shm_msg *)((char*)addr + SHM_CLIENT_BUF_IDX_RAND);
+	client_monitor = (struct shm_msg *)((char*)addr + SHM_CLIENT_BUF_IDX_MONITOR);
+	server_msg = (struct shm_msg *)((char*)addr + SHM_SERVER_BUF_IDX);
+	server_msg->status = 1;
 		
 	printf("file is running...\n");
 	
