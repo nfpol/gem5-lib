@@ -13,7 +13,7 @@
 #include <unistd.h>   //for sleep()
 
 
-static void print_help(char* argv[]) {
+static void print_help(char* argv[] ) {
   fprintf(stdout, "Usage: %s [OPTIONS]\n", argv[0]);
   fprintf(stdout, "\t-t, -timing_frame <value>\t TIMING FRAME (default: t 1  --> 1/10 --> 0.1sec )\n");
   fprintf(stdout, "\t-m, -loop_monitor <value>\t  Loop for the moniotr (default:  m 1000)\n");
