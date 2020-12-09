@@ -12,6 +12,7 @@
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <string.h>
 
 #include "ipc.h"
 
@@ -69,12 +70,12 @@ out:
 static void
 ipc_disconnect(void)
 {
-	char *data = calloc(16, sizeof(data));
+	char *data = calloc(100, sizeof(data));
 	/* send end msg */
 	client_msg->status = 0;
-	client_msg->len = sizeof(END_MSG) + 16; // be careful to choose the right size
+	client_msg->len = sizeof(END_MSG) + 40); // be careful to choose the right size
 	strncpy(client_msg->msg, END_MSG, client_msg->len);
-	memcpy(client_msg->msg + sizeof(END_MSG), data, 16); // todo
+	memcpy(client_msg->msg + sizeof(END_MSG), data, 100); // todo
 	client_msg->status = 1;
 	
 	/* close shm */
@@ -126,7 +127,7 @@ int main(int argc, char* argv[])
 		//			exit(EXIT_FAILURE);
 		//}
 
-		char* data = calloc(16, sizeof(data));
+		char* data = calloc(100, sizeof(data));
 	 
 		/* Parse arguments */
 		static const char* short_options = "t:m:r:d:h:";
@@ -188,16 +189,16 @@ int main(int argc, char* argv[])
 		}
 		
 		printf("ipc connect successfull\n\n");
-		sprintf(command, "nice --1 ./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
+		sprintf(command, "./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
 		system(command);
 		data = "\nstarting random execution\n\n";
-		ipc_send(data, 16);
+		ipc_send(data, strlen(data));
 		for(int i =0; i<loop_rand; i++) {
 			randomnumber = rand() % 4+ 1;
 			if (randomnumber==1){
 					/*Run libflush example */
 				data = "\nlibflush\n";
-				ipc_send(data, 16);
+				ipc_send(data, strlen(data));
 				//fprintf(fPtr, "libflush\n");
 				//printf("libflush\n");
 				chdir("/home/nikos/armageddon/libflush/"); 
@@ -208,7 +209,7 @@ int main(int argc, char* argv[])
 			}
 			else if (randomnumber==2){
 				data = "\nbasicmath_small\n";
-				ipc_send(data, 16);
+				ipc_send(data, strlen(data));
 				//fprintf(fPtr, "basicmath\n");
 				//printf("basicmath\n");
 				chdir("/home/nikos/gem5-lib/automotive/basicmath"); 
@@ -219,7 +220,7 @@ int main(int argc, char* argv[])
 			}	
 			else if (randomnumber==3){
 				data = "\nbitcount small\n";
-				ipc_send(data, 16);
+				ipc_send(data, strlen(data));
 				//printf(""bitcount\n");
 				//fprintf(fPtr, "bitcount\n");
 				chdir("/home/nikos/gem5-lib/automotive/bitcount"); 
@@ -230,7 +231,7 @@ int main(int argc, char* argv[])
 			}
 			else if (randomnumber==4){
 				data = "\nsha small\n";
-				ipc_send(data, 16);
+				ipc_send(data, strlen(data));
 				//printf("sha\n");
 				//fprintf(fPtr, "sha\n");
 				chdir("/home/nikos/gem5-lib/security/sha"); 
@@ -241,7 +242,7 @@ int main(int argc, char* argv[])
 			}
 			else {
 				data = "\nwrong rand\n";
-				ipc_send(data, 16);
+				ipc_send(data, strlen(data));
 				//fprintf(fPtr, "nothing");
 				//printf("nothing");
 			}
@@ -249,7 +250,7 @@ int main(int argc, char* argv[])
 		}
 	
 	data = "\nclosing random execution\n";
-	ipc_send(data, 16);
+	ipc_send(data, strlen(data));
 	//fprintf(fPtr, "closing random execution\n");
 	//printf("closing random execution\n");
 	//system("pkill -f monitor");

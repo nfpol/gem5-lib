@@ -9,7 +9,7 @@
 #include <sys/syscall.h>
 #include <linux/perf_event.h>
 #include "arm_v8.h"
-
+#include <string.h>
 #include <unistd.h>   //for sleep()
 
 #include <sys/mman.h>
@@ -79,7 +79,7 @@ ipc_disconnect(void)
 	char *data = calloc(100, sizeof(data));
 	/* send end msg */
 	client_msg->status = 0;
-	client_msg->len = sizeof(END_MSG) + 100; // be careful to choose the right size
+	client_msg->len = sizeof(END_MSG) + 40; // be careful to choose the right size
 	strncpy(client_msg->msg, END_MSG, client_msg->len);
 	memcpy(client_msg->msg + sizeof(END_MSG), data, 100); // todo
 	client_msg->status = 1;
@@ -190,7 +190,6 @@ int main(int argc, char* argv[]) {
 	//fprintf(fPtr, "PMU monitor is starting monitoring counters\n\n");
 	//fprintf(fPtr, "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n");
 	while(i < loop){
-		printf("%u\n",i);
 		reset_event_counters(); //reset event counters
 		pmu_reset_cycle_counter();
 		sleep(timing_frame);  //sleep 10ms
@@ -198,22 +197,22 @@ int main(int argc, char* argv[]) {
 		event_counters_disable();
 		cycle_counter_disable();
 		
-		snprintf(data, 16, "%u      ", get_event_counter(0)); 
-		ipc_send(data, 16);
-		snprintf(data, 16, "%u      ", get_event_counter(1));
-		ipc_send(data, 16);
-		snprintf(data, 16, "%u      ", get_event_counter(2));
-		ipc_send(data, 16);
-		snprintf(data, 16, "%u      ", get_event_counter(3));
-		ipc_send(data, 16);
-		snprintf(data, 16, "%u      ", get_event_counter(4));
-		ipc_send(data, 16);
-		snprintf(data, 16, "%u      ", get_event_counter(5));
-		ipc_send(data, 16);
-		snprintf(data, 16, "%u      ", get_event_counter(6));
-		ipc_send(data, 16);
-		snprintf(data, 16, "%lu     \n", get_timing());
-		ipc_send(data, 16); 
+		snprintf(data, 20, "%u      ", get_event_counter(0)); 
+		ipc_send(data, strlen(data));
+		snprintf(data, 20, "%u      ", get_event_counter(1));
+		ipc_send(data, strlen(data));
+		snprintf(data, 20, "%u      ", get_event_counter(2));
+		ipc_send(data, strlen(data));
+		snprintf(data, 20, "%u      ", get_event_counter(3));
+		ipc_send(data, strlen(data));
+		snprintf(data, 20, "%u      ", get_event_counter(4));
+		ipc_send(data, strlen(data));
+		snprintf(data, 20, "%u      ", get_event_counter(5));
+		ipc_send(data, strlen(data));
+		snprintf(data, 20, "%u      ", get_event_counter(6));
+		ipc_send(data, strlen(data));
+		snprintf(data, 20, "%lu     \n", get_timing());
+		ipc_send(data, strlen(data)); 
 		//f(fPtr, "%u                            ", get_event_counter(0));
 		//f(fPtr, "%u                            ", get_event_counter(1) );
 		//f(fPtr, "%u                            ", get_event_counter(2) );
@@ -234,7 +233,7 @@ int main(int argc, char* argv[]) {
 	}
 	
 	data = "\nPMU monitor is closing ....\n";
-	ipc_send(data, 100);
+	ipc_send(data, strlen(data));
 	printf("PMU monitor is closing ....\n");
 	//fprintf(fPtr, "PMU monitor is closing\n");
 	//fclose(fPtr);
