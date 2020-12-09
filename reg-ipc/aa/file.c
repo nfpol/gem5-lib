@@ -59,7 +59,7 @@ int main(int argc, char **argv)
 	printf("file is running...\n");
 	
 	chdir("/home/nikos/gem5-lib/reg-ipc/aa");
-	system("nice -1 ./random &");	
+	system("./random &");	
 	
 	while(1) {
 		/* read msg */
@@ -68,7 +68,6 @@ int main(int argc, char **argv)
 				server_msg->status = 0;
 				memcpy(msg, client_msg->msg, client_msg->len);
 				fprintf(fPtr, "%s", msg);
-				printf("receive msg : %s\n", msg);
 				client_msg->status = 0;
 				server_msg->status = 1;
 				break;
@@ -77,7 +76,6 @@ int main(int argc, char **argv)
 				client_monitor->status = 0;
 				memcpy(msg, client_monitor->msg, client_monitor->len);
 				fprintf(fPtr, "%s", msg);
-				printf("receive msg : %s\n", msg);
 				client_monitor->status = 0;
 				server_msg->status = 1;
 				break;
