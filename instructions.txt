@@ -754,4 +754,11 @@ ps ax
  2708  cd ..
 
 
+(gdb) break 5
+No symbol table is loaded.  Use the "file" command.
+
+Weaksauce, following gdb's advice didn't help.
+
+Turns out we need to specify an option when compiling our program, -ggdb should get us what we need. The full command for our example looks like gcc hello_world.c -o hello_world -ggdb.
+
 
