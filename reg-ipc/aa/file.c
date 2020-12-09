@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 {
 	int i;
 	FILE * fPtr;
-	fPtr = fopen("./monitor/output-reg.dat", "a");
+	fPtr = fopen("./monitor/output-reg.dat", "w");
 	if(fPtr == NULL){
 		/* File not created hence exit */
 		printf("Unable to create file.\n");

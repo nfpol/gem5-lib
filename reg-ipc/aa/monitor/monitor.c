@@ -190,6 +190,7 @@ int main(int argc, char* argv[]) {
 	//fprintf(fPtr, "PMU monitor is starting monitoring counters\n\n");
 	//fprintf(fPtr, "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n");
 	while(i < loop){
+		printf("%u\n",i);
 		reset_event_counters(); //reset event counters
 		pmu_reset_cycle_counter();
 		sleep(timing_frame);  //sleep 10ms
