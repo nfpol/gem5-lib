@@ -120,7 +120,7 @@ int main(int argc, char* argv[]) {
 	float timing_frame = 0;
 	int time = 1;
 	int div = 10;
-	int loop = 6000;
+	int loop = 60000;
 	FILE* logfile = NULL;
   	int i,j,k = 0;
   //FILE * fPtr;
