@@ -76,12 +76,12 @@ out:
 static void
 ipc_disconnect(void)
 {
-	char *data = calloc(100, sizeof(data));
+	char *data = calloc(300, sizeof(data));
 	/* send end msg */
 	client_msg->status = 0;
-	client_msg->len = sizeof(END_MSG) + 100; // be careful to choose the right size
+	client_msg->len = sizeof(END_MSG) + 300; // be careful to choose the right size
 	strncpy(client_msg->msg, END_MSG, client_msg->len);
-	memcpy(client_msg->msg + sizeof(END_MSG), data, 100); // todo
+	memcpy(client_msg->msg + sizeof(END_MSG), data, 300); // todo
 	client_msg->status = 1;
 	
 	/* close shm */
@@ -120,7 +120,7 @@ int main(int argc, char* argv[]) {
 	float timing_frame = 0;
 	int time = 1;
 	int div = 10;
-	int loop = 60;
+	int loop = 6000;
 	FILE* logfile = NULL;
   	int i,j,k = 0;
   //FILE * fPtr;
@@ -131,7 +131,7 @@ int main(int argc, char* argv[]) {
   //      exit(EXIT_FAILURE);
   //}
 	
-	char* data = calloc(100, sizeof(data));
+	char* data = calloc(300, sizeof(data));
 	
 	/* Parse arguments */
   	static const char* short_options = "t:m:d:h:";
@@ -184,9 +184,9 @@ int main(int argc, char* argv[]) {
 	timing_frame = (time/(double)div);
 	printf("Performance monitor results\n");
 	data = "PMU monitor is starting monitoring counters\n\n";
-	ipc_send(data, 100);
+	ipc_send(data, 300);
 	data = "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n";
-	ipc_send(data, 100);
+	ipc_send(data, 300);
 	//fprintf(fPtr, "PMU monitor is starting monitoring counters\n\n");
 	//fprintf(fPtr, "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n");
 	while(i < loop){
