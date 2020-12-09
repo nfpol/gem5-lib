@@ -70,12 +70,12 @@ out:
 static void
 ipc_disconnect(void)
 {
-	char *data = calloc(100, sizeof(data));
+	char *data = calloc(16, sizeof(data));
 	/* send end msg */
 	client_msg->status = 0;
-	client_msg->len = sizeof(END_MSG) + 40; // be careful to choose the right size
+	client_msg->len = sizeof(END_MSG) + 16; // be careful to choose the right size
 	strncpy(client_msg->msg, END_MSG, client_msg->len);
-	memcpy(client_msg->msg + sizeof(END_MSG), data, 100); // todo
+	memcpy(client_msg->msg + sizeof(END_MSG), data, 16); // todo
 	client_msg->status = 1;
 	
 	/* close shm */
