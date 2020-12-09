@@ -199,7 +199,6 @@ int main(int argc, char* argv[]) {
 		
 		snprintf(buffer, 20, "%u      ", get_event_counter(0));
 		data = buffer;
-		printf("%s\n", buffer);
 		ipc_send(data, strlen(buffer));
 		snprintf(data, 20, "%u      ", get_event_counter(1));
 		ipc_send(data, strlen(data));
@@ -213,8 +212,10 @@ int main(int argc, char* argv[]) {
 		ipc_send(data, strlen(data));
 		snprintf(data, 20, "%u      ", get_event_counter(6));
 		ipc_send(data, strlen(data));
-		snprintf(data, 20, "%lu     \n", get_timing());
-		ipc_send(data, strlen(data)); 
+		snprintf(buffer, 20, "%u      |\n", get_timing());
+		data = buffer;
+		printf("data %u and buffer %u\n", strlen(data), strlen(buffer));
+		ipc_send(data, strlen(buffer));	        
 		//f(fPtr, "%u                            ", get_event_counter(0));
 		//f(fPtr, "%u                            ", get_event_counter(1) );
 		//f(fPtr, "%u                            ", get_event_counter(2) );
