@@ -197,22 +197,22 @@ int main(int argc, char* argv[]) {
 		event_counters_disable();
 		cycle_counter_disable();
 		
-		snprintf(data, 100, "%u                            ", get_event_counter(0)); 
-		ipc_send(data, sizeof(data));
-		snprintf(data, sizeof(data), "%u      ", get_event_counter(1));
-		ipc_send(data, sizeof(data));
-		snprintf(data, sizeof(data), "%u      ", get_event_counter(2));
-		ipc_send(data, sizeof(data));
-		snprintf(data, sizeof(data), "%u      ", get_event_counter(3));
-		ipc_send(data, sizeof(data));
-		snprintf(data, sizeof(data), "%u      ", get_event_counter(4));
-		ipc_send(data, sizeof(data));
-		snprintf(data, sizeof(data), "%u      ", get_event_counter(5));
-		ipc_send(data, sizeof(data));
-		snprintf(data, sizeof(data), "%u      ", get_event_counter(6));
-		ipc_send(data, sizeof(data));
-		snprintf(data, sizeof(data), "%lu     \n", get_timing());
-		ipc_send(data, sizeof(data)); 
+		snprintf(data, 100, "%u      ", get_event_counter(0)); 
+		ipc_send(data, 100);
+		snprintf(data, 100, "%u      ", get_event_counter(1));
+		ipc_send(data, 100);
+		snprintf(data, 100, "%u      ", get_event_counter(2));
+		ipc_send(data, 100);
+		snprintf(data, 100, "%u      ", get_event_counter(3));
+		ipc_send(data, 100);
+		snprintf(data, 100, "%u      ", get_event_counter(4));
+		ipc_send(data, 100);
+		snprintf(data, 100, "%u      ", get_event_counter(5));
+		ipc_send(data, 100);
+		snprintf(data, 100, "%u      ", get_event_counter(6));
+		ipc_send(data, 100);
+		snprintf(data, 100, "%lu     \n", get_timing());
+		ipc_send(data, 100); 
 		//f(fPtr, "%u                            ", get_event_counter(0));
 		//f(fPtr, "%u                            ", get_event_counter(1) );
 		//f(fPtr, "%u                            ", get_event_counter(2) );
@@ -233,7 +233,7 @@ int main(int argc, char* argv[]) {
 	}
 	
 	data = "\nPMU monitor is closing ....\n";
-	ipc_send(data, sizeof(data));
+	ipc_send(data, 100);
 	printf("PMU monitor is closing ....\n");
 	//fprintf(fPtr, "PMU monitor is closing\n");
 	//fclose(fPtr);
