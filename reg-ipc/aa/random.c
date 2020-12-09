@@ -187,16 +187,16 @@ int main(int argc, char* argv[])
 			return 0;
 		}
 		
-		printf("ipc connect successfull\n");
+		printf("ipc connect successfull\n\n");
 		sprintf(command, "nice --1 ./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
 		system(command);
-		data = "starting random execution\n";
+		data = "\nstarting random execution\n\n";
 		ipc_send(data, 16);
 		for(int i =0; i<loop_rand; i++) {
 			randomnumber = rand() % 4+ 1;
 			if (randomnumber==1){
 					/*Run libflush example */
-				data = "libflush\n";
+				data = "\nlibflush\n";
 				ipc_send(data, 16);
 				//fprintf(fPtr, "libflush\n");
 				//printf("libflush\n");
@@ -207,7 +207,7 @@ int main(int argc, char* argv[])
 				chdir("/home/nikos/gem5-lib/");	
 			}
 			else if (randomnumber==2){
-				data = "basicmath_small\n";
+				data = "\nbasicmath_small\n";
 				ipc_send(data, 16);
 				//fprintf(fPtr, "basicmath\n");
 				//printf("basicmath\n");
@@ -218,7 +218,7 @@ int main(int argc, char* argv[])
 				chdir("/home/nikos/gem5-lib/");
 			}	
 			else if (randomnumber==3){
-				data = "bitcount small\n";
+				data = "\nbitcount small\n";
 				ipc_send(data, 16);
 				//printf(""bitcount\n");
 				//fprintf(fPtr, "bitcount\n");
@@ -229,7 +229,7 @@ int main(int argc, char* argv[])
 				chdir("/home/nikos/gem5-lib/");	
 			}
 			else if (randomnumber==4){
-				data = "sha small\n";
+				data = "\nsha small\n";
 				ipc_send(data, 16);
 				//printf("sha\n");
 				//fprintf(fPtr, "sha\n");
@@ -240,7 +240,7 @@ int main(int argc, char* argv[])
 				chdir("/home/nikos/gem5-lib/");	
 			}
 			else {
-				data = "wrong rand\n";
+				data = "\nwrong rand\n";
 				ipc_send(data, 16);
 				//fprintf(fPtr, "nothing");
 				//printf("nothing");
@@ -248,7 +248,7 @@ int main(int argc, char* argv[])
 			
 		}
 	
-	data = "closing random execution";
+	data = "\nclosing random execution\n";
 	ipc_send(data, 16);
 	//fprintf(fPtr, "closing random execution\n");
 	//printf("closing random execution\n");

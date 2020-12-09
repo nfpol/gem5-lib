@@ -199,19 +199,19 @@ int main(int argc, char* argv[]) {
 		
 		snprintf(data, 100, "%u                            ", get_event_counter(0)); 
 		ipc_send(data, sizeof(data));
-		snprintf(data, sizeof(data), "%u                            ", get_event_counter(1));
+		snprintf(data, sizeof(data), "%u      ", get_event_counter(1));
 		ipc_send(data, sizeof(data));
-		snprintf(data, sizeof(data), "%u                            ", get_event_counter(2));
+		snprintf(data, sizeof(data), "%u      ", get_event_counter(2));
 		ipc_send(data, sizeof(data));
-		snprintf(data, sizeof(data), "%u                            ", get_event_counter(3));
+		snprintf(data, sizeof(data), "%u      ", get_event_counter(3));
 		ipc_send(data, sizeof(data));
-		snprintf(data, sizeof(data), "%u                            ", get_event_counter(4));
+		snprintf(data, sizeof(data), "%u      ", get_event_counter(4));
 		ipc_send(data, sizeof(data));
-		snprintf(data, sizeof(data), "%u                            ", get_event_counter(5));
+		snprintf(data, sizeof(data), "%u      ", get_event_counter(5));
 		ipc_send(data, sizeof(data));
-		snprintf(data, sizeof(data), "%u                            ", get_event_counter(6));
+		snprintf(data, sizeof(data), "%u      ", get_event_counter(6));
 		ipc_send(data, sizeof(data));
-		snprintf(data, sizeof(data), "%lu                            \n", get_timing());
+		snprintf(data, sizeof(data), "%lu     \n", get_timing());
 		ipc_send(data, sizeof(data)); 
 		//f(fPtr, "%u                            ", get_event_counter(0));
 		//f(fPtr, "%u                            ", get_event_counter(1) );
@@ -232,7 +232,7 @@ int main(int argc, char* argv[]) {
 		pmu_enable_all_counters();
 	}
 	
-	data = "PMU monitor is closing ....\n";
+	data = "\nPMU monitor is closing ....\n";
 	ipc_send(data, sizeof(data));
 	printf("PMU monitor is closing ....\n");
 	//fprintf(fPtr, "PMU monitor is closing\n");
