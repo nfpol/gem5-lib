@@ -197,6 +197,7 @@ int main(int argc, char* argv[]) {
 		event_counters_disable();
 		cycle_counter_disable();
 		
+		data = snprintf(data, sizeof(data), "                            %u", get_event_counter(0));
 		data = to_string(get_event_counter(0)) & "                            ";
 		ipc_send(data, 16);
 		data = get_event_counter(1) & "                            ";
