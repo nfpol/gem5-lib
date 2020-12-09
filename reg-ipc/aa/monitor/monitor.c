@@ -72,16 +72,15 @@ out:
 	return -1;
 }
 
-
 static void
 ipc_disconnect(void)
 {
-	char *data = calloc(100, sizeof(data));
+	char *data = calloc(16, sizeof(data));
 	/* send end msg */
 	client_msg->status = 0;
-	client_msg->len = sizeof(END_MSG) + 40; // be careful to choose the right size
+	client_msg->len = sizeof(END_MSG) + 16; // be careful to choose the right size
 	strncpy(client_msg->msg, END_MSG, client_msg->len);
-	memcpy(client_msg->msg + sizeof(END_MSG), data, 100); // todo
+	memcpy(client_msg->msg + sizeof(END_MSG), data, 16); // todo
 	client_msg->status = 1;
 	
 	/* close shm */
@@ -122,7 +121,8 @@ int main(int argc, char* argv[]) {
 	int div = 10;
 	int loop = 60000;
 	FILE* logfile = NULL;
-  	int i,j,k = 0;
+  int i,j,k = 0;
+  char buffer [100];
   //FILE * fPtr;
   //fPtr = fopen("output-reg.dat", "a");
   //if(fPtr == NULL){
@@ -131,7 +131,7 @@ int main(int argc, char* argv[]) {
   //      exit(EXIT_FAILURE);
   //}
 	
-	char* data = calloc(100, sizeof(data));
+	char* data = calloc(16, sizeof(data));
 	
 	/* Parse arguments */
   	static const char* short_options = "t:m:d:h:";
@@ -197,8 +197,10 @@ int main(int argc, char* argv[]) {
 		event_counters_disable();
 		cycle_counter_disable();
 		
-		snprintf(data, 20, "%u      ", get_event_counter(0)); 
-		ipc_send(data, strlen(data));
+		snprintf(buffer, 20, "%u      ", get_event_counter(0));
+		data = buffer;
+		printf("%s\n", buffer);
+		ipc_send(data, strlen(buffer));
 		snprintf(data, 20, "%u      ", get_event_counter(1));
 		ipc_send(data, strlen(data));
 		snprintf(data, 20, "%u      ", get_event_counter(2));

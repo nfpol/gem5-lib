@@ -4,7 +4,7 @@
 /* msg */
 #define MSG_SIZE_MAX (8 * 1024)
 #define REPLY_MSG "reply"
-#define END_MSG "\nend of execution\n"
+#define END_MSG "\nend\n"
 
 /* permission */
 #define PERM_FILE (S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)
