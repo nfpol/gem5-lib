@@ -1,13 +1,22 @@
 bitcount small
-i cache refills-sha small
+i cache  small
+libflush
+basicmath_small
+libflush
+basicmath_small
+sha small
+bitcount small
+libflush
+basicmath_small
+bitcount small
+bitcount small
+libflush
+libflush
 bitcount small
 sha small
-sha small
 bitcount small
-sha small
+basicmath_small
+libflush
 basicmath_small
 basicmath_small
-basicmath_small
-bitcount small
-sha small
 end
