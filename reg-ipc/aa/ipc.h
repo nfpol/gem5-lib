@@ -12,8 +12,9 @@
 /* shared memory */
 #define SHM_NAME "/shm"
 #define SHM_CLIENT_BUF_IDX_MONITOR (0)
-#define SHM_CLIENT_BUF_IDX_RAND (1024)
-#define SHM_SERVER_BUF_IDX (2048)
+//#define SHM_CLIENT_BUF_IDX_RAND (1024)
+//#define SHM_SERVER_BUF_IDX (2048)
+#define SHM_SERVER_BUF_IDX (16384)
 
 struct shm_msg {
     int status;
