@@ -184,13 +184,13 @@ int main(int argc, char* argv[]) {
 	timing_frame = (time/(double)div);
 	printf("Performance monitor results\n");
 	data = "PMU monitor is starting ";
-	ipc_send(data, sizeof(data));
+	ipc_send(data, 100);
 	data = "monitoring counters\n\n";
-	ipc_send(data, sizeof(data));
+	ipc_send(data, 100);
 	data = "i cache refills---|";
-	ipc_send(data, sizeof(data));
+	ipc_send(data, 100);
 	data = "---retired branches---|";
-	ipc_send(data, sizeof(data));
+	ipc_send(data, 100);
 	data = "---d cache refills---|";
 	ipc_send(data, sizeof(data));
 	data = "---branch predictor misses---|";
