@@ -116,7 +116,7 @@ int main(int argc, char* argv[])
 		int loop_monitor = 1000;
 		int loop_rand = 20;
 		FILE* logfile = NULL;
-    	int randomnumber;
+    int randomnumber;
 		srand(time(NULL));
 		//FILE * fPtr;
 		//fPtr = fopen("./monitor/output-reg.dat", "a");
@@ -125,18 +125,10 @@ int main(int argc, char* argv[])
 		//			printf("Unable to create file.\n");
 		//			exit(EXIT_FAILURE);
 		//}
-		//
-		chdir("/home/nikos/gem5-lib/reg-ipc/aa");
-		system("./server &");	
-			/* 1. Initialize */
-		if(ipc_connect()) {
-			printf("ipc connect error\n");
-			return 0;
-		}
-		
+
 		char* data = calloc(16, sizeof(data));
-	  	printf("ipc connect successfull\n");
-			/* Parse arguments */
+	 
+		/* Parse arguments */
 		static const char* short_options = "t:m:r:d:h:";
 		/*static struct option long_options[] = {
 			{"timing",           required_argument, NULL, 't'},
@@ -189,8 +181,14 @@ int main(int argc, char* argv[])
 		}
 		
 
-
-		sprintf(command, "./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
+		//		/* 1. Initialize */
+		if(ipc_connect()) {
+			printf("ipc connect error\n");
+			return 0;
+		}
+		
+		printf("ipc connect successfull\n");
+		sprintf(command, "nice --1 ./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
 		system(command);
 		data = "starting random execution\n";
 		ipc_send(data, 16);

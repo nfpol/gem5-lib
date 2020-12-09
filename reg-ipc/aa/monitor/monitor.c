@@ -131,13 +131,6 @@ int main(int argc, char* argv[]) {
   //      exit(EXIT_FAILURE);
   //}
 	
-		/* 1. Initialize */
-	if(ipc_connect()) {
-		printf("ipc connect error\n");
-		return 0;
-	}
-	printf("ipc connect successfull\n");
-	
 	char* data = calloc(16, sizeof(data));
 	
 	/* Parse arguments */
@@ -176,6 +169,13 @@ int main(int argc, char* argv[]) {
         return -1; 
     	}
  	}
+ 	
+ 	/* 1. Initialize */
+	if(ipc_connect()) {
+		printf("ipc connect error\n");
+		return 0;
+	}
+	printf("ipc connect successfull\n");
 		
 	init_pmu();
 	select_event();

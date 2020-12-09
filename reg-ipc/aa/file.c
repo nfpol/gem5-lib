@@ -58,6 +58,9 @@ int main(int argc, char **argv)
 		
 	printf("file is running...\n");
 	
+	chdir("/home/nikos/gem5-lib/reg-ipc/aa");
+	system("nice -1 ./random &");	
+	
 	while(1) {
 		/* read msg */
 		while(1) {
