@@ -124,7 +124,10 @@ int main(int argc, char* argv[])
 		//		/* File not created hence exit */
 		//			printf("Unable to create file.\n");
 		//			exit(EXIT_FAILURE);
-		//}	
+		//}
+		//
+		chdir("/home/nikos/gem5-lib/reg-ipc/aa");
+		system("./server &");	
 			/* 1. Initialize */
 		if(ipc_connect()) {
 			printf("ipc connect error\n");
@@ -185,7 +188,7 @@ int main(int argc, char* argv[])
 			}
 		}
 		
-		system("./home/nikos/gem5-lib/reg-ipc/aa/server &");
+
 
 		sprintf(command, "./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
 		system(command);

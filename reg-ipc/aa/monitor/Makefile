@@ -1,7 +1,7 @@
 all:  clean monitor
 
 monitor: monitor.c Makefile
-	gcc -static monitor.c  arm_v8.c -O3 -o monitor -lrt
+	gcc monitor.c  arm_v8.c -O3 -o monitor -lrt -lm
 
 clean:
 	rm -rf monitor out*

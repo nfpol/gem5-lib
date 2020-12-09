@@ -211,7 +211,7 @@ int main(int argc, char* argv[]) {
 		ipc_send(data, 16);
 		data = snprintf(data, sizeof(data), "%u                            ", get_event_counter(6));
 		ipc_send(data, 16);
-		data = snprintf(data, sizeof(data), "%u                            \n", get_timing());
+		data = snprintf(data, sizeof(data), "%lu                            \n", get_timing());
 		ipc_send(data, 16);
 		//f(fPtr, "%u                            ", get_event_counter(0));
 		//f(fPtr, "%u                            ", get_event_counter(1) );
