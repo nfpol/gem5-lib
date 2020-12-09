@@ -131,7 +131,7 @@ int main(int argc, char* argv[]) {
   //      exit(EXIT_FAILURE);
   //}
 	
-	char* data = calloc(16, sizeof(data));
+	char* data = calloc(100, sizeof(data));
 	
 	/* Parse arguments */
   	static const char* short_options = "t:m:d:h:";
