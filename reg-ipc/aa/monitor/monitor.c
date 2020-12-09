@@ -184,7 +184,7 @@ int main(int argc, char* argv[]) {
 	timing_frame = (time/(double)div);
 	printf("Performance monitor results\n");
 	//data = "PMU monitor is starting monitoring counters\n\n";
-	//ipc_send(data, 300);
+	//ipc_send(data, 100);
 	//data = "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n";
 	//ipc_send(data, 300);
 	//fprintf(fPtr, "PMU monitor is starting monitoring counters\n\n");
@@ -198,7 +198,7 @@ int main(int argc, char* argv[]) {
 		cycle_counter_disable();
 		
 		snprintf(data, 100, "%u                            ", get_event_counter(0)); 
-		ipc_send(data, sizeof(data));/*
+		ipc_send(data, sizeof(data));
 		snprintf(data, sizeof(data), "%u                            ", get_event_counter(1));
 		ipc_send(data, sizeof(data));
 		snprintf(data, sizeof(data), "%u                            ", get_event_counter(2));
@@ -212,7 +212,7 @@ int main(int argc, char* argv[]) {
 		snprintf(data, sizeof(data), "%u                            ", get_event_counter(6));
 		ipc_send(data, sizeof(data));
 		snprintf(data, sizeof(data), "%lu                            \n", get_timing());
-		ipc_send(data, sizeof(data)); */
+		ipc_send(data, sizeof(data)); 
 		//f(fPtr, "%u                            ", get_event_counter(0));
 		//f(fPtr, "%u                            ", get_event_counter(1) );
 		//f(fPtr, "%u                            ", get_event_counter(2) );
