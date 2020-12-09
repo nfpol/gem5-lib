@@ -1,9 +1,13 @@
 FILE1 = random.c
-
-all: clean random
+FILE2 = file.c
+all: clean server random
 
 random: ${FILE1} Makefile
-	gcc -static -O3 ${FILE1} -g  -o random -lm -lrt
+	gcc -O3 ${FILE1} -g  -o random  -lrt -lm
+
+server: ${FILE2} Makefile
+	gcc file.c -o server -lrt
+
 
 clean:
-	rm -rf random
+	rm -rf random server
