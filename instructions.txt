@@ -715,3 +715,43 @@ usage: /sbin/m5 exit [delay]
        /sbin/m5 pin <cpu> <program> [args ...]
 
 All times in nanoseconds!
+
+
+(./monitor -t 1 -l 10000 -d 100 &) && ps ax | grep monitor
+ 2675  (./monitor -t 1 -m 10000 -d 100 &) && ps ax | grep monitor
+ 2676  kill 9050
+ 2677  kill 9052
+ps ax
+ 2679  ./monitor -t 1 -m 10000 -d 100 &
+ 2680  ps ax
+ 2681  ./monitor -t 1 -m 100000 -d 100 &
+ 2682  ps ax
+ 2683  kill 9057
+ 2684  kill 9056
+ 2685  ps ax
+ 2686  ./monitor -t 1 -m 100000 -d 100 &
+ 2687  ps ax | grep monitor
+ 2688  kill 9059
+ 2689  ./monitor -t 1 -m 100000 -d 100 &
+ 2690  threshold=$(echo $?)
+ 2691  echo $threshold
+ 2692  ./monitor -t 1 -m 100000 -d 100 &
+ 2693  threshold=$(echo $?)
+ 2694  threshold=$(echo $./monitor -t 1 -m 100000 -d 100 &)
+ 2695  ps ax
+ 2696  kill 9062
+ 2697  kill 9064
+ 2698  ps ax
+ 2699  threshold=$(echo $./monitor -t 1 -m 100000 -d 100 &)
+ 2700  echo $threshold
+ 2701  threshold=$(echo $(./monitor -t 1 -m 100000 -d 100 &))
+ 2702  ps ax
+ 2703  ls
+ 2704  ./monitor -t 1 -m 100000 -d 100 &
+ 2705  pgrep -u monitor
+ 2706  pgrep -u root monitor
+ 2707  pkill -f monitor
+ 2708  cd ..
+
+
+
