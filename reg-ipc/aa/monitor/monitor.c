@@ -184,9 +184,9 @@ int main(int argc, char* argv[]) {
 	timing_frame = (time/(double)div);
 	printf("Performance monitor results\n");
 	data = "PMU monitor is starting monitoring counters\n\n";
-	ipc_send(data, 16);
+	ipc_send(data, sizeof(data));
 	data = "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n";
-	ipc_send(data, 16);
+	ipc_send(data, sizeof(data));
 	//fprintf(fPtr, "PMU monitor is starting monitoring counters\n\n");
 	//fprintf(fPtr, "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n");
 	while(i < loop){
@@ -197,21 +197,21 @@ int main(int argc, char* argv[]) {
 		event_counters_disable();
 		cycle_counter_disable();
 		
-		data = snprintf(data, sizeof(data), "%u                            ", get_event_counter(0));
+		snprintf(data, sizeof(data), "%u                            ", get_event_counter(0));
 		ipc_send(data, sizeof(data));
-		data = snprintf(data, sizeof(data), "%u                            ", get_event_counter(1));
+		snprintf(data, sizeof(data), "%u                            ", get_event_counter(1));
 		ipc_send(data, sizeof(data));
-		data = snprintf(data, sizeof(data), "%u                            ", get_event_counter(2));
+		snprintf(data, sizeof(data), "%u                            ", get_event_counter(2));
 		ipc_send(data, sizeof(data));
-		data = snprintf(data, sizeof(data), "%u                            ", get_event_counter(3));
+		snprintf(data, sizeof(data), "%u                            ", get_event_counter(3));
 		ipc_send(data, sizeof(data));
-		data = snprintf(data, sizeof(data), "%u                            ", get_event_counter(4));
+		snprintf(data, sizeof(data), "%u                            ", get_event_counter(4));
 		ipc_send(data, sizeof(data));
-		data = snprintf(data, sizeof(data), "%u                            ", get_event_counter(5));
+		snprintf(data, sizeof(data), "%u                            ", get_event_counter(5));
 		ipc_send(data, sizeof(data));
-		data = snprintf(data, sizeof(data), "%u                            ", get_event_counter(6));
+		snprintf(data, sizeof(data), "%u                            ", get_event_counter(6));
 		ipc_send(data, sizeof(data));
-		data = snprintf(data, sizeof(data), "%lu                            \n", get_timing());
+		snprintf(data, sizeof(data), "%lu                            \n", get_timing());
 		ipc_send(data, sizeof(data));
 		//f(fPtr, "%u                            ", get_event_counter(0));
 		//f(fPtr, "%u                            ", get_event_counter(1) );
@@ -233,7 +233,7 @@ int main(int argc, char* argv[]) {
 	}
 	
 	data = "PMU monitor is closing ....\n";
-	ipc_send(data, 16);
+	ipc_send(data, sizeof(data));
 	printf("PMU monitor is closing ....\n");
 	//fprintf(fPtr, "PMU monitor is closing\n");
 	//fclose(fPtr);
