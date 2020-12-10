@@ -92,7 +92,7 @@ int main(int argc, char **argv)
 	}
 	
 	printf("file is closing...\n");
-
+	fclose(fPtr);
 out:
 	/* destroy shm */
     if(munmap(addr, MSG_SIZE_MAX) == -1) {

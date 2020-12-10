@@ -11,7 +11,7 @@
 
 
 #include <unistd.h>   //for sleep()
-
+#include "arm_v8.h"
 
 static void print_help(char* argv[] ) {
   fprintf(stdout, "Usage: %s [OPTIONS]\n", argv[0]);
@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
     int randomnumber;
 		srand(time(NULL));
 		FILE * fPtr;
-		fPtr = fopen("./monitor/output-reg.dat", "a");
+		fPtr = fopen("output.dat", "w");
 		if(fPtr == NULL){
 				/* File not created hence exit */
 					printf("Unable to create file.\n");
@@ -96,7 +96,11 @@ int main(int argc, char* argv[])
 			randomnumber = rand() % 4+ 1;
 			if (randomnumber==1){
 					/*Run libflush example */
+				pmu_cycle_counter_disable();
+				cycles = get_timing();
+				
 				fprintf(fPtr, "libflush\n");
+				pmu_enable_cycle_counter();
 				//printf("libflush\n");
 				chdir("/home/nikos/armageddon/libflush/"); 
 				//system("m5 resetstats");

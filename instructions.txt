@@ -764,3 +764,7 @@ Turns out we need to specify an option when compiling our program, -ggdb should 
 
 
 m5 writefile myfileguest myfilehost
+
+
+
+grep -r "string to be searched"  /path/to/dir
