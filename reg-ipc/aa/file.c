@@ -67,12 +67,9 @@ int main(int argc, char **argv)
 			if(client_msg->status == 1) {
 				server_msg->status = 0;
 				memcpy(msg, client_msg->msg, client_msg->len);
-<<<<<<< HEAD
 				fprintf(fPtr, "%s", client_msg->msg);
-=======
-				fprintf(fPtr, "%s", msg);
-				printf("%s", msg);
->>>>>>> 1a40679d358e284057aacf499ec9e846f58ec4c8
+				printf("%s\n", client_msg->msg);
+				printf("%s\n", msg);
 				client_msg->status = 0;
 				server_msg->status = 1;
 				break;
@@ -80,12 +77,9 @@ int main(int argc, char **argv)
 			if(client_monitor->status == 1) {
 				client_monitor->status = 0;
 				memcpy(msg, client_monitor->msg, client_monitor->len);
-<<<<<<< HEAD
 				fprintf(fPtr, "%s", client_monitor->msg);
-=======
-				fprintf(fPtr, "%s", msg);
-				printf("%s", msg);
->>>>>>> 1a40679d358e284057aacf499ec9e846f58ec4c8
+				printf("%s\n", client_monitor->msg);
+				printf("%s\n", msg);
 				client_monitor->status = 0;
 				server_msg->status = 1;
 				break;
