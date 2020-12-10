@@ -121,8 +121,8 @@ int main(int argc, char* argv[]) {
 	int div = 10;
 	int loop = 60000;
 	FILE* logfile = NULL;
-  int i,j,k = 0;
-  char buffer [100];
+  	int i,j,k = 0;
+  	char buffer [200];
   //FILE * fPtr;
   //fPtr = fopen("output-reg.dat", "a");
   //if(fPtr == NULL){
@@ -183,13 +183,15 @@ int main(int argc, char* argv[]) {
 	reset_cycle_counter();
 	timing_frame = (time/(double)div);
 	printf("Performance monitor results\n");
-	data = "PMU monitor is starting monitoring counters\n\n";
-	ipc_send(data, strlen(data));
-	data = "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n";
-	ipc_send(data, strlen(data));
+	//data = "PMU monitor is starting monitoring counters\n\n";
+	//ipc_send(data, 200);
+	//data = "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n";
+	//ipc_send(data, strlen(data));
 	//fprintf(fPtr, "PMU monitor is starting monitoring counters\n\n");
 	//fprintf(fPtr, "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n");
+	
 	while(i < loop){
+		printf("i = %u\n", i);
 		reset_event_counters(); //reset event counters
 		pmu_reset_cycle_counter();
 		sleep(timing_frame);  //sleep 10ms
@@ -199,8 +201,8 @@ int main(int argc, char* argv[]) {
 		
 		
 		snprintf(buffer, 200, "%u     %u     %u     %u     %u     %u     %u     %u\n", get_event_counter(0), get_event_counter(1), get_event_counter(2), get_event_counter(3), get_event_counter(4), get_event_counter(5), get_event_counter(6), get_timing());
-		data = buffer;
-		ipc_send(data, strlen(buffer));
+		//data = buffer;
+		//ipc_send(data, strlen(buffer));
 		/*
 		snprintf(buffer, 20, "%u      ", get_event_counter(0));
 		data = buffer;
@@ -246,7 +248,7 @@ int main(int argc, char* argv[]) {
 	}
 	
 	data = "\nPMU monitor is closing ....\n";
-	ipc_send(data, strlen(data));
+	ipc_send(data, 200);
 	printf("PMU monitor is closing ....\n");
 	//fprintf(fPtr, "PMU monitor is closing\n");
 	//fclose(fPtr);

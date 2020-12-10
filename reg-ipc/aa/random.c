@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
 		char command[100];
 		int div = 10;
 		int timing_frame = 1;
-		int loop_monitor = 6000;
+		int loop_monitor = 10000;
 		int loop_rand = 20;
 		FILE* logfile = NULL;
     int randomnumber;
