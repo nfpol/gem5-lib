@@ -67,7 +67,8 @@ int main(int argc, char **argv)
 			if(client_msg->status == 1) {
 				server_msg->status = 0;
 				memcpy(msg, client_msg->msg, client_msg->len);
-				fprintf(fPtr, "%s", client_msg->msg);
+				//fprintf(fPtr, "%s", client_msg->msg);
+				fprintf(fPtr, "%s", msg);
 				printf("rand--pointer------%s------\n", client_msg->msg);
 				printf("rand+++msg++++++%s++++++\n", msg);
 				client_msg->status = 0;
@@ -77,7 +78,8 @@ int main(int argc, char **argv)
 			if(client_monitor->status == 1) {
 				client_monitor->status = 0;
 				memcpy(msg, client_monitor->msg, client_monitor->len);
-				fprintf(fPtr, "%s", client_monitor->msg);
+				//fprintf(fPtr, "%s", client_monitor->msg);
+				fprintf(fPtr, "%s", msg);
 				printf("moniotr---pointer----%s-----\n", client_monitor->msg);
 				printf("monitor++msg++++++%s+++++++\n", msg);
 				client_monitor->status = 0;
