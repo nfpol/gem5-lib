@@ -70,12 +70,12 @@ out:
 static void
 ipc_disconnect(void)
 {
-	char *data = calloc(16, sizeof(data));
+	char *data = calloc(32, sizeof(data));
 	/* send end msg */
 	client_msg->status = 0;
-	client_msg->len = sizeof(END_MSG) + 16; // be careful to choose the right size
+	client_msg->len = sizeof(END_MSG) + 32; // be careful to choose the right size
 	strncpy(client_msg->msg, END_MSG, client_msg->len);
-	memcpy(client_msg->msg + sizeof(END_MSG), data, 16); // todo
+	memcpy(client_msg->msg + sizeof(END_MSG), data, 32); // todo
 	client_msg->status = 1;
 	
 	/* close shm */
@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
 		char command[100];
 		int div = 10;
 		int timing_frame = 1;
-		int loop_monitor = 1000;
+		int loop_monitor = 6000;
 		int loop_rand = 20;
 		FILE* logfile = NULL;
     int randomnumber;
@@ -127,7 +127,7 @@ int main(int argc, char* argv[])
 		//			exit(EXIT_FAILURE);
 		//}
 
-		char* data = calloc(100, sizeof(data));
+		char* data = calloc(32, sizeof(data));
 	 
 		/* Parse arguments */
 		static const char* short_options = "t:m:r:d:h:";
@@ -193,6 +193,7 @@ int main(int argc, char* argv[])
 		system(command);
 		data = "\nstarting random execution\n\n";
 		ipc_send(data, strlen(data));
+		printf("strlendata = %u\n", strlen(data));
 		for(int i =0; i<loop_rand; i++) {
 			randomnumber = rand() % 4+ 1;
 			if (randomnumber==1){

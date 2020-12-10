@@ -75,12 +75,12 @@ out:
 static void
 ipc_disconnect(void)
 {
-	char *data = calloc(16, sizeof(data));
+	char *data = calloc(32, sizeof(data));
 	/* send end msg */
 	client_msg->status = 0;
-	client_msg->len = sizeof(END_MSG) + 16; // be careful to choose the right size
+	client_msg->len = sizeof(END_MSG) + 32; // be careful to choose the right size
 	strncpy(client_msg->msg, END_MSG, client_msg->len);
-	memcpy(client_msg->msg + sizeof(END_MSG), data, 16); // todo
+	memcpy(client_msg->msg + sizeof(END_MSG), data, 32); // todo
 	client_msg->status = 1;
 	
 	/* close shm */
@@ -131,7 +131,7 @@ int main(int argc, char* argv[]) {
   //      exit(EXIT_FAILURE);
   //}
 	
-	char* data = calloc(16, sizeof(data));
+	char* data = calloc(200, sizeof(data));
 	
 	/* Parse arguments */
   	static const char* short_options = "t:m:d:h:";
@@ -183,10 +183,10 @@ int main(int argc, char* argv[]) {
 	reset_cycle_counter();
 	timing_frame = (time/(double)div);
 	printf("Performance monitor results\n");
-	//data = "PMU monitor is starting monitoring counters\n\n";
-	//ipc_send(data, 100);
-	//data = "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n";
-	//ipc_send(data, 300);
+	data = "PMU monitor is starting monitoring counters\n\n";
+	ipc_send(data, strlen(data));
+	data = "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n";
+	ipc_send(data, strlen(data));
 	//fprintf(fPtr, "PMU monitor is starting monitoring counters\n\n");
 	//fprintf(fPtr, "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n");
 	while(i < loop){
@@ -197,6 +197,11 @@ int main(int argc, char* argv[]) {
 		event_counters_disable();
 		cycle_counter_disable();
 		
+		
+		snprintf(buffer, 200, "%u     %u     %u     %u     %u     %u     %u     %u\n", get_event_counter(0), get_event_counter(1), get_event_counter(2), get_event_counter(3), get_event_counter(4), get_event_counter(5), get_event_counter(6), get_timing());
+		data = buffer;
+		ipc_send(data, strlen(buffer));
+		/*
 		snprintf(buffer, 20, "%u      ", get_event_counter(0));
 		data = buffer;
 		ipc_send(data, strlen(buffer));
@@ -220,7 +225,7 @@ int main(int argc, char* argv[]) {
 		ipc_send(data, strlen(buffer));
 		snprintf(buffer, 20, "%u      \n", get_timing());
 		data = buffer;
-		ipc_send(data, strlen(buffer));	        
+		ipc_send(data, strlen(buffer));	*/        
 		//f(fPtr, "%u                            ", get_event_counter(0));
 		//f(fPtr, "%u                            ", get_event_counter(1) );
 		//f(fPtr, "%u                            ", get_event_counter(2) );

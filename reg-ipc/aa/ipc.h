@@ -12,8 +12,8 @@
 /* shared memory */
 #define SHM_NAME "/shm"
 #define SHM_SERVER_BUF_IDX (0)
-#define SHM_CLIENT_BUF_IDX_RAND (1024)
-#define SHM_CLIENT_BUF_IDX_MONITOR (4096)
+#define SHM_CLIENT_BUF_IDX_RAND (128)
+#define SHM_CLIENT_BUF_IDX_MONITOR (2048)
 
 
 
