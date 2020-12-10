@@ -177,47 +177,46 @@ int main(int argc, char* argv[])
 		sprintf(command, "./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
 		system(command);
 		data = "\nstarting random execution\n\n";
-		printf("strlendata = %u\n", strlen(data));
 		for(int i =0; i<loop_rand; i++) {
 			randomnumber = rand() % 4+ 1;
 			if (randomnumber==1){
 					/*Run libflush example */
 				data = "\nlibflush\n";
-				ipc_send(data, strlen(data));
+				ipc_send(data, 32);
 				chdir("/home/nikos/armageddon/libflush/"); 
 				system("./example/build/armv8/release/bin/example -s 400 -n  1000 -x 1 -z 10");
 				chdir("/home/nikos/gem5-lib/");	
 			}
 			else if (randomnumber==2){
 				data = "\nbasicmath_small\n";
-				ipc_send(data, strlen(data));
+				ipc_send(data, 32);
 				chdir("/home/nikos/gem5-lib/automotive/basicmath");
 				system("./basicmath_small > output_small.txt");
 				chdir("/home/nikos/gem5-lib/");
 			}	
 			else if (randomnumber==3){
 				data = "\nbitcount small\n";
-				ipc_send(data, strlen(data));
+				ipc_send(data, 32);
 				chdir("/home/nikos/gem5-lib/automotive/bitcount"); 
 				system("./bitcnts 75000 > output_small.txt");
 				chdir("/home/nikos/gem5-lib/");	
 			}
 			else if (randomnumber==4){
 				data = "\nsha small\n";
-				ipc_send(data, strlen(data));
+				ipc_send(data, 32);
 				chdir("/home/nikos/gem5-lib/security/sha"); 
 				system("./sha input_small.asc > output_small.txt");
 				chdir("/home/nikos/gem5-lib/");	
 			}
 			else {
 				data = "\nwrong rand\n";
-				ipc_send(data, strlen(data));
+				ipc_send(data, 32);
 			}
 			
 		}
 	
 	data = "\nclosing random execution\n";
-	ipc_send(data, strlen(data));
+	ipc_send(data, 32);
 	//system("pkill -f monitor");
 	ipc_disconnect();
 	printf("ipc disconnect successfull\n");

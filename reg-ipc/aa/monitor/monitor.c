@@ -176,15 +176,14 @@ int main(int argc, char* argv[]) {
 	reset_cycle_counter();
 	timing_frame = (time/(double)div);
 	printf("Performance monitor results\n");
-	//data = "PMU monitor is starting monitoring counters\n\n";
-	//ipc_send(data, 256);
+	data = "PMU monitor is starting monitoring counters\n\n";
+	ipc_send(data, 256);
 	//data = "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n";
 	//ipc_send(data, strlen(data));
 	//fprintf(fPtr, "PMU monitor is starting monitoring counters\n\n");
 	//fprintf(fPtr, "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n");
 	
 	while(i < loop){
-		printf("i = %u\n", i);
 		reset_event_counters(); //reset event counters
 		pmu_reset_cycle_counter();
 		sleep(timing_frame);  //sleep 0.1s (default)
