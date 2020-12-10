@@ -77,6 +77,7 @@ int main(int argc, char **argv)
 				client_monitor->status = 0;
 				memcpy(msg, client_monitor->msg, client_monitor->len);
 				//fprintf(fPtr, "%s", client_monitor->msg);
+				printf("++++%s+++++", client_monitor->msg);
 				fprintf(fPtr, "%s", msg);		
 				client_monitor->status = 0;
 				server_msg->status = 1;
