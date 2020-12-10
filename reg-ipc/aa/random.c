@@ -177,6 +177,7 @@ int main(int argc, char* argv[])
 		sprintf(command, "nice --10 ./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
 		system(command);
 		data = "\nstarting random execution\n\n";
+		ipc_send(data, 32);
 		for(int i =0; i<loop_rand; i++) {
 			randomnumber = rand() % 4+ 1;
 			if (randomnumber==1){
