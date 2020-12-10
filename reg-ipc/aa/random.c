@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
 		char command[100];
 		int div = 10;
 		int timing_frame = 1;
-		int loop_monitor = 1000;
+		int loop_monitor = 60000;
 		int loop_rand = 20;
 		FILE* logfile = NULL;
     int randomnumber;
@@ -174,7 +174,7 @@ int main(int argc, char* argv[])
 		}
 		
 		printf("ipc connect successfull\n\n");
-		sprintf(command, "nice --10 ./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
+		sprintf(command, "./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
 		system(command);
 		data = "\nstarting random execution\n\n";
 		ipc_send(data, 32);
