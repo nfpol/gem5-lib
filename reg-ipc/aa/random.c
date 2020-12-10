@@ -119,26 +119,11 @@ int main(int argc, char* argv[])
 		FILE* logfile = NULL;
     int randomnumber;
 		srand(time(NULL));
-		//FILE * fPtr;
-		//fPtr = fopen("./monitor/output-reg.dat", "a");
-		//if(fPtr == NULL){
-		//		/* File not created hence exit */
-		//			printf("Unable to create file.\n");
-		//			exit(EXIT_FAILURE);
-		//}
 
 		char* data = calloc(32, sizeof(data));
 	 
 		/* Parse arguments */
 		static const char* short_options = "t:m:r:d:h:";
-		/*static struct option long_options[] = {
-			{"timing",           required_argument, NULL, 't'},
-			{"loop_monitor",     required_argument, NULL, 'm'},
-			{"loop_rand",        required_argument, NULL, 'r'},
-			{"divider",          required_argument, NULL, 'd'},
-			{ NULL,              0, NULL, 0}
-		};*/ 
-		/*call the server file */
 		
 		int c;
 		while ((c = getopt_long(argc, argv, short_options, NULL)) != -1) {
@@ -192,7 +177,6 @@ int main(int argc, char* argv[])
 		sprintf(command, "./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
 		system(command);
 		data = "\nstarting random execution\n\n";
-		ipc_send(data, strlen(data));
 		printf("strlendata = %u\n", strlen(data));
 		for(int i =0; i<loop_rand; i++) {
 			randomnumber = rand() % 4+ 1;
@@ -200,63 +184,42 @@ int main(int argc, char* argv[])
 					/*Run libflush example */
 				data = "\nlibflush\n";
 				ipc_send(data, strlen(data));
-				//fprintf(fPtr, "libflush\n");
-				//printf("libflush\n");
 				chdir("/home/nikos/armageddon/libflush/"); 
-				//system("m5 resetstats");
 				system("./example/build/armv8/release/bin/example -s 400 -n  1000 -x 1 -z 10");
-				//system("m5 dumpstats");
 				chdir("/home/nikos/gem5-lib/");	
 			}
 			else if (randomnumber==2){
 				data = "\nbasicmath_small\n";
 				ipc_send(data, strlen(data));
-				//fprintf(fPtr, "basicmath\n");
-				//printf("basicmath\n");
-				chdir("/home/nikos/gem5-lib/automotive/basicmath"); 
-				//system("m5 resetstats");
+				chdir("/home/nikos/gem5-lib/automotive/basicmath");
 				system("./basicmath_small > output_small.txt");
-				//system("m5 dumpstats");
 				chdir("/home/nikos/gem5-lib/");
 			}	
 			else if (randomnumber==3){
 				data = "\nbitcount small\n";
 				ipc_send(data, strlen(data));
-				//printf(""bitcount\n");
-				//fprintf(fPtr, "bitcount\n");
 				chdir("/home/nikos/gem5-lib/automotive/bitcount"); 
-				//system("m5 resetstats");
 				system("./bitcnts 75000 > output_small.txt");
-				//system("m5 dumpstats");
 				chdir("/home/nikos/gem5-lib/");	
 			}
 			else if (randomnumber==4){
 				data = "\nsha small\n";
 				ipc_send(data, strlen(data));
-				//printf("sha\n");
-				//fprintf(fPtr, "sha\n");
 				chdir("/home/nikos/gem5-lib/security/sha"); 
-				//system("m5 resetstats");
 				system("./sha input_small.asc > output_small.txt");
-				//system("m5 dumpstats");
 				chdir("/home/nikos/gem5-lib/");	
 			}
 			else {
 				data = "\nwrong rand\n";
 				ipc_send(data, strlen(data));
-				//fprintf(fPtr, "nothing");
-				//printf("nothing");
 			}
 			
 		}
 	
 	data = "\nclosing random execution\n";
 	ipc_send(data, strlen(data));
-	//fprintf(fPtr, "closing random execution\n");
-	//printf("closing random execution\n");
 	//system("pkill -f monitor");
 	ipc_disconnect();
 	printf("ipc disconnect successfull\n");
-	//fclose(fPtr);
 	return 0;
 }
