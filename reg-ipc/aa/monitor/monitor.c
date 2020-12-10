@@ -193,7 +193,7 @@ int main(int argc, char* argv[]) {
 		cycle_counter_disable();
 		
 		
-		snprintf(buffer, 256, "%u     %u     %u     %u     %u     %u     \n", get_event_counter(0), get_event_counter(1), get_event_counter(2), get_event_counter(3), get_event_counter(4), get_event_counter(5), get_event_counter(6), get_timing());
+		snprintf(buffer, 256, "%u     %u     %u     %u     %u     %u     %u     %lu\n", get_event_counter(0), get_event_counter(1), get_event_counter(2), get_event_counter(3), get_event_counter(4), get_event_counter(5), get_event_counter(6), get_timing());
 		data = buffer;
 		ipc_send(data, strlen(buffer));
 
