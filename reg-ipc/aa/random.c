@@ -174,7 +174,7 @@ int main(int argc, char* argv[])
 		}
 		
 		printf("ipc connect successfull\n\n");
-		sprintf(command, "./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
+		sprintf(command, "nice --10 ./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
 		system(command);
 		data = "\nstarting random execution\n\n";
 		for(int i =0; i<loop_rand; i++) {
