@@ -1,3 +1,5 @@
 rm -rf ./monitor/out*
 rm -rf out*
+touch ./monitor/output-reg.dat
+touch output.dat
 

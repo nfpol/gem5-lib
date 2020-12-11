@@ -180,7 +180,7 @@ int main(int argc, char* argv[]) {
 	ipc_send(data, 256);
 	//data = "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n";
 	//ipc_send(data, 256);
-	
+	asm volatile("ISB");
 	while(i < loop){
 		reset_event_counters(); //reset event counters
 		pmu_reset_cycle_counter();

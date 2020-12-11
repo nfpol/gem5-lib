@@ -174,10 +174,13 @@ int main(int argc, char* argv[])
 		}
 		
 		printf("ipc connect successfull\n\n");
+		asm volatile("ISB");
 		sprintf(command, "nice --2 ./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
 		system(command);
+		asm volatile("ISB");
 		data = "\nstarting random execution\n\n";
 		ipc_send(data, 32);
+		asm volatile("ISB");
 		for(int i =0; i<loop_rand; i++) {
 			randomnumber = rand() % 4+ 1;
 			if (randomnumber==1){

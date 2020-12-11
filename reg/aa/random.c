@@ -30,10 +30,13 @@ int main(int argc, char* argv[])
 		int timing_frame = 1;
 		int loop_monitor = 1000;
 		int loop_rand = 20;
+		int cycles = 0;
 		FILE* logfile = NULL;
     int randomnumber;
 		srand(time(NULL));
 		FILE * fPtr;
+		system("./delete-out");
+		asm volatile("ISB");
 		fPtr = fopen("output.dat", "w");
 		if(fPtr == NULL){
 				/* File not created hence exit */
@@ -90,59 +93,58 @@ int main(int argc, char* argv[])
 					return -1; 
 			}
 		}
+		asm volatile("ISB");
 		sprintf(command, "./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
 		system(command);
+		asm volatile("ISB");
 		for(int i =0; i<loop_rand; i++) {
 			randomnumber = rand() % 4+ 1;
 			if (randomnumber==1){
-					/*Run libflush example */
 				pmu_cycle_counter_disable();
 				cycles = get_timing();
-				
-				fprintf(fPtr, "libflush\n");
+				fprintf(fPtr, "libflush started execution at %lu CPU cycles\n", cycles);
+				asm volatile("ISB");
 				pmu_enable_cycle_counter();
-				//printf("libflush\n");
-				chdir("/home/nikos/armageddon/libflush/"); 
-				//system("m5 resetstats");
+				chdir("/home/nikos/armageddon/libflush/");
 				system("./example/build/armv8/release/bin/example -s 400 -n  1000 -x 1 -z 10");
-				//system("m5 dumpstats");
 				chdir("/home/nikos/gem5-lib/");	
 			}
 			else if (randomnumber==2){
-				fprintf(fPtr, "basicmath\n");
-				//printf("basicmath\n");
-				chdir("/home/nikos/gem5-lib/automotive/basicmath"); 
-				//system("m5 resetstats");
+				pmu_cycle_counter_disable();
+				cycles = get_timing();
+				fprintf(fPtr, "basicmath small started execution at %lu CPU cycles\n", cycles);
+				asm volatile("ISB");
+				pmu_enable_cycle_counter();
+				chdir("/home/nikos/gem5-lib/automotive/basicmath");
 				system("./basicmath_small > output_small.txt");
-				//system("m5 dumpstats");
 				chdir("/home/nikos/gem5-lib/");
 			}	
 			else if (randomnumber==3){
-				//printf(""bitcount\n");
-				fprintf(fPtr, "bitcount\n");
+				pmu_cycle_counter_disable();
+				cycles = get_timing();
+				fprintf(fPtr, "bitcount small started execution at %lu CPU cycles\n", cycles);
+				asm volatile("ISB");
+				pmu_enable_cycle_counter();
 				chdir("/home/nikos/gem5-lib/automotive/bitcount"); 
-				//system("m5 resetstats");
 				system("./bitcnts 75000 > output_small.txt");
-				//system("m5 dumpstats");
 				chdir("/home/nikos/gem5-lib/");	
 			}
 			else if (randomnumber==4){
-				//printf("sha\n");
-				fprintf(fPtr, "sha\n");
-				chdir("/home/nikos/gem5-lib/security/sha"); 
-				//system("m5 resetstats");
-				system("./sha input_small.asc > output_small.txt");
-				//system("m5 dumpstats");
+				pmu_cycle_counter_disable();
+				cycles = get_timing();
+				fprintf(fPtr, "sha large started execution at %lu CPU cycles\n", cycles");
+				asm volatile("ISB");
+				pmu_enable_cycle_counter();
+				chdir("/home/nikos/gem5-lib/security/sha");
+				system("./sha input_large.asc > output_large.txt");
 				chdir("/home/nikos/gem5-lib/");	
 			}
 			else {
 				fprintf(fPtr, "nothing");
-				//printf("nothing");
 			}
 			
 		}
 	fprintf(fPtr, "closing random execution\n");
-	//printf("closing random execution\n");
 	//system("pkill -f monitor");
 	fclose(fPtr);
 	return 0;

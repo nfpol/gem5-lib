@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
 	FILE* logfile = NULL;
   int i,j,k = 0;
   FILE * fPtr;
-  fPtr = fopen("output-reg.dat", "a");
+  fPtr = fopen("output-reg.dat", "w");
   if(fPtr == NULL){
         /* File not created hence exit */
         printf("Unable to create file.\n");
@@ -81,11 +81,12 @@ int main(int argc, char* argv[]) {
         return -1; 
     }
   }
-		
+	asm volatile("ISB");
 	init_pmu();
 	select_event();
 	reset_event_counters();
 	reset_cycle_counter();
+	asm volatile("ISB");
 	timing_frame = (time/(double)div);
 	printf("Performance monitor results\n");
 	fprintf(fPtr, "PMU monitor is starting monitoring counters\n\n");

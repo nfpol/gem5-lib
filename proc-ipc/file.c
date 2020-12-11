@@ -118,10 +118,11 @@ int main(int argc, char **argv)
 	printf("file is running...\n");
 	
 	chdir("/home/nikos/gem5-lib/reg-ipc/aa");
+	asm volatile("ISB");
 	sprintf(command, "nice --1 ./random -r %u -m %u -t %u -d %u &", loop_rand, loop_monitor, timing_frame, div);
 	system(command);
 	//system("nice --1 ./random &");	
-	
+	asm volatile("ISB");
 	while(1) {
 		/* read msg */
 		while(1) {
