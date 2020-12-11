@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
 	FILE* logfile = NULL;
   int i,j,k = 0;
   FILE * fPtr;
-  fPtr = fopen("output-reg.dat", "w");
+  fPtr = fopen("./monitor/output-reg.dat", "w");
   if(fPtr == NULL){
         /* File not created hence exit */
         printf("Unable to create file.\n");
