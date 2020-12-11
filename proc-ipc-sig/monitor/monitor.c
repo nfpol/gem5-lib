@@ -79,6 +79,7 @@ static void
 ipc_disconnect(void)
 {
 	/* close shm */
+	printf("hell yeah_v2\n");
 	if(munmap(addr, MSG_SIZE_MAX) == -1) {
 		printf("munmap error : %s\n", strerror(errno));
 	}
@@ -226,6 +227,7 @@ int main(int argc, char* argv[]) {
 	fprintf(fPtr, "PMU monitor is closing\n");
 	fclose(fPtr);
 	ipc_disconnect();
+	printf("hell yeah\n");
 		
   exit(0);
   

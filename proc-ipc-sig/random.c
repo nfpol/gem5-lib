@@ -199,13 +199,14 @@ int main(int argc, char* argv[])
 		for(int i =0; i<loop_rand; i++) {
 			random_execution();
 		}
-		
+		printf("hell yeah_v3\n");
 		server_msg->finish = 1;
-		
+		printf("hell yeah_v4\n");
 		while(1){
 			printf("oh my god\n");
 			if(client_msg->finish == 1) break;
 		}
+		printf("hell yeah_v5\n");
 		//maybe it will work as when random execution stop we dont care
 		pmu_cycle_counter_disable();
 		pmu_event_counters_disable_all();
