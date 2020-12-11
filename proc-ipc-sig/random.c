@@ -205,12 +205,14 @@ int main(int argc, char* argv[])
 			random_execution();
 		}
 		server_msg->finish = 1;
+		
 		while(1){
 			if(client_msg->finish == 1) {
 				printf("hell yeah_v4\n");
 				break;
 			}
 		}
+		server_msg->status = 0;
 		printf("hell yeah_v5\n");
 		//maybe it will work as when random execution stop we dont care
 		pmu_cycle_counter_disable();
