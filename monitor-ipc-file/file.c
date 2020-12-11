@@ -146,9 +146,8 @@ int main(int argc, char **argv)
 				server_msg->status = 1;
 				break;
 			}
-			sleep(0);
 		}
-		
+		printf("here");
 		if(client_msg->len == (sizeof(END_MSG) + 64)) {
 			printf("end msg!!\n");
 			break;
