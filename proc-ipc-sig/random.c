@@ -20,11 +20,14 @@
 #include <unistd.h>   //for sleep()
 
 /* IPC */
+int server_fd;
 static int ipc_fd;
 static void *addr;
 static struct shm_msg *client_msg;
 static struct shm_msg *server_msg;
 static int randomnumber = 0;
+FILE * fPtr;
+
 static void print_help(char* argv[]) {
   fprintf(stdout, "Usage: %s [OPTIONS]\n", argv[0]);
   fprintf(stdout, "\t-t, -timing_frame <value>\t TIMING FRAME (default: t 1  --> 1/10 --> 0.1sec )\n");
@@ -143,7 +146,7 @@ int main(int argc, char* argv[])
 			}
 		}
 		
-		FILE * fPtr;
+		//FILE * fPtr;
 		fPtr = fopen("./output.dat", "w");
 		asm volatile ("ISB");
 		if(fPtr == NULL){
@@ -171,7 +174,7 @@ int main(int argc, char* argv[])
 		  }
 		  memset(addr, 0, MSG_SIZE_MAX);
 		
-		client_msg = (struct shm_msg *)((char*)addr + HM_CLIENT_BUF_IDX_MONITOR);
+		client_msg = (struct shm_msg *)((char*)addr + SHM_CLIENT_BUF_IDX_MONITOR);
 		server_msg = (struct shm_msg *)((char*)addr + SHM_SERVER_BUF_IDX);
 		server_msg->status = 1;
 		server_msg->wait = 1;
@@ -194,7 +197,7 @@ int main(int argc, char* argv[])
 		asm volatile ("ISB");
 		fprintf(fPtr, "random execution started ...\n");
 		for(int i =0; i<loop_rand; i++) {
-			random_execution();
+			random_execution(fPtr);
 		}
 		
 		server_msg->finish = 1;
