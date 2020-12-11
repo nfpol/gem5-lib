@@ -1,11 +1,11 @@
-bitcount small started execution at 9841088508 CPU cycles
-basicmath small started execution at 54530680 CPU cycles
-libflush started execution at 321127751 CPU cycles
-basicmath small started execution at 53646381 CPU cycles
-basicmath small started execution at 310270653 CPU cycles
-basicmath small started execution at 556697163 CPU cycles
-basicmath small started execution at 805307115 CPU cycles
-sha large started execution at 1053969473 CPU cycles
-basicmath small started execution at 1181670355 CPU cycles
-sha large started execution at 1427019225 CPU cycles
+bitcount small started execution at 23862300213 CPU cycles
+bitcount small started execution at 52227863 CPU cycles
+libflush started execution at 108980057 CPU cycles
+bitcount small started execution at 60306624 CPU cycles
+basicmath small started execution at 118006555 CPU cycles
+bitcount small started execution at 388680780 CPU cycles
+sha large started execution at 444365401 CPU cycles
+libflush started execution at 574927101 CPU cycles
+basicmath small started execution at 64752262 CPU cycles
+bitcount small started execution at 319705618 CPU cycles
 closing random execution
