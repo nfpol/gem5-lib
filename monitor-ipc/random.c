@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
 		int timing_frame = 1;
 		int loop_monitor = 1000;
 		int loop_rand = 20;
-		int cycles = 0;
+		uint64_t cycles = 0;
 		FILE* logfile = NULL;
     int randomnumber;
 		srand(time(NULL));

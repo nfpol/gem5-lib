@@ -121,7 +121,7 @@ int main(int argc, char* argv[])
 		srand(time(NULL));
 		char buffer [32];
 		char* data = calloc(32, sizeof(data));
-		int cycles=0;
+		uint64_t cycles=0;
 	 
 		/* Parse arguments */
 		static const char* short_options = "t:m:r:d:h:";
