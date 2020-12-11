@@ -24,7 +24,7 @@ static int ipc_fd;
 static void *addr;
 static struct shm_msg *client_msg;
 static struct shm_msg *server_msg;
-
+static int randomnumber = 0;
 static void print_help(char* argv[]) {
   fprintf(stdout, "Usage: %s [OPTIONS]\n", argv[0]);
   fprintf(stdout, "\t-t, -timing_frame <value>\t TIMING FRAME (default: t 1  --> 1/10 --> 0.1sec )\n");
@@ -36,17 +36,6 @@ static void print_help(char* argv[]) {
 
 static void random_execution(void){
 	randomnumber = rand() % 4+ 1;
-	while(1) {
-		if(client_msg->status == 1) {
-			server_msg->status = 0;
-			memcpy(msg, client_msg->msg, client_msg->len);
-			//fprintf(fPtr, "%s", client_msg->msg);
-			fprintf(fPtr, "%s", msg);
-			client_msg->status = 0;
-			server_msg->status = 1;
-			break;
-		}
-	}
 	if (randomnumber==1){
 		pmu_cycle_counter_disable();
 		pmu_event_counters_disable_all();
@@ -106,7 +95,6 @@ int main(int argc, char* argv[])
 		int loop_monitor = 1000;
 		int loop_rand = 20;
 		FILE* logfile = NULL;
-    int randomnumber;
 		srand(time(NULL));
 
 		char* data = calloc(32, sizeof(data));
