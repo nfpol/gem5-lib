@@ -55,7 +55,7 @@ ipc_connect(void)
 			goto out;
 	}
 
-	client_msg = (struct shm_msg *)((char*)addr + define SHM_CLIENT_BUF_IDX_MONITOR);
+	client_msg = (struct shm_msg *)((char*)addr + SHM_CLIENT_BUF_IDX_MONITOR);
 	server_msg = (struct shm_msg *)((char*)addr + SHM_SERVER_BUF_IDX);
 	client_msg->status = 0;
 	client_msg->wait = 1;

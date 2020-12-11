@@ -197,7 +197,7 @@ int main(int argc, char* argv[])
 		asm volatile ("ISB");
 		fprintf(fPtr, "random execution started ...\n");
 		for(int i =0; i<loop_rand; i++) {
-			random_execution(fPtr);
+			random_execution();
 		}
 		
 		server_msg->finish = 1;
