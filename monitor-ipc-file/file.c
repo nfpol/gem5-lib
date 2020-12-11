@@ -121,7 +121,7 @@ int main(int argc, char **argv)
 	
 	chdir("/home/nikos/gem5-lib/reg-ipc/aa");
 	asm volatile("ISB");
-	sprintf(command, "nice --1 ./random -r %u -m %u -t %u -d %u &", loop_rand, loop_monitor, timing_frame, div);
+	sprintf(command, "./random -r %u -m %u -t %u -d %u &", loop_rand, loop_monitor, timing_frame, div);
 	system(command);
 	//system("nice --1 ./random &");	
 	asm volatile("ISB");
@@ -149,7 +149,7 @@ int main(int argc, char **argv)
 			
 		}
 		printf("here");
-		if(client_msg->len == (sizeof(END_MSG) + 64)) {
+		if(client_msg->len == (sizeof(END_MSG) + 32)) {
 			printf("end msg!!\n");
 			break;
 		}
