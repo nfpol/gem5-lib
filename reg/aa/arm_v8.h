@@ -172,6 +172,8 @@ inline void pmu_event_counters_disable(unsigned counter){
 
 inline void pmu_event_counters_disable_all(void){
 	uint32_t mask = 0;
+	uint32_t value = 0;
+	asm volatile("MRS %0, PMCR_EL0" : "=r" (value));
   mask |= ARMV8_PMCR_E; /* Enable */
 	/* Disable Performance event Counters */
 	asm volatile ("ISB");
