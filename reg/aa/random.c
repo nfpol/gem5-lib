@@ -11,7 +11,7 @@
 
 
 #include <unistd.h>   //for sleep()
-#include "arm_v8.h"
+#include "./moniotr/arm_v8.h"
 
 static void print_help(char* argv[] ) {
   fprintf(stdout, "Usage: %s [OPTIONS]\n", argv[0]);
@@ -101,40 +101,49 @@ int main(int argc, char* argv[])
 			randomnumber = rand() % 4+ 1;
 			if (randomnumber==1){
 				pmu_cycle_counter_disable();
+				event_counters_disable();
 				cycles = get_timing();
 				fprintf(fPtr, "libflush started execution at %lu CPU cycles\n", cycles);
 				asm volatile("ISB");
 				pmu_enable_cycle_counter();
+				pmu_enable_all_counters();
 				chdir("/home/nikos/armageddon/libflush/");
 				system("./example/build/armv8/release/bin/example -s 400 -n  1000 -x 1 -z 10");
 				chdir("/home/nikos/gem5-lib/");	
 			}
 			else if (randomnumber==2){
 				pmu_cycle_counter_disable();
+				event_counters_disable();
 				cycles = get_timing();
+				pmu_enable_all_counters();
 				fprintf(fPtr, "basicmath small started execution at %lu CPU cycles\n", cycles);
 				asm volatile("ISB");
 				pmu_enable_cycle_counter();
+				pmu_enable_all_counters();
 				chdir("/home/nikos/gem5-lib/automotive/basicmath");
 				system("./basicmath_small > output_small.txt");
 				chdir("/home/nikos/gem5-lib/");
 			}	
 			else if (randomnumber==3){
 				pmu_cycle_counter_disable();
+				event_counters_disable();
 				cycles = get_timing();
 				fprintf(fPtr, "bitcount small started execution at %lu CPU cycles\n", cycles);
 				asm volatile("ISB");
 				pmu_enable_cycle_counter();
+				pmu_enable_all_counters();
 				chdir("/home/nikos/gem5-lib/automotive/bitcount"); 
 				system("./bitcnts 75000 > output_small.txt");
 				chdir("/home/nikos/gem5-lib/");	
 			}
 			else if (randomnumber==4){
 				pmu_cycle_counter_disable();
+				event_counters_disable();
 				cycles = get_timing();
 				fprintf(fPtr, "sha large started execution at %lu CPU cycles\n", cycles);
 				asm volatile("ISB");
 				pmu_enable_cycle_counter();
+				pmu_enable_all_counters();
 				chdir("/home/nikos/gem5-lib/security/sha");
 				system("./sha input_large.asc > output_large.txt");
 				chdir("/home/nikos/gem5-lib/");	

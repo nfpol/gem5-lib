@@ -83,7 +83,8 @@ int main(int argc, char **argv)
 				return -1; 
 		}
 	}
-
+	system("./delete-out");
+	asm volatile("ISB");
 	FILE * fPtr;
 	fPtr = fopen("./monitor/output-reg.dat", "w");
 	if(fPtr == NULL){

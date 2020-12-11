@@ -69,6 +69,17 @@ inline void pmu_event_config(unsigned counter, uint32_t event)   /* Configuring 
 }
 
 
+inline void pmu_enable_cycle_counter(void)  /* Enabling a configured event counter  */
+{
+	uint32_t value = 0;
+	
+	asm volatile("MRS %0, PMCNTENSET_EL0" : "=r" (value));
+	value |= ARMV8_PMCNTENSET_EL0_EN;   /* enabling the cycle counter */
+	asm volatile ("ISB");
+	asm volatile("MSR PMCNTENSET_EL0, %0" : : "r" (value));
+	//printf("enable counter %zu\n", counter);
+}
+
 inline void pmu_enable_config_counter(unsigned counter)  /* Enabling a configured event counter  */
 {
 	uint32_t value = 0;

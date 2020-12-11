@@ -93,7 +93,7 @@ int main(int argc, char* argv[]) {
 	fprintf(fPtr, "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n");
 	while(i < loop){
 		reset_event_counters(); //reset event counters
-		pmu_reset_cycle_counter();
+		//pmu_reset_cycle_counter();
 		sleep(timing_frame);  //sleep 10ms
 		//sleep(1);
 		event_counters_disable();
