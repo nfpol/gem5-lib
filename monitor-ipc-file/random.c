@@ -70,12 +70,12 @@ out:
 static void
 ipc_disconnect(void)
 {
-	char *data = calloc(64, sizeof(data));
+	char *data = calloc(32, sizeof(data));
 	/* send end msg */
 	client_msg->status = 0;
-	client_msg->len = sizeof(END_MSG) + 64; // be careful to choose the right size
+	client_msg->len = sizeof(END_MSG) + 32; // be careful to choose the right size
 	strncpy(client_msg->msg, END_MSG, client_msg->len);
-	memcpy(client_msg->msg + sizeof(END_MSG), data, 64); // todo
+	memcpy(client_msg->msg + sizeof(END_MSG), data, 32); // todo
 	client_msg->status = 1;
 	
 	/* close shm */
@@ -119,8 +119,8 @@ int main(int argc, char* argv[])
 		FILE* logfile = NULL;
     int randomnumber;
 		srand(time(NULL));
-		char buffer [64];
-		char* data = calloc(64, sizeof(data));
+		char buffer [32];
+		char* data = calloc(32, sizeof(data));
 		int cycles=0;
 	 
 		/* Parse arguments */
@@ -176,11 +176,11 @@ int main(int argc, char* argv[])
 		
 		printf("ipc connect successfull\n\n");
 		asm volatile("ISB");
-		sprintf(command, "nice --2 ./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
+		sprintf(command, "./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
 		system(command);
 		asm volatile("ISB");
 		data = "\nstarting random execution\n\n";
-		ipc_send(data, 64);
+		ipc_send(data, 32);
 		asm volatile("ISB");
 		for(int i =0; i<loop_rand; i++) {
 			randomnumber = rand() % 4+ 1;
@@ -188,10 +188,10 @@ int main(int argc, char* argv[])
 				pmu_cycle_counter_disable();
 				pmu_event_counters_disable_all();
 				cycles = get_timing();
-				snprintf(buffer, 64, "%\n\nlibflush at %lu\n", cycles);
+				snprintf(buffer, 32, "%\n\nlibflush at %lu\n", cycles);
 				data = buffer;
 				//data = "\nlibflush\n";
-				ipc_send(data, 64);
+				ipc_send(data, 32);
 				asm volatile("ISB");
 				pmu_enable_cycle_counter();
 				pmu_enable_all_counters();
@@ -203,10 +203,10 @@ int main(int argc, char* argv[])
 				pmu_cycle_counter_disable();
 				pmu_event_counters_disable_all();
 				cycles = get_timing();
-				snprintf(buffer, 64, "%\n\nbasicmath small at %lu\n", cycles);
+				snprintf(buffer, 32, "%\n\nbasicmath small at %lu\n", cycles);
 				data = buffer;
 				//data = "\nbasicmath_small\n";
-				ipc_send(data, 64);
+				ipc_send(data, 32);
 				asm volatile("ISB");
 				pmu_enable_cycle_counter();
 				pmu_enable_all_counters();
@@ -218,10 +218,10 @@ int main(int argc, char* argv[])
 				pmu_cycle_counter_disable();
 				pmu_event_counters_disable_all();
 				cycles = get_timing();
-				snprintf(buffer, 64, "%\n\nbitcount small at %lu\n", cycles);
+				snprintf(buffer, 32, "%\n\nbitcount small at %lu\n", cycles);
 				data = buffer;
 				//data = "\nbitcount small\n";
-				ipc_send(data, 64);
+				ipc_send(data, 32);
 				asm volatile("ISB");
 				pmu_enable_cycle_counter();
 				pmu_enable_all_counters();
@@ -233,10 +233,10 @@ int main(int argc, char* argv[])
 				pmu_cycle_counter_disable();
 				pmu_event_counters_disable_all();
 				cycles = get_timing();
-				snprintf(buffer, 64, "%\n\nsha small at %lu\n", cycles);
+				snprintf(buffer, 32, "%\n\nsha small at %lu\n", cycles);
 				data = buffer;
 				//data = "\nsha small\n";
-				ipc_send(data, 64);
+				ipc_send(data, 32);
 				asm volatile("ISB");
 				pmu_enable_cycle_counter();
 				pmu_enable_all_counters();
@@ -246,14 +246,14 @@ int main(int argc, char* argv[])
 			}
 			else {
 				data = "\nwrong rand\n";
-				ipc_send(data, 64);
+				ipc_send(data, 32);
 			}
 			
 		}
 	pmu_cycle_counter_disable();
 	pmu_event_counters_disable_all();
 	data = "\nclosing random execution\n";
-	ipc_send(data, 64);
+	ipc_send(data, 32);
 	//system("pkill -f monitor");
 	ipc_disconnect();
 	printf("ipc disconnect successfull\n");
