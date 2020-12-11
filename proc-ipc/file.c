@@ -28,6 +28,7 @@ static void print_help(char* argv[]) {
   fprintf(stdout, "\t-r, -loop_rand <value>\t How many random choices of benchmark attack to execute  (default: -r 20)\n");
   fprintf(stdout, "\t-d, -div <value>\t time divider (default:  div 10)\n");
   fprintf(stdout, "\t-h, -help\t\t Help page\n");
+}
 
 int main(int argc, char **argv)
 {
