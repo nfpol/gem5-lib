@@ -39,6 +39,21 @@ static void print_help(char* argv[]) {
   fprintf(stdout, "\t-h, -help\t\t Help page\n");
 }
 
+static void
+ipc_disconnect(void)
+{
+	/* close shm */
+	printf("hell yeah_v2\n");
+	if(munmap(addr, MSG_SIZE_MAX) == -1) {
+		printf("munmap error : %s\n", strerror(errno));
+	}
+
+	if(close(ipc_fd) == -1) {
+		printf("close error : %s\n", strerror(errno));
+	}
+}
+
+
 static int 
 ipc_connect(void)
 {
@@ -213,6 +228,7 @@ int main(int argc, char* argv[]) {
 	fprintf(fPtr, "PMU monitor is closing\n");
 	fclose(fPtr);
 	client_msg->finish = 1;	
+	ipc_disconnect();
   exit(0);
   
 

@@ -37,19 +37,6 @@ static void print_help(char* argv[]) {
   fprintf(stdout, "\t-h, -help\t\t Help page\n");
 }
 
-static void
-ipc_disconnect(void)
-{
-	/* close shm */
-	printf("hell yeah_v2\n");
-	if(munmap(addr, MSG_SIZE_MAX) == -1) {
-		printf("munmap error : %s\n", strerror(errno));
-	}
-
-	if(close(ipc_fd) == -1) {
-		printf("close error : %s\n", strerror(errno));
-	}
-}
 
 static void random_execution(void){
 	randomnumber = rand() % 4+ 1;
@@ -193,9 +180,9 @@ int main(int argc, char* argv[])
 		server_msg->status = 1;
 		server_msg->wait = 1;
 		server_msg->finish = 0;
-		client_msg->status = 0;
-		client_msg->wait = 1;
-		client_msg->finish = 0;
+		//client_msg->status = 0;
+		//client_msg->wait = 1;
+		//client_msg->finish = 0;
 			
 		printf("server is running...\n");
 		
@@ -221,7 +208,6 @@ int main(int argc, char* argv[])
 		while(1){
 			if(client_msg->finish == 1) {
 				printf("hell yeah_v4\n");
-				ipc_disconnect();
 				break;
 			}
 		}
