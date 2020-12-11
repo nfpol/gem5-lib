@@ -100,8 +100,8 @@ int main(int argc, char* argv[])
 		for(int i =0; i<loop_rand; i++) {
 			randomnumber = rand() % 4+ 1;
 			if (randomnumber==1){
+				pmu_cycle_counter_disable();
 				pmu_event_counters_disable_all();
-				event_counters_disable();
 				cycles = get_timing();
 				fprintf(fPtr, "libflush started execution at %lu CPU cycles\n", cycles);
 				asm volatile("ISB");
@@ -112,8 +112,8 @@ int main(int argc, char* argv[])
 				chdir("/home/nikos/gem5-lib/");	
 			}
 			else if (randomnumber==2){
+				pmu_cycle_counter_disable();
 				pmu_event_counters_disable_all();
-				event_counters_disable();
 				cycles = get_timing();
 				pmu_enable_all_counters();
 				fprintf(fPtr, "basicmath small started execution at %lu CPU cycles\n", cycles);
@@ -125,8 +125,8 @@ int main(int argc, char* argv[])
 				chdir("/home/nikos/gem5-lib/");
 			}	
 			else if (randomnumber==3){
+				pmu_cycle_counter_disable();
 				pmu_event_counters_disable_all();
-				event_counters_disable();
 				cycles = get_timing();
 				fprintf(fPtr, "bitcount small started execution at %lu CPU cycles\n", cycles);
 				asm volatile("ISB");
@@ -137,8 +137,8 @@ int main(int argc, char* argv[])
 				chdir("/home/nikos/gem5-lib/");	
 			}
 			else if (randomnumber==4){
+				pmu_cycle_counter_disable();
 				pmu_event_counters_disable_all();
-				event_counters_disable();
 				cycles = get_timing();
 				fprintf(fPtr, "sha large started execution at %lu CPU cycles\n", cycles);
 				asm volatile("ISB");
