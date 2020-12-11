@@ -1,0 +1,3 @@
+gcc ipc_client2.c -o client_rand -lrt
+gcc ipc_client1.c -o client_monitor -lrt
+gcc file.c -o server -lrt
