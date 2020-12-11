@@ -213,9 +213,7 @@ int main(int argc, char* argv[]) {
 	printf("PMU monitor is closing ....\n");
 	fprintf(fPtr, "PMU monitor is closing\n");
 	fclose(fPtr);
-	client_msg->finish = 1;
-	printf("hell yeah\n");
-		
+	client_msg->finish = 1;	
   exit(0);
   
 

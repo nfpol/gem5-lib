@@ -205,9 +205,7 @@ int main(int argc, char* argv[])
 		system(command);
 		
 		while(1){
-			printf("waiting\n");
-			if(client_msg->status == 1 && client_msg->wait == 0){
-				printf("monitor status %u and monitor wait %u \n", client_msg->status, client_msg->wait); 
+			if(client_msg->status == 1 && client_msg->wait == 0){ 
 				break;
 			}
 		}
@@ -218,11 +216,10 @@ int main(int argc, char* argv[])
 		for(int i =0; i<loop_rand; i++) {
 			random_execution();
 		}
-		printf("hell yeah_v3\n");
 		server_msg->finish = 1;
-		printf("hell yeah_v4\n");
 		while(1){
 			if(client_msg->finish == 1) {
+				printf("hell yeah_v4\n");
 				ipc_disconnect();
 				break;
 			}
