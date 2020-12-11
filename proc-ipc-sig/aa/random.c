@@ -154,7 +154,7 @@ int main(int argc, char* argv[])
 		rand_status = 1;
 		asm volatile ("ISB");
 		rand_wait = 0;
-		sprintf(command, "./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
+		sprintf(command, "./monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
 		system(command);
 		while(1){
 			if(monitor_status == 1 && monitor_wait == 0){ 
