@@ -181,13 +181,12 @@ int main(int argc, char* argv[]) {
 	}
 	
 	
-	
+	client_msg->wait = 0;
 	while(i < loop && server_msg->finish == 0){
 		
 		reset_event_counters(); //reset event counters
 		//pmu_reset_cycle_counter();
 		
-		if (i == 0) client_msg->wait = 0;
 		sleep(timing_frame);  //sleep 0.1s (default)
 		event_counters_disable();
 		cycle_counter_disable();
