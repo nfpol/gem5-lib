@@ -229,6 +229,7 @@ int main(int argc, char* argv[]) {
 	fclose(fPtr);
 	client_msg->finish = 1;
 	while(!(server_msg->status == 0 && server_msg->finish == 1)){
+		printf("stay here\n");
 	}
 	ipc_disconnect();
   exit(0);
