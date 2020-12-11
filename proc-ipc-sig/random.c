@@ -203,8 +203,9 @@ int main(int argc, char* argv[])
 		server_msg->wait = 0;
 		sprintf(command, "nice --2 ./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
 		system(command);
-		
+		printf("i am here 1\n");
 		while(1){
+			printf("i am here 2\n");
 			if(client_msg->status == 1 && client_msg->wait == 0){ 
 				break;
 			}
