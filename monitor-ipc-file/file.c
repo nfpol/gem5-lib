@@ -148,7 +148,6 @@ int main(int argc, char **argv)
 			}
 			
 		}
-		printf("here");
 		if(client_msg->len == (sizeof(END_MSG) + 32)) {
 			printf("end msg!!\n");
 			break;
