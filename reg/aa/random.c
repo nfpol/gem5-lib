@@ -11,7 +11,7 @@
 
 
 #include <unistd.h>   //for sleep()
-#include "./moniotr/arm_v8.h"
+#include "./monitor/arm_v8.h"
 
 static void print_help(char* argv[] ) {
   fprintf(stdout, "Usage: %s [OPTIONS]\n", argv[0]);
