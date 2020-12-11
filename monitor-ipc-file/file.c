@@ -24,7 +24,7 @@ char msg[MSG_SIZE_MAX] = {0,};
 static void print_help(char* argv[]) {
   fprintf(stdout, "Usage: %s [OPTIONS]\n", argv[0]);
   fprintf(stdout, "\t-t, -timing_frame <value>\t TIMING FRAME (default: t 1  --> 1/10 --> 0.1sec )\n");
-  fprintf(stdout, "\t-m, -loop_monitor <value>\t  Loop for the moniotr (default:  m 1000)\n");
+  fprintf(stdout, "\t-m, -loop_monitor <value>\t  Loop for the moniotr (default:  m 10000)\n");
   fprintf(stdout, "\t-r, -loop_rand <value>\t How many random choices of benchmark attack to execute  (default: -r 20)\n");
   fprintf(stdout, "\t-d, -div <value>\t time divider (default:  div 10)\n");
   fprintf(stdout, "\t-h, -help\t\t Help page\n");
@@ -35,7 +35,7 @@ int main(int argc, char **argv)
 	char command[100];
 	int div = 10;
 	int timing_frame = 1;
-	int loop_monitor = 60000;
+	int loop_monitor = 10000;
 	int loop_rand = 20;
 	FILE* logfile = NULL;
 	int i;
@@ -149,7 +149,7 @@ int main(int argc, char **argv)
 			sleep(0);
 		}
 		
-		if(client_msg->len == (sizeof(END_MSG) + 32)) {
+		if(client_msg->len == (sizeof(END_MSG) + 64)) {
 			printf("end msg!!\n");
 			break;
 		}

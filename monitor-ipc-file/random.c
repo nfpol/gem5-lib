@@ -188,7 +188,7 @@ int main(int argc, char* argv[])
 				pmu_cycle_counter_disable();
 				pmu_event_counters_disable_all();
 				cycles = get_timing();
-				snprintf(buffer, 64, "%\n\nlibflush at lu\n", cycles);
+				snprintf(buffer, 64, "%\n\nlibflush at %lu\n", cycles);
 				data = buffer;
 				//data = "\nlibflush\n";
 				ipc_send(data, 64);
@@ -203,7 +203,7 @@ int main(int argc, char* argv[])
 				pmu_cycle_counter_disable();
 				pmu_event_counters_disable_all();
 				cycles = get_timing();
-				snprintf(buffer, 64, "%\n\nbasicmath small at lu\n", cycles);
+				snprintf(buffer, 64, "%\n\nbasicmath small at %lu\n", cycles);
 				data = buffer;
 				//data = "\nbasicmath_small\n";
 				ipc_send(data, 64);
@@ -218,7 +218,7 @@ int main(int argc, char* argv[])
 				pmu_cycle_counter_disable();
 				pmu_event_counters_disable_all();
 				cycles = get_timing();
-				snprintf(buffer, 64, "%\n\nbitcount small at lu\n", cycles);
+				snprintf(buffer, 64, "%\n\nbitcount small at %lu\n", cycles);
 				data = buffer;
 				//data = "\nbitcount small\n";
 				ipc_send(data, 64);
@@ -233,7 +233,7 @@ int main(int argc, char* argv[])
 				pmu_cycle_counter_disable();
 				pmu_event_counters_disable_all();
 				cycles = get_timing();
-				snprintf(buffer, 64, "%\n\nsha small at lu\n", cycles);
+				snprintf(buffer, 64, "%\n\nsha small at %lu\n", cycles);
 				data = buffer;
 				//data = "\nsha small\n";
 				ipc_send(data, 64);
