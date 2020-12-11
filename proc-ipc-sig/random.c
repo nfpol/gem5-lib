@@ -191,7 +191,7 @@ int main(int argc, char* argv[])
 		system(command);
 		
 		while(1){
-			printf("waiting");
+			printf("waiting\n");
 			if(client_msg->status == 1 && client_msg->wait == 0){
 				printf("monitor status %u and monitor wait %u \n", client_msg->status, client_msg->wait); 
 				break;
@@ -209,7 +209,9 @@ int main(int argc, char* argv[])
 		printf("hell yeah_v4\n");
 		while(1){
 			printf("oh my god\n");
-			if(client_msg->finish == 1) break;
+			if(client_msg->finish == 1) {
+				break;
+			}
 		}
 		printf("hell yeah_v5\n");
 		//maybe it will work as when random execution stop we dont care

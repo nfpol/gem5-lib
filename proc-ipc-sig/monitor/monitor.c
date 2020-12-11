@@ -190,8 +190,11 @@ int main(int argc, char* argv[]) {
 	//ipc_send(data, 256);
 	
 	while(1) {
-		if (server_msg->status == 1 && server_msg->wait == 0) break;
+		if (server_msg->status == 1 && server_msg->wait == 0) {
+			break;
+		}
 	}
+	
 	
 	
 	while(i < loop && server_msg->finish == 0){
