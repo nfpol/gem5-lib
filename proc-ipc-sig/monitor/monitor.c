@@ -75,21 +75,6 @@ out:
 	return -1;
 }
 
-static void
-ipc_disconnect(void)
-{
-	/* close shm */
-	printf("hell yeah_v2\n");
-	if(munmap(addr, MSG_SIZE_MAX) == -1) {
-		printf("munmap error : %s\n", strerror(errno));
-	}
-
-	if(close(ipc_fd) == -1) {
-		printf("close error : %s\n", strerror(errno));
-	}
-	client_msg->finish = 1;
-	printf("%u\n", client_msg->finish);
-}
 
 static int
 ipc_send(char* data, size_t size)
@@ -228,7 +213,7 @@ int main(int argc, char* argv[]) {
 	printf("PMU monitor is closing ....\n");
 	fprintf(fPtr, "PMU monitor is closing\n");
 	fclose(fPtr);
-	ipc_disconnect();
+	client_msg->finish = 1;
 	printf("hell yeah\n");
 		
   exit(0);
