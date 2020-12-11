@@ -228,7 +228,10 @@ int main(int argc, char* argv[]) {
 	fprintf(fPtr, "PMU monitor is closing\n");
 	fclose(fPtr);
 	client_msg->finish = 1;
-	while(!(server_msg->status == 0 && server_msg->finish == 1)){
+	while(1)){
+		if(server_msg->status == 0 && server_msg->finish == 1){
+			break;
+		}
 	}
 	ipc_disconnect();
   exit(0);
