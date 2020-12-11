@@ -203,6 +203,7 @@ int main(int argc, char* argv[])
 		server_msg->finish = 1;
 		
 		while(1){
+			printf("oh my god\n");
 			if(client_msg->finish == 1) break;
 		}
 		//maybe it will work as when random execution stop we dont care
@@ -222,7 +223,7 @@ out:
 		if(shm_unlink(SHM_NAME) == -1) {
         printf("shm_unlink error : %s\n", strerror(errno));
     }
-		
+		printf("oh yes\n");
 		
 		fclose(fPtr);
 		return 0;

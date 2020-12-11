@@ -87,6 +87,7 @@ ipc_disconnect(void)
 		printf("close error : %s\n", strerror(errno));
 	}
 	client_msg->finish = 1;
+	printf("%u\n", client_msg->finish);
 }
 
 static int
