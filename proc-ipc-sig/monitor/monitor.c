@@ -43,7 +43,6 @@ static void
 ipc_disconnect(void)
 {
 	/* close shm */
-	printf("hell yeah_v2\n");
 	if(munmap(addr, MSG_SIZE_MAX) == -1) {
 		printf("munmap error : %s\n", strerror(errno));
 	}
@@ -171,7 +170,7 @@ int main(int argc, char* argv[]) {
 	client_msg->finish = 0;
 	printf("ipc connect successfull\n");
 	FILE * fPtr;
-	fPtr = fopen("./output-reg.dat", "w");
+	fPtr = fopen("./monitor/output-reg.dat", "w");
 	asm volatile ("ISB");
 	if(fPtr == NULL){
 		/* File not created hence exit */
@@ -184,11 +183,12 @@ int main(int argc, char* argv[]) {
 	reset_cycle_counter();
 	timing_frame = (time/(double)div);
 	printf("Performance monitor results\n");
+	fprintf(fPtr, "PMU monitor is starting monitoring counters\n\n");
 	//data = "PMU monitor is starting monitoring counters\n\n";
 	//ipc_send(data, 256);
 	//data = "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n";
 	//ipc_send(data, 256);
-	
+	fprintf(fPtr, "i cache refills---|---retired branches---|---d cache refills---|---branch predictor misses---|---predictable branch speculatively executed---|---CPU cycles event counter---|---CPU cycles ccnt\n");
 	while(1) {
 		if (server_msg->status == 1 && server_msg->wait == 0) {
 			break;
@@ -206,7 +206,7 @@ int main(int argc, char* argv[]) {
 		event_counters_disable();
 		cycle_counter_disable();
 		
-		
+		fprintf(fPtr, "%u     %u     %u     %u     %u     %u     %u     %lu\n", get_event_counter(0), get_event_counter(1), get_event_counter(2), get_event_counter(3), get_event_counter(4), get_event_counter(5), get_event_counter(6), get_timing());
 		//snprintf(buffer, 256, "%u     %u     %u     %u     %u     %u     %u     %lu\n", get_event_counter(0), get_event_counter(1), get_event_counter(2), get_event_counter(3), get_event_counter(4), get_event_counter(5), get_event_counter(6), get_timing());
 		//data = buffer;
 		//ipc_send(data, 256);
