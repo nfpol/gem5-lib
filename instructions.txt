@@ -768,3 +768,29 @@ m5 writefile myfileguest myfilehost
 
 
 grep -r "string to be searched"  /path/to/dir
+
+
+
+
+ have a project where the directory structure is like this:
+
+                         $projectroot
+                              |
+              +---------------+----------------+
+              |               |                |
+            part1/          part2/           part3/
+              |               |                |
+       +------+-----+     +---+----+       +---+-----+
+       |      |     |     |        |       |         |
+     data/   src/  inc/  src/     inc/   src/       inc/
+
+
+The traditional way is to have a Makefile in each of the subdirectories (part1, part2, etc.) allowing you to build them independently. Further, have a Makefile in the root directory of the project which builds everything. The "root" Makefile would look something like the following:
+
+all:
+    +$(MAKE) -C part1
+    +$(MAKE) -C part2
+    +$(MAKE) -C part3
+
+
+
