@@ -123,7 +123,6 @@ int main(int argc, char **argv)
 	asm volatile("ISB");
 	sprintf(command, "./random -r %u -m %u -t %u -d %u &", loop_rand, loop_monitor, timing_frame, div);
 	system(command);
-	//system("nice --1 ./random &");	
 	asm volatile("ISB");
 	while(1) {
 		/* read msg */
