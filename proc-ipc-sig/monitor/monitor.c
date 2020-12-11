@@ -200,7 +200,6 @@ int main(int argc, char* argv[]) {
 		//pmu_reset_cycle_counter();
 		
 		if (i == 0) client_msg->wait = 0;
-		printf("%u monitor wait", client_msg->wait);
 		sleep(timing_frame);  //sleep 0.1s (default)
 		event_counters_disable();
 		cycle_counter_disable();

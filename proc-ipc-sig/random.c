@@ -191,8 +191,13 @@ int main(int argc, char* argv[])
 		system(command);
 		
 		while(1){
-			if(client_msg->status == 1 && client_msg->wait == 0) break;
+			printf("waiting");
+			if(client_msg->status == 1 && client_msg->wait == 0){
+				printf("monitor status %u and monitor wait %u \n", client_msg->status, client_msg->wait); 
+				break;
+			}
 		}
+		
 		
 		asm volatile ("ISB");
 		fprintf(fPtr, "random execution started ...\n");
