@@ -170,6 +170,14 @@ inline void pmu_event_counters_disable(unsigned counter){
 	//printf("PMU event counter %zu disabled\n", counter_set);
 }
 
+inline void pmu_event_counters_disable_all(void){
+	uint32_t mask = 0;
+  mask |= ARMV8_PMCR_E; /* Enable */
+	/* Disable Performance event Counters */
+	asm volatile ("ISB");
+  asm volatile("MSR PMCR_EL0, %0" : : "r" (value & ~mask));
+}
+
 
 
 
