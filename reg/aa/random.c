@@ -132,7 +132,7 @@ int main(int argc, char* argv[])
 			else if (randomnumber==4){
 				pmu_cycle_counter_disable();
 				cycles = get_timing();
-				fprintf(fPtr, "sha large started execution at %lu CPU cycles\n", cycles");
+				fprintf(fPtr, "sha large started execution at %lu CPU cycles\n", cycles);
 				asm volatile("ISB");
 				pmu_enable_cycle_counter();
 				chdir("/home/nikos/gem5-lib/security/sha");
