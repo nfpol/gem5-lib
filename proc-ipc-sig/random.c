@@ -190,9 +190,7 @@ int main(int argc, char* argv[])
 		server_msg->wait = 0;
 		sprintf(command, "nice --2 ./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
 		system(command);
-		printf("i am here 1\n");
 		while(1){
-			printf("i am here 2\n");
 			if(client_msg->status == 1 && client_msg->wait == 0){ 
 				break;
 			}
@@ -208,12 +206,10 @@ int main(int argc, char* argv[])
 		
 		while(1){
 			if(client_msg->finish == 1) {
-				printf("hell yeah_v4\n");
 				break;
 			}
 		}
 		server_msg->status = 0;
-		printf("hell yeah_v5\n");
 		//maybe it will work as when random execution stop we dont care
 		pmu_cycle_counter_disable();
 		pmu_event_counters_disable_all();
@@ -231,7 +227,6 @@ out:
 		if(shm_unlink(SHM_NAME) == -1) {
         printf("shm_unlink error : %s\n", strerror(errno));
     }
-		printf("oh yes\n");
 		
 		fclose(fPtr);
 		return 0;
