@@ -176,7 +176,7 @@ int main(int argc, char* argv[])
 		
 		printf("ipc connect successfull\n\n");
 		asm volatile("ISB");
-		sprintf(command, "./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
+		sprintf(command, "nice --2 ./monitor/monitor -m %u -t %u -d %u &", loop_monitor, timing_frame, div);
 		system(command);
 		asm volatile("ISB");
 		data = "\nstarting random execution\n\n";

@@ -121,7 +121,7 @@ int main(int argc, char **argv)
 	
 	chdir("/home/nikos/gem5-lib/reg-ipc/aa");
 	asm volatile("ISB");
-	sprintf(command, "./random -r %u -m %u -t %u -d %u &", loop_rand, loop_monitor, timing_frame, div);
+	sprintf(command, "nice --1 ./random -r %u -m %u -t %u -d %u &", loop_rand, loop_monitor, timing_frame, div);
 	system(command);
 	asm volatile("ISB");
 	while(1) {
