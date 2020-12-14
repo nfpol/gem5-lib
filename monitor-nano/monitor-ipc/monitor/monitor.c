@@ -100,7 +100,7 @@ int main(int argc, char* argv[]) {
 	while(i < loop){
 		reset_event_counters(); //reset event counters
 		//pmu_reset_cycle_counter();
-		nanosleep(&ts, NULL);  //sleep 10ms
+		nanosleep(&tim, NULL);  //sleep 10ms
 		//sleep(1);
 		event_counters_disable();
 		cycle_counter_disable();
