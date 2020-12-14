@@ -100,7 +100,7 @@ int main(int argc, char* argv[]) {
 	while(i < loop){
 		/* resetstats */
   	//__asm__ __volatile__ ("mov x0, #0; mov x1, #0; .inst 0XFF000110 | (0x40 << 16);");
-		nanosleep(&ts, NULL);  //sleep 10ms
+		nanosleep(&tim, NULL);  //sleep 10ms
 		/* dumpstats */
 	  __asm__ __volatile__ ("mov x0, #0; mov x1, #0; .inst 0xFF000110 | (0x41 << 16);");
 	}
