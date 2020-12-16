@@ -98,7 +98,7 @@ int main(int argc, char* argv[]) {
 		//sleep(1);
 		event_counters_disable();
 		cycle_counter_disable();
-		fprintf(fPtr, "%u" PRIu64 "               %u" PRIu64 "               %u" PRIu64 "               %u" PRIu64 "               %u" PRIu64 "               %u" PRIu64 "               \n", get_event_counter(0), get_event_counter(1), get_event_counter(2), get_event_counter(3), get_event_counter(4), get_event_counter(5), get_event_counter(6), get_timing());
+		fprintf(fPtr, "%" PRIu64 "               %" PRIu64 "               %" PRIu64 "               %" PRIu64 "               %" PRIu64 "               %" PRIu64 "               \n", get_event_counter(0), get_event_counter(1), get_event_counter(2), get_event_counter(3), get_event_counter(4), get_event_counter(5), get_event_counter(6), get_timing());
 		i++;
 		pmu_enable_config_counter(0);
 		pmu_enable_config_counter(1);
