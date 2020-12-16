@@ -9,8 +9,10 @@
 #include <sys/syscall.h>
 #include <linux/perf_event.h>
 #include "arm_v8.h"
+#include <inttypes.h>
 
 #include <unistd.h>   //for sleep()
+#include <getopt.h>
 
 extern void init_pmu(void);
 extern void select_event(void);
@@ -47,9 +49,16 @@ int main(int argc, char* argv[]) {
 	
 	/* Parse arguments */
   static const char* short_options = "t:m:d:h:";
+  static struct option long_options[] = {
+	  {"timing_frame",        required_argument, NULL, 't'},
+	  {"timing_divider",        required_argument, NULL, 'd'},
+	  {"monitor_loop",        required_argument, NULL, 'm'},
+	  {"help",            no_argument,       NULL, 'h'},
+	  { NULL,             0, NULL, 0}
+  };
 	
 	int c;
-  while ((c = getopt_long(argc, argv, short_options, NULL)) != -1) {
+  while ((c = getopt_long(argc, argv, short_options, long_options, NULL)) != -1) {
 		switch (c) {
       case 't':
         time = atoi(optarg);
@@ -100,13 +109,13 @@ int main(int argc, char* argv[]) {
 		cycle_counter_disable();
 		/*
 		fprintf(fPtr, "%" PRIu64 "               %" PRIu64 "               %" PRIu64 "               %" PRIu64 "               %" PRIu64 "               %" PRIu64 "               \n", get_event_counter(0), get_event_counter(1), get_event_counter(2), get_event_counter(3), get_event_counter(4), get_event_counter(5), get_event_counter(6), get_timing()); */
-		fprintf(fPtr, "%"PRIu64"               ", get_event_counter(0));
-		fprintf(fPtr, "%"PRIu64"               ", get_event_counter(1));
-		fprintf(fPtr, "%"PRIu64"               ", get_event_counter(2));
-		fprintf(fPtr, "%"PRIu64"               ", get_event_counter(3));
-		fprintf(fPtr, "%"PRIu64"               ", get_event_counter(4));
-		fprintf(fPtr, "%"PRIu64"               ", get_event_counter(5));
-		fprintf(fPtr, "%"PRIu64"               ", get_event_counter(6));
+		fprintf(fPtr, "%"PRIu32"               ", get_event_counter(0));
+		fprintf(fPtr, "%"PRIu32"               ", get_event_counter(1));
+		fprintf(fPtr, "%"PRIu32"               ", get_event_counter(2));
+		fprintf(fPtr, "%"PRIu32"               ", get_event_counter(3));
+		fprintf(fPtr, "%"PRIu32"               ", get_event_counter(4));
+		fprintf(fPtr, "%"PRIu32"               ", get_event_counter(5));
+		fprintf(fPtr, "%"PRIu32"               ", get_event_counter(6));
 		fprintf(fPtr, "%"PRIu64"               \n", get_timing());
 		i++;
 		pmu_enable_config_counter(0);
