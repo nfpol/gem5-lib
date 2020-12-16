@@ -198,7 +198,7 @@ int main(int argc, char* argv[])
 				pmu_cycle_counter_disable();
 				pmu_event_counters_disable_all();
 				cycles = get_timing();
-				snprintf(buffer, 32, "%\n\nlibflush at %"PRIu64"\n", cycles);
+				snprintf(buffer, 32, "\n\nlibflush at %"PRIu64"\n", cycles);
 				data = buffer;
 				//data = "\nlibflush\n";
 				ipc_send(data, 32);
@@ -213,7 +213,7 @@ int main(int argc, char* argv[])
 				pmu_cycle_counter_disable();
 				pmu_event_counters_disable_all();
 				cycles = get_timing();
-				snprintf(buffer, 32, "%\n\nbasicmath small at %"PRIu64"\n", cycles);
+				snprintf(buffer, 32, "\n\nbasicmath small at %"PRIu64"\n", cycles);
 				data = buffer;
 				//data = "\nbasicmath_small\n";
 				ipc_send(data, 32);
@@ -228,7 +228,7 @@ int main(int argc, char* argv[])
 				pmu_cycle_counter_disable();
 				pmu_event_counters_disable_all();
 				cycles = get_timing();
-				snprintf(buffer, 32, "%\n\nbitcount small at %"PRIu64"\n", cycles);
+				snprintf(buffer, 32, "\n\nbitcount small at %"PRIu64"\n", cycles);
 				data = buffer;
 				//data = "\nbitcount small\n";
 				ipc_send(data, 32);
@@ -243,7 +243,7 @@ int main(int argc, char* argv[])
 				pmu_cycle_counter_disable();
 				pmu_event_counters_disable_all();
 				cycles = get_timing();
-				snprintf(buffer, 32, "%\n\nsha small at %"PRIu64"\n", cycles);
+				snprintf(buffer, 32, "\n\nsha small at %"PRIu64"\n", cycles);
 				data = buffer;
 				//data = "\nsha small\n";
 				ipc_send(data, 32);
