@@ -9,7 +9,8 @@
 #include <sys/syscall.h>
 #include <linux/perf_event.h>
 #include "arm_v8.h"
-
+#include <getopt.h>
+#include <inttypes.h>
 #include <unistd.h>   //for sleep()
 
 extern void init_pmu(void);
@@ -47,9 +48,15 @@ int main(int argc, char* argv[]) {
 	
 	/* Parse arguments */
   static const char* short_options = "t:m:d:h:";
-	
+	static struct option long_options[] = {
+	  {"timing_frame",        required_argument, NULL, 't'},
+	  {"timing_divider",        required_argument, NULL, 'd'},
+	  {"monitor_loop",        required_argument, NULL, 'm'},
+	  {"help",            no_argument,       NULL, 'h'},
+	  { NULL,             0, NULL, 0}
+  };
 	int c;
-  while ((c = getopt_long(argc, argv, short_options, NULL)) != -1) {
+  while ((c = getopt_long(argc, argv, short_options, long_options, NULL)) != -1) {
 		switch (c) {
       case 't':
         time = atoi(optarg);

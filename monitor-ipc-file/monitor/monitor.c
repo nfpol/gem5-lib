@@ -16,6 +16,9 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include "../ipc.h"
+#include <getopt.h>
+#include <inttypes.h>
+
 
 /* IPC */
 static int ipc_fd;
@@ -128,9 +131,16 @@ int main(int argc, char* argv[]) {
 	
 	/* Parse arguments */
   	static const char* short_options = "t:m:d:h:";
-	
+		static struct option long_options[] = {
+	  {"timing_frame",        required_argument, NULL, 't'},
+	  {"timing_divider",        required_argument, NULL, 'd'},
+	  {"monitor_loop",        required_argument, NULL, 'm'},
+	  {"help",            no_argument,       NULL, 'h'},
+	  { NULL,             0, NULL, 0}
+  };
+  
 	int c;
-  	while ((c = getopt_long(argc, argv, short_options, NULL)) != -1) {
+  	while ((c = getopt_long(argc, argv, short_options, long_options, NULL)) != -1) {
 		switch (c) {
       case 't':
         time = atoi(optarg);
@@ -190,7 +200,7 @@ int main(int argc, char* argv[]) {
 		cycle_counter_disable();
 		
 		
-		snprintf(buffer, 256, "%u     %u     %u     %u     %u     %u     %u     %lu\n", get_event_counter(0), get_event_counter(1), get_event_counter(2), get_event_counter(3), get_event_counter(4), get_event_counter(5), get_event_counter(6), get_timing());
+		snprintf(buffer, 256, "%"PRIu32"     %"PRIu32"     %"PRIu32"     %"PRIu32"     %"PRIu32"     %"PRIu32"     %"PRIu32"     %"PRIu64"\n", get_event_counter(0), get_event_counter(1), get_event_counter(2), get_event_counter(3), get_event_counter(4), get_event_counter(5), get_event_counter(6), get_timing());
 		data = buffer;
 		ipc_send(data, 256);
 

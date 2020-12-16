@@ -15,6 +15,9 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 
+#include <inttypes.h>
+#include <getopt.h>
+
 extern void init_pmu(void);
 extern void select_event(void);
 extern void reset_event_counters(void);
@@ -53,9 +56,16 @@ int main(int argc, char* argv[]) {
 	
 	/* Parse arguments */
   static const char* short_options = "t:m:d:h:";
-	
+	static struct option long_options[] = {
+	  {"timing_frame",        required_argument, NULL, 't'},
+	  {"timing_divider",        required_argument, NULL, 'd'},
+	  {"monitor_loop",        required_argument, NULL, 'm'},
+	  {"help",            no_argument,       NULL, 'h'},
+	  { NULL,             0, NULL, 0}
+  };
+  
 	int c;
-  while ((c = getopt_long(argc, argv, short_options, NULL)) != -1) {
+  while ((c = getopt_long(argc, argv, short_options, long_options, NULL)) != -1) {
 		switch (c) {
       case 't':
         tim.tv_nsec = atoi(optarg);
@@ -104,14 +114,14 @@ int main(int argc, char* argv[]) {
 		//sleep(1);
 		event_counters_disable();
 		cycle_counter_disable();
-		fprintf(fPtr, "%u                    ", get_event_counter(0));
-		fprintf(fPtr, "%u                    ", get_event_counter(1) );
-		fprintf(fPtr, "%u                    ", get_event_counter(2) );
-		fprintf(fPtr, "%u                    ", get_event_counter(3) );
-		fprintf(fPtr, "%u                    ", get_event_counter(4) );
-		fprintf(fPtr, "%u                    ", get_event_counter(5) );
-		fprintf(fPtr, "%u                    ", get_event_counter(6) );
-		fprintf(fPtr, "%lu                   \n", get_timing());
+		fprintf(fPtr, "%"PRIu32"               ", get_event_counter(0));
+		fprintf(fPtr, "%"PRIu32"               ", get_event_counter(1));
+		fprintf(fPtr, "%"PRIu32"               ", get_event_counter(2));
+		fprintf(fPtr, "%"PRIu32"               ", get_event_counter(3));
+		fprintf(fPtr, "%"PRIu32"               ", get_event_counter(4));
+		fprintf(fPtr, "%"PRIu32"               ", get_event_counter(5));
+		fprintf(fPtr, "%"PRIu32"               ", get_event_counter(6));
+		fprintf(fPtr, "%"PRIu64"               \n", get_timing());
 		i++;
 		pmu_enable_config_counter(0);
 		pmu_enable_config_counter(1);

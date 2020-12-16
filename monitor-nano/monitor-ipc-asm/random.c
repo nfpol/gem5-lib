@@ -8,7 +8,8 @@
 #include <unistd.h>
 #include <sys/syscall.h>
 #include <linux/perf_event.h>
-
+#include <getopt.h>
+#include <inttypes.h>
 
 #include <unistd.h>   //for sleep()
 #include "./monitor/arm_v8.h"
@@ -45,16 +46,17 @@ int main(int argc, char* argv[])
 		}	
 			/* Parse arguments */
 		static const char* short_options = "t:m:r:d:h:";
-		/*static struct option long_options[] = {
-			{"timing",           required_argument, NULL, 't'},
-			{"loop_monitor",     required_argument, NULL, 'm'},
-			{"loop_rand",        required_argument, NULL, 'r'},
-			{"divider",          required_argument, NULL, 'd'},
-			{ NULL,              0, NULL, 0}
-		};*/ 
+		static struct option long_options[] = {
+	  {"timing_frame",        required_argument, NULL, 't'},
+	  {"timing_divider",        required_argument, NULL, 'd'},
+	  {"monitor_loop",        required_argument, NULL, 'm'},
+	  {"rand_loop",        required_argument, NULL, 'r'},
+	  {"help",            no_argument,       NULL, 'h'},
+	  { NULL,             0, NULL, 0}
+  }; 
 	
 		int c;
-		while ((c = getopt_long(argc, argv, short_options, NULL)) != -1) {
+		while ((c = getopt_long(argc, argv, short_options, long_options, NULL)) != -1) {
 			switch (c) {
 				case 't':
 					timing_frame = atoi(optarg);
@@ -104,7 +106,7 @@ int main(int argc, char* argv[])
 				//pmu_event_counters_disable_all();
 				cycles = get_timing();
 				pmu_enable_cycle_counter();
-				fprintf(fPtr, "libflush started execution at %lu CPU cycles\n", cycles);
+				fprintf(fPtr, "libflush started execution at %"PRIu64" CPU cycles\n", cycles);
 				asm volatile("ISB");
 				//pmu_enable_cycle_counter();
 				//pmu_enable_all_counters();
@@ -118,7 +120,7 @@ int main(int argc, char* argv[])
 				cycles = get_timing();
 				pmu_enable_cycle_counter();
 				pmu_enable_all_counters();
-				fprintf(fPtr, "basicmath small started execution at %lu CPU cycles\n", cycles);
+				fprintf(fPtr, "basicmath small started execution at %"PRIu64" CPU cycles\n", cycles);
 				asm volatile("ISB");
 				//pmu_enable_cycle_counter();
 				//pmu_enable_all_counters();
@@ -131,7 +133,7 @@ int main(int argc, char* argv[])
 				//pmu_event_counters_disable_all();
 				cycles = get_timing();
 				pmu_enable_cycle_counter();
-				fprintf(fPtr, "bitcount small started execution at %lu CPU cycles\n", cycles);
+				fprintf(fPtr, "bitcount small started execution at %"PRIu64" CPU cycles\n", cycles);
 				asm volatile("ISB");
 				//pmu_enable_cycle_counter();
 				//pmu_enable_all_counters();
@@ -144,7 +146,7 @@ int main(int argc, char* argv[])
 				//pmu_event_counters_disable_all();
 				cycles = get_timing();
 				pmu_enable_cycle_counter();
-				fprintf(fPtr, "sha large started execution at %lu CPU cycles\n", cycles);
+				fprintf(fPtr, "sha large started execution at %"PRIu64" CPU cycles\n", cycles);
 				asm volatile("ISB");
 				//pmu_enable_cycle_counter();
 				//pmu_enable_all_counters();

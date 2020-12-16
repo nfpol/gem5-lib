@@ -10,9 +10,10 @@
 #include <linux/perf_event.h>
 #include "arm_v8.h"
 #include <inttypes.h>
+#include <getopt.h>
 
 #include <unistd.h>   //for sleep()
-#include <getopt.h>
+
 
 extern void init_pmu(void);
 extern void select_event(void);

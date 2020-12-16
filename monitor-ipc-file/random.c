@@ -13,7 +13,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <string.h>
-
+#include <getopt.h>
+#include <inttypes.h>
 #include "ipc.h"
 #include "arm_v8.h"
 #include <unistd.h>   //for sleep()
@@ -125,9 +126,16 @@ int main(int argc, char* argv[])
 	 
 		/* Parse arguments */
 		static const char* short_options = "t:m:r:d:h:";
-		
+		static struct option long_options[] = {
+	  {"timing_frame",        required_argument, NULL, 't'},
+	  {"timing_divider",        required_argument, NULL, 'd'},
+	  {"monitor_loop",        required_argument, NULL, 'm'},
+	  {"rand_loop",        required_argument, NULL, 'r'},
+	  {"help",            no_argument,       NULL, 'h'},
+	  { NULL,             0, NULL, 0}
+  };
 		int c;
-		while ((c = getopt_long(argc, argv, short_options, NULL)) != -1) {
+		while ((c = getopt_long(argc, argv, short_options, long_options, NULL)) != -1) {
 			switch (c) {
 				case 't':
 					timing_frame = atoi(optarg);
@@ -188,7 +196,7 @@ int main(int argc, char* argv[])
 				pmu_cycle_counter_disable();
 				pmu_event_counters_disable_all();
 				cycles = get_timing();
-				snprintf(buffer, 32, "%\n\nlibflush at %lu\n", cycles);
+				snprintf(buffer, 32, "%\n\nlibflush at %"PRIu64"\n", cycles);
 				data = buffer;
 				//data = "\nlibflush\n";
 				ipc_send(data, 32);
@@ -203,7 +211,7 @@ int main(int argc, char* argv[])
 				pmu_cycle_counter_disable();
 				pmu_event_counters_disable_all();
 				cycles = get_timing();
-				snprintf(buffer, 32, "%\n\nbasicmath small at %lu\n", cycles);
+				snprintf(buffer, 32, "%\n\nbasicmath small at %"PRIu64"\n", cycles);
 				data = buffer;
 				//data = "\nbasicmath_small\n";
 				ipc_send(data, 32);
@@ -218,7 +226,7 @@ int main(int argc, char* argv[])
 				pmu_cycle_counter_disable();
 				pmu_event_counters_disable_all();
 				cycles = get_timing();
-				snprintf(buffer, 32, "%\n\nbitcount small at %lu\n", cycles);
+				snprintf(buffer, 32, "%\n\nbitcount small at %"PRIu64"\n", cycles);
 				data = buffer;
 				//data = "\nbitcount small\n";
 				ipc_send(data, 32);
@@ -233,7 +241,7 @@ int main(int argc, char* argv[])
 				pmu_cycle_counter_disable();
 				pmu_event_counters_disable_all();
 				cycles = get_timing();
-				snprintf(buffer, 32, "%\n\nsha small at %lu\n", cycles);
+				snprintf(buffer, 32, "%\n\nsha small at %"PRIu64"\n", cycles);
 				data = buffer;
 				//data = "\nsha small\n";
 				ipc_send(data, 32);
