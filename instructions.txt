@@ -794,3 +794,5 @@ all:
 
 
 
+git config credential.helper store
+
