@@ -1,21 +1,21 @@
-libflush started execution at 229332796 CPU cycles
-libflush started execution at 121532507 CPU cycles
-libflush started execution at 128264397 CPU cycles
-sha large started execution at 119434171 CPU cycles
-sha large started execution at 353916332 CPU cycles
-sha large started execution at 591324477 CPU cycles
-sha large started execution at 829139084 CPU cycles
-libflush started execution at 1063826378 CPU cycles
-bitcount small started execution at 119185353 CPU cycles
-bitcount small started execution at 224680302 CPU cycles
-bitcount small started execution at 329569100 CPU cycles
-basicmath small started execution at 433612519 CPU cycles
-bitcount small started execution at 871996631 CPU cycles
-sha large started execution at 976202377 CPU cycles
-libflush started execution at 1213738023 CPU cycles
-basicmath small started execution at 120232052 CPU cycles
-basicmath small started execution at 508196183 CPU cycles
-basicmath small started execution at 895779212 CPU cycles
-sha large started execution at 1288024878 CPU cycles
-basicmath small started execution at 1532069749 CPU cycles
+libflush started execution at 132420495859 CPU cycles
+sha large started execution at 117735116 CPU cycles
+sha large started execution at 355653579 CPU cycles
+bitcount small started execution at 589180612 CPU cycles
+basicmath small started execution at 702138806 CPU cycles
+basicmath small started execution at 1104666636 CPU cycles
+sha large started execution at 1517966253 CPU cycles
+libflush started execution at 1751778774 CPU cycles
+basicmath small started execution at 116227054 CPU cycles
+sha large started execution at 528856290 CPU cycles
+libflush started execution at 770395770 CPU cycles
+basicmath small started execution at 120265839 CPU cycles
+libflush started execution at 522367357 CPU cycles
+bitcount small started execution at 124988965 CPU cycles
+libflush started execution at 226613995 CPU cycles
+libflush started execution at 123122480 CPU cycles
+basicmath small started execution at 117034158 CPU cycles
+basicmath small started execution at 532611248 CPU cycles
+sha large started execution at 930575745 CPU cycles
+libflush started execution at 1165146865 CPU cycles
 closing random execution
