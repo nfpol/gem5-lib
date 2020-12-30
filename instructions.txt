@@ -797,4 +797,11 @@ all:
 git config credential.helper store
 
 
-Just grep for pmuProbePoint("Misses") or ppMisses in gem5 and see 
+Just grep for pmuProbePoint("Misses") or ppMisses in gem5 and see
+
+## for perf form source code
+cd linuxsource/tools/perf
+make
+make install
+cp perf /bin
+chmod +x perf 
